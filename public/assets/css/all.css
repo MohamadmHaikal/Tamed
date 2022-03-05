@@ -49,6 +49,10 @@ select.form-custom::-ms-expand {
     margin-top: 15px;
     border-radius: 4px;
 }
+.flag-width {
+    margin-left: 10px;
+
+}
 .jumbotron { background-color: #f1f2f3; }
 .mark, mark { background-color: #ffeccb }
 .code-section-container {

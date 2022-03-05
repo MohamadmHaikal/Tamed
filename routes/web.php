@@ -12,12 +12,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Http\Controllers\LanguageController;
 Route::get('/', function () {
     return view('dashboard.dashboard1');
-});
+})->middleware('LanguageSwitcher');
 
-Route::group(['prefix' => 'dashboard'], function(){
+Route::group(['prefix' => 'dashboard','middleware'=>'LanguageSwitcher'], function(){
     Route::get('dashboard1', function () { return view('dashboard.dashboard1'); });
     Route::get('dashboard2', function () { return view('dashboard.dashboard2'); });
     Route::get('dashboard3', function () { return view('dashboard.dashboard3'); });
@@ -26,7 +26,7 @@ Route::group(['prefix' => 'dashboard'], function(){
     Route::get('dashboard-social', function () { return view('dashboard.dashboard-social'); });
 });
 
-Route::group(['prefix' => 'apps'], function(){
+Route::group(['prefix' => 'apps','middleware'=>'LanguageSwitcher'], function(){
     Route::get('calendar', function () { return view('apps.calendar'); });
     Route::get('chat', function () { return view('apps.chat'); });
     Route::group(['prefix' => 'companies'], function (){
@@ -34,7 +34,7 @@ Route::group(['prefix' => 'apps'], function(){
         Route::get('company-details', function () { return view('apps.companies.company-details'); });
     });
     Route::get('contacts', function () { return view('apps.contacts'); });
-    Route::group(['prefix' => 'ecommerce'], function (){
+    Route::group(['prefix' => 'ecommerce','middleware'=>'LanguageSwitcher'], function (){
         Route::get('dashboard', function () { return view('apps.ecommerce.dashboard'); });
         Route::get('products', function () { return view('apps.ecommerce.products'); });
         Route::get('product-details', function () { return view('apps.ecommerce.product-details'); });
@@ -46,27 +46,27 @@ Route::group(['prefix' => 'apps'], function(){
         Route::get('cart', function () { return view('apps.ecommerce.cart'); });
         Route::get('checkout', function () { return view('apps.ecommerce.checkout'); });
     });
-    Route::group(['prefix' => 'email'], function (){
+    Route::group(['prefix' => 'email','middleware'=>'LanguageSwitcher'], function (){
         Route::get('inbox', function () { return view('apps.email.inbox'); });
         Route::get('details', function () { return view('apps.email.details'); });
         Route::get('compose', function () { return view('apps.email.compose'); });
     });
     Route::get('file-manager', function () { return view('apps.file-manager'); });
     Route::get('invoice-list', function () { return view('apps.invoice-list'); });
-    Route::group(['prefix' => 'notes'], function (){
+    Route::group(['prefix' => 'notes','middleware'=>'LanguageSwitcher'], function (){
         Route::get('list', function () { return view('apps.notes.list'); });
         Route::get('details', function () { return view('apps.notes.details'); });
         Route::get('create', function () { return view('apps.notes.create'); });
     });
     Route::get('social', function () { return view('apps.social'); });
     Route::get('task-list', function () { return view('apps.task-list'); });
-    Route::group(['prefix' => 'tickets'], function (){
+    Route::group(['prefix' => 'tickets','middleware'=>'LanguageSwitcher'], function (){
         Route::get('list', function () { return view('apps.tickets.list'); });
         Route::get('details', function () { return view('apps.tickets.details'); });
     });
 });
 
-Route::group(['prefix' => 'authentications'], function(){
+Route::group(['prefix' => 'authentications','middleware'=>'LanguageSwitcher'], function(){
     Route::group(['prefix' => 'style1'], function (){
         Route::get('login', function () { return view('authentications.style1.login'); });
         Route::get('signup', function () { return view('authentications.style1.signup'); });
@@ -74,14 +74,14 @@ Route::group(['prefix' => 'authentications'], function(){
         Route::get('forgot-password', function () { return view('authentications.style1.forgot-password'); });
         Route::get('confirm-email', function () { return view('authentications.style1.confirm-email'); });
     });
-    Route::group(['prefix' => 'style2'], function (){
+    Route::group(['prefix' => 'style2','middleware'=>'LanguageSwitcher'], function (){
         Route::get('login', function () { return view('authentications.style2.login'); });
         Route::get('signup', function () { return view('authentications.style2.signup'); });
         Route::get('locked', function () { return view('authentications.style2.locked'); });
         Route::get('forgot-password', function () { return view('authentications.style2.forgot-password'); });
         Route::get('confirm-email', function () { return view('authentications.style2.confirm-email'); });
     });
-    Route::group(['prefix' => 'style3'], function (){
+    Route::group(['prefix' => 'style3','middleware'=>'LanguageSwitcher'], function (){
         Route::get('login', function () { return view('authentications.style3.login'); });
         Route::get('signup', function () { return view('authentications.style3.signup'); });
         Route::get('locked', function () { return view('authentications.style3.locked'); });
@@ -90,12 +90,12 @@ Route::group(['prefix' => 'authentications'], function(){
     });
 });
 
-Route::group(['prefix' => 'pages'], function(){
+Route::group(['prefix' => 'pages','middleware'=>'LanguageSwitcher'], function(){
     Route::get('coming-soon', function () { return view('pages.coming-soon'); });
     Route::get('coming-soon2', function () { return view('pages.coming-soon2'); });
     Route::get('contact-us', function () { return view('pages.contact-us'); });
     Route::get('contact-us2', function () { return view('pages.contact-us2'); });
-    Route::group(['prefix' => 'error'], function (){
+    Route::group(['prefix' => 'error','middleware'=>'LanguageSwitcher'], function (){
         Route::get('error404', function () { return view('pages.error.error404'); });
         Route::get('error500', function () { return view('pages.error.error500'); });
         Route::get('error503', function () { return view('pages.error.error503'); });
@@ -121,7 +121,7 @@ Route::group(['prefix' => 'pages'], function(){
     Route::get('timeline', function () { return view('pages.timeline'); });
 });
 
-Route::group(['prefix' => 'basic-ui'], function(){
+Route::group(['prefix' => 'basic-ui','middleware'=>'LanguageSwitcher'], function(){
     Route::get('accordions', function () { return view('basic-ui.accordions'); });
     Route::get('animation', function () { return view('basic-ui.animation'); });
     Route::get('cards', function () { return view('basic-ui.cards'); });
@@ -142,7 +142,7 @@ Route::group(['prefix' => 'basic-ui'], function(){
     Route::get('tour-tutorial', function () { return view('basic-ui.tour-tutorial'); });
 });
 
-Route::group(['prefix' => 'ui-elements'], function(){
+Route::group(['prefix' => 'ui-elements','middleware'=>'LanguageSwitcher'], function(){
     Route::get('alerts', function () { return view('ui-elements.alerts'); });
     Route::get('avatar', function () { return view('ui-elements.avatar'); });
     Route::get('badges', function () { return view('ui-elements.badges'); });
@@ -165,17 +165,17 @@ Route::group(['prefix' => 'ui-elements'], function(){
 
 Route::get('widgets', function () {
     return view('widgets');
-});
+})->middleware('LanguageSwitcher');
 
 Route::get('tables', function () {
     return view('tables');
-});
+})->middleware('LanguageSwitcher');
 
 Route::get('data-tables', function () {
     return view('data-tables');
-});
+})->middleware('LanguageSwitcher');
 
-Route::group(['prefix' => 'forms'], function(){
+Route::group(['prefix' => 'forms','middleware'=>'LanguageSwitcher'], function(){
     Route::group(['prefix' => 'controls'], function (){
         Route::get('base-inputs', function () { return view('forms.controls.base-inputs'); });
         Route::get('input-groups', function () { return view('forms.controls.input-groups'); });
@@ -183,7 +183,7 @@ Route::group(['prefix' => 'forms'], function(){
         Route::get('radio', function () { return view('forms.controls.radio'); });
         Route::get('switch', function () { return view('forms.controls.switch'); });
     });
-    Route::group(['prefix' => 'widgets'], function (){
+    Route::group(['prefix' => 'widgets','middleware'=>'LanguageSwitcher'], function (){
         Route::get('picker', function () { return view('forms.widgets.picker'); });
         Route::get('tagify', function () { return view('forms.widgets.tagify'); });
         Route::get('touch-spin', function () { return view('forms.widgets.touch-spin'); });
@@ -206,19 +206,19 @@ Route::group(['prefix' => 'forms'], function(){
     Route::get('multiple-step', function () { return view('forms.multiple-step'); });
 });
 
-Route::group(['prefix' => 'maps'], function(){
+Route::group(['prefix' => 'maps','middleware'=>'LanguageSwitcher'], function(){
     Route::get('leaflet-map', function () { return view('maps.leaflet-map'); });
     Route::get('vector-map', function () { return view('maps.vector-map'); });
 });
 
-Route::group(['prefix' => 'charts'], function(){
+Route::group(['prefix' => 'charts','middleware'=>'LanguageSwitcher'], function(){
     Route::get('apex-chart', function () { return view('charts.apex-chart'); });
     Route::get('chartlist-chart', function () { return view('charts.chartlist-chart'); });
     Route::get('chartjs', function () { return view('charts.chartjs'); });
     Route::get('morris-chart', function () { return view('charts.morris-chart'); });
 });
 
-Route::group(['prefix' => 'starter'], function(){
+Route::group(['prefix' => 'starter','middleware'=>'LanguageSwitcher'], function(){
     Route::get('blank-page', function () { return view('starter.blank-page'); });
     Route::get('breadcrumbs', function () { return view('starter.breadcrumbs'); });
 });
@@ -228,7 +228,7 @@ Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
-
+Route::get('/lan/{lang}',[LanguageController::class,'change'])->name("LanguageSwitcher");
 // 404 for undefined routes
 Route::any('/{page?}',function(){
     return View::make('error-404');

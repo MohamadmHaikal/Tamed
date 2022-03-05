@@ -12,8 +12,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
+@if (session()->get('lang') == 'en')
+<link rel="stylesheet" media="all" href="{{ asset('assets/css/all_en.css') }}">
+  @else
+  <link rel="stylesheet" media="all" href="{{ asset('assets/css/all.css') }}">
+@endif
 
-<link rel="stylesheet" media="all" href="{{ mix('assets/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/line-awesome-1.3.0/css/line-awesome.min.css') }}">
 
 <!-- Stack array for including inline css or head elements -->

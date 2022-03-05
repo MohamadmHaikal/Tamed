@@ -117,21 +117,14 @@
                 <i class="las la-language"></i>
             </a>
             <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
-                <a class="dropdown-item d-flex" href="javascript:void(0);">
-                    <img src="{{ url('assets/img/flag/usa-flag.png') }}" class="flag-width" alt="flag">
-                    <span class="align-self-center"> {{ __('English') }}</span>
-                </a>
-                <a class="dropdown-item d-flex" href="javascript:void(0);">
-                    <img src="{{ url('assets/img/flag/spain-flag.png') }}" class="flag-width" alt="flag">
-                    <span class="align-self-center">&nbsp;{{ __('Spanish') }}</span>
-                </a>
-                <a class="dropdown-item d-flex" href="javascript:void(0);">
-                    <img src="{{ url('assets/img/flag/france-flag.png') }}" class="flag-width" alt="flag">
-                    <span class="align-self-center">&nbsp;{{ __('French') }}</span>
-                </a>
-                <a class="dropdown-item d-flex" href="javascript:void(0);">
+               
+                <a class="dropdown-item d-flex" href="{{route('LanguageSwitcher',['ar'])}}">
                     <img src="{{ url('assets/img/flag/saudi-arabia-flag.png') }}" class="flag-width" alt="flag">
                     <span class="align-self-center">&nbsp;{{ __('Arabic') }}</span>
+                </a>
+                <a class="dropdown-item d-flex" href="{{route('LanguageSwitcher',['en'])}}">
+                    <img src="{{ url('assets/img/flag/usa-flag.png') }}" class="flag-width" alt="flag">
+                    <span class="align-self-center"> {{ __('English') }}</span>
                 </a>
             </div>
         </li>
