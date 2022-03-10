@@ -12,6 +12,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\Dashboard\ActivitiesController;
+use App\Http\Controllers\Dashboard\AdditionalActivitieController;
+use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\LanguageController;
 
 Route::get('/', function () {
@@ -231,6 +234,37 @@ Route::group(['prefix' => 'charts','middleware'=>'LanguageSwitcher'], function()
     Route::get('chartjs', function () { return view('charts.chartjs'); });
     Route::get('morris-chart', function () { return view('charts.morris-chart'); });
 });
+
+//Activities routes
+Route::group(['prefix' => 'Activities', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/all', [ActivitiesController::class, 'index'])->name('activites.all');
+    Route::get('/create', [ActivitiesController::class, 'create'])->name('activites.create');
+    Route::post('/store', [ActivitiesController::class, 'store'])->name('activites.store');
+    Route::get('/delete/{id}', [ActivitiesController::class, 'destroy'])->name('activites.delete');
+    Route::get('/show/{id}', [ActivitiesController::class, 'show'])->name('activites.show');
+    Route::get('/edit/{id}', [ActivitiesController::class, 'edit'])->name('activites.edit');
+    Route::post('/update/{id}', [ActivitiesController::class, 'update'])->name('activites.update');
+});
+//AdditionalActivitie routes
+Route::group(['prefix' => 'AdditionalActivitie', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/all', [AdditionalActivitieController::class, 'index'])->name('additionalactivitie.all');
+    Route::get('/create', [AdditionalActivitieController::class, 'create'])->name('additionalactivitie.create');
+    Route::post('/store', [AdditionalActivitieController::class, 'store'])->name('additionalactivitie.store');
+    Route::get('/delete/{id}', [AdditionalActivitieController::class, 'destroy'])->name('additionalactivitie.delete');
+    Route::get('/show/{id}', [AdditionalActivitieController::class, 'show'])->name('additionalactivitie.show');
+    Route::get('/edit/{id}', [AdditionalActivitieController::class, 'edit'])->name('additionalactivitie.edit');
+    Route::post('/update/{id}', [AdditionalActivitieController::class, 'update'])->name('additionalactivitie.update');
+});
+//ProjectServices routes
+Route::group(['prefix' => 'Services', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/all', [ServicesController::class, 'index'])->name('services.all');
+    Route::get('/create', [ServicesController::class, 'create'])->name('services.create');
+    Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
+    Route::get('/delete/{id}', [ServicesController::class, 'destroy'])->name('services.delete');
+    Route::get('/show/{id}', [ServicesController::class, 'show'])->name('services.show');
+    Route::get('/edit/{id}', [ServicesController::class, 'edit'])->name('services.edit');
+    Route::post('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+}); 
 
 Route::group(['prefix' => 'starter','middleware'=>'LanguageSwitcher'], function(){
     Route::get('blank-page', function () { return view('starter.blank-page'); });

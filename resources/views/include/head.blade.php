@@ -9,7 +9,7 @@
 
 <!-- fonts library -->
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 @if (session()->get('lang') == 'en')
