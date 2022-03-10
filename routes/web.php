@@ -13,6 +13,7 @@
 |
 */
 use App\Http\Controllers\LanguageController;
+
 Route::get('/', function () {
     return view('dashboard.dashboard1');
 })->middleware('LanguageSwitcher');
@@ -25,6 +26,19 @@ Route::group(['prefix' => 'dashboard','middleware'=>'LanguageSwitcher'], functio
     Route::get('dashboard5', function () { return view('dashboard.dashboard5'); });
     Route::get('dashboard-social', function () { return view('dashboard.dashboard-social'); });
 });
+
+Route::group(['prefix' => 'addItem','middleware'=>'LanguageSwitcher' ,'namespace' => 'App\Http\Controllers\Dashboard'], function (){
+    Route::group(['prefix' => 'emplyee'], function (){
+        Route::resource('emplyees', 'EmployeeTypeController');
+    });
+    Route::group(['prefix' => 'project'], function (){
+        Route::resource('project', 'ProjectTypeController');
+    });
+    Route::group(['prefix' => 'material'], function (){
+        Route::resource('material', 'MaterialTypeController');
+    });
+});
+
 
 Route::group(['prefix' => 'apps','middleware'=>'LanguageSwitcher'], function(){
     Route::get('calendar', function () { return view('apps.calendar'); });

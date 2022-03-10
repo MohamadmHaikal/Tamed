@@ -100,6 +100,13 @@
                 <span>{{__('Dashboard')}}</span>
             </a>
         </li>
+        <li class="menu {{ active_class(['addItem/*']) }}">
+            <a data-active={{ is_active_route(['addItem/*']) }} href="javascript:void(0);" id="addItem" class="main-item dropdown-toggle">
+                <span class="new-notification"></span>
+                <i class="las la-plus"></i>
+                <span>{{__('Add Item')}}</span>
+            </a>
+        </li>
         <li class="menu">
             <a data-active={{ is_active_route(['apps/*']) }} href="javascript:void(0);" id="apps" class="main-item dropdown-toggle">
                 <i class="lab la-medapps"></i>
@@ -113,6 +120,7 @@
                 <span>{{__('Auth Pages')}}</span>
             </a>
         </li>
+        
         <li class="menu {{ active_class(['pages/*']) }}">
             <a data-active={{ is_active_route(['pages/*']) }} href="javascript:void(0);" id="otherPages"  class="main-item dropdown-toggle">
                 <i class="las la-file"></i>
@@ -211,6 +219,60 @@
                     </li>
                     <li class="{{ active_class(['dashboard/dashboard5']) }}">
                         <a class="app-submenu" href="{{ url('/dashboard/dashboard5') }}"> Dashboard 5 </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="submenu" id="addItemMenu">
+            <div class="submenu-info">
+                <div class="submenu-inner-info">
+                    <h5 class="mb-3">add</h5>
+                    <p>add item.</p>
+                </div>
+                <ul class="submenu-list" data-parent-element="#dashboard">
+                    <li>
+                        <a data-toggle="collapse" href="#authTypeOne" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style1/*']) }}">
+                           Material Type  <i class="las la-angle-right sidemenu-right-icon"></i>
+                        </a>
+                        <ul class="sub-submenu-list collapse" id="authTypeOne">
+                            <li class=" {{ active_class(['authentication/style3/login']) }}">
+                                <a href="{{ route('material.index') }}"> {{ __('Material') }} </a>
+                            </li>
+                            <li class=" {{ active_class(['authentication/style3/register']) }}">
+                                <a href="{{ route('material.create') }}"> {{ __('add Material') }} </a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#authTypeTwo" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style2/*']) }}">
+                           Project Type <i class="las la-angle-right sidemenu-right-icon"></i>
+                        </a>
+                        <ul class="sub-submenu-list collapse" id="authTypeTwo">
+                            <li class=" {{ active_class(['authentication/style3/login']) }}">
+                                <a href="{{ route('project.index') }}"> {{ __('project') }} </a>
+                            </li>
+                            <li class=" {{ active_class(['authentication/style3/register']) }}">
+                                <a href="{{ route('project.create') }}"> {{ __('add project') }} </a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#authTypeThree" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
+                          Employee  Type 
+                            <span class="menu-badge badge-danger">New</span>
+                        </a>
+                        <ul class="sub-submenu-list collapse" id="authTypeThree">
+                            <li class=" {{ active_class(['authentication/style3/login']) }}">
+                                <a href="{{ route('emplyees.index') }}"> {{ __('employee') }} </a>
+                            </li>
+                            <li class=" {{ active_class(['authentication/style3/register']) }}">
+                                <a href="{{ route('emplyees.create') }}"> {{ __('add employee') }} </a>
+                            </li>
+                           
+                           
+                        </ul>
                     </li>
                 </ul>
             </div>
