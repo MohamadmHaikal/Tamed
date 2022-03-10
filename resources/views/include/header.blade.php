@@ -117,15 +117,17 @@
                 <i class="las la-language"></i>
             </a>
             <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
-               
+                @if (session()->get('lang') == 'en')
                 <a class="dropdown-item d-flex" href="{{route('LanguageSwitcher',['ar'])}}">
                     <img src="{{ url('assets/img/flag/saudi-arabia-flag.png') }}" class="flag-width" alt="flag">
                     <span class="align-self-center">&nbsp;{{ __('Arabic') }}</span>
                 </a>
+                @else
                 <a class="dropdown-item d-flex" href="{{route('LanguageSwitcher',['en'])}}">
                     <img src="{{ url('assets/img/flag/usa-flag.png') }}" class="flag-width" alt="flag">
                     <span class="align-self-center"> {{ __('English') }}</span>
                 </a>
+                @endif
             </div>
         </li>
         <li class="nav-item dropdown notification-dropdown">

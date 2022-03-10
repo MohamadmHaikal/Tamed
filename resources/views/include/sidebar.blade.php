@@ -1,7 +1,7 @@
 <nav id="sidebar">
     <div class="fixed-profile">
         <div class="premium-border">
-            <img src="{{asset('assets/img/profile-16.jpg')}}" class="profile-avatar"/>
+            <img src="{{ asset('assets/img/profile-16.jpg') }}" class="profile-avatar" />
         </div>
         <div class="mt-3">
             <h6 class="text-white font-14 mb-1">Sara Smith</h6>
@@ -9,7 +9,8 @@
         </div>
         <ul class="flex-row profile-option-container">
             <li class="option-item dropdown message-dropdown">
-                <div class="option-link-container dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="option-link-container dropdown-toggle" id="messageDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <a class="option-link dropdown-toggle">
                         <i class="las la-envelope"></i>
                     </a>
@@ -31,7 +32,8 @@
                                 <a class="account-item">
                                     <div class="media">
                                         <div class="user-img">
-                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-11.jpg" alt="profile">
+                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-11.jpg"
+                                                alt="profile">
                                         </div>
                                         <div class="media-body">
                                             <div class="">
@@ -44,7 +46,8 @@
                                 <a class="account-item marked-read">
                                     <div class="media">
                                         <div class="user-img">
-                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-10.jpg" alt="profile">
+                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-10.jpg"
+                                                alt="profile">
                                         </div>
                                         <div class="media-body">
                                             <div class="">
@@ -57,7 +60,8 @@
                                 <a class="account-item marked-read">
                                     <div class="media">
                                         <div class="user-img">
-                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-9.jpg" alt="profile">
+                                            <img class="rounded-circle avatar-xs" src="assets/img/profile-9.jpg"
+                                                alt="profile">
                                         </div>
                                         <div class="media-body">
                                             <div class="">
@@ -95,100 +99,119 @@
 
     <ul class="list-unstyled menu-categories" id="accordionExample">
         <li class="menu ">
-            <a data-active={{ is_active_route(['dashboard/*']) }} href="javascript:void(0);" id="dashboard" class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['dashboard/*']) }} href="javascript:void(0);" id="dashboard"
+                class="main-item dropdown-toggle">
                 <i class="las la-home"></i>
-                <span>{{__('Dashboard')}}</span>
+                <span>{{ __('Dashboard') }}</span>
+            </a>
+        </li>
+        <li class="menu ">
+            <a data-active={{ is_active_route(['add/*']) }} href="javascript:void(0);" id="add"
+                class="main-item dropdown-toggle">
+                <i class="las la-plus"></i>
+                <span>{{ __('backend.add') }}</span>
             </a>
         </li>
         <li class="menu">
-            <a data-active={{ is_active_route(['apps/*']) }} href="javascript:void(0);" id="apps" class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['apps/*']) }} href="javascript:void(0);" id="apps"
+                class="main-item dropdown-toggle">
                 <i class="lab la-medapps"></i>
-                <span>{{__('Apps')}}</span>
+                <span>{{ __('Apps') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['authentications/*']) }}">
-            <a data-active={{ is_active_route(['authentications/*']) }} href="javascript:void(0);" id="authPages" class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['authentications/*']) }} href="javascript:void(0);" id="authPages"
+                class="main-item dropdown-toggle">
                 <span class="new-notification"></span>
                 <i class="las la-lock"></i>
-                <span>{{__('Auth Pages')}}</span>
+                <span>{{ __('Auth Pages') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['pages/*']) }}">
-            <a data-active={{ is_active_route(['pages/*']) }} href="javascript:void(0);" id="otherPages"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['pages/*']) }} href="javascript:void(0);" id="otherPages"
+                class="main-item dropdown-toggle">
                 <i class="las la-file"></i>
-                <span>{{__('Other Pages')}}</span>
+                <span>{{ __('Other Pages') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['basic-ui/*']) }}">
-            <a data-active={{ is_active_route(['basic-ui/*']) }} href="javascript:void(0);" id="basicUI"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['basic-ui/*']) }} href="javascript:void(0);" id="basicUI"
+                class="main-item dropdown-toggle">
                 <i class="las la-drafting-compass"></i>
-                <span>{{__('Basic UI')}}</span>
+                <span>{{ __('Basic UI') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['ui-elements/*']) }}">
-            <a data-active={{ is_active_route(['ui-elements/*']) }} href="javascript:void(0);" id="uiElements"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['ui-elements/*']) }} href="javascript:void(0);" id="uiElements"
+                class="main-item dropdown-toggle">
                 <i class="lab la-elementor"></i>
-                <span>{{__('UI Elements')}}</span>
+                <span>{{ __('UI Elements') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['forms/*']) }}">
-            <a data-active={{ is_active_route(['forms/*']) }} href="javascript:void(0);" id="forms"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['forms/*']) }} href="javascript:void(0);" id="forms"
+                class="main-item dropdown-toggle">
                 <i class="lab la-wpforms"></i>
-                <span>{{__('Forms')}}</span>
+                <span>{{ __('Forms') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['maps/*']) }}">
-            <a data-active={{ is_active_route(['maps/*']) }} href="javascript:void(0);" id="maps"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['maps/*']) }} href="javascript:void(0);" id="maps"
+                class="main-item dropdown-toggle">
                 <i class="las la-globe-americas"></i>
-                <span>{{__('Maps')}}</span>
+                <span>{{ __('Maps') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['charts/*']) }}">
-            <a data-active={{ is_active_route(['charts/*']) }} href="javascript:void(0);" id="charts"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['charts/*']) }} href="javascript:void(0);" id="charts"
+                class="main-item dropdown-toggle">
                 <i class="las la-chart-pie"></i>
-                <span>{{__('Charts')}}</span>
+                <span>{{ __('Charts') }}</span>
             </a>
         </li>
         <li class="menu">
-            <a href="{{ url('/widgets') }}" data-active={{ is_active_route(['widgets']) }} class="dropdown-toggle">
+            <a href="{{ url('/widgets') }}" data-active={{ is_active_route(['widgets']) }}
+                class="dropdown-toggle">
                 <i class="las la-desktop"></i>
-                <span>{{__('Widgets')}}</span>
+                <span>{{ __('Widgets') }}</span>
             </a>
         </li>
         <li class="menu">
             <a href="{{ url('/tables') }}" data-active={{ is_active_route(['tables']) }} class="dropdown-toggle">
                 <i class="las la-border-all"></i>
-                <span>{{__('Tables')}}</span>
+                <span>{{ __('Tables') }}</span>
             </a>
         </li>
         <li class="menu">
-            <a href="{{ url('/data-tables') }}" data-active={{ is_active_route(['data-tables']) }} class="dropdown-toggle">
+            <a href="{{ url('/data-tables') }}" data-active={{ is_active_route(['data-tables']) }}
+                class="dropdown-toggle">
                 <i class="las la-table"></i>
-                <span>{{__('Data Tables')}}</span>
+                <span>{{ __('Data Tables') }}</span>
             </a>
         </li>
         <li class="menu {{ active_class(['starter/*']) }}">
-            <a data-active={{ is_active_route(['starter/*']) }} href="javascript:void(0);" id="starterKit"  class="main-item dropdown-toggle">
+            <a data-active={{ is_active_route(['starter/*']) }} href="javascript:void(0);" id="starterKit"
+                class="main-item dropdown-toggle">
                 <i class="las la-copy"></i>
-                <span>{{__('Starter Kit')}}</span>
+                <span>{{ __('Starter Kit') }}</span>
             </a>
         </li>
         <li class="menu">
             <a href="javascript:void(0);" id="multiLevel" class="main-item dropdown-toggle">
                 <i class="las la-sitemap"></i>
-                <span>{{__('Multi Levels')}}</span>
+                <span>{{ __('Multi Levels') }}</span>
             </a>
         </li>
         <li class="menu">
             <a href="http://neptuneweb.xyz" class="dropdown-toggle">
                 <i class="las la-file-code"></i>
-                <span> {{__('Documentation')}}</span>
+                <span> {{ __('Documentation') }}</span>
             </a>
         </li>
     </ul>
     <div class="sidebar-submenu">
         <span class="sidebar-submenu-close" id="sidebarSubmenuClose">
-           <i class="las la-times"></i>
+            <i class="las la-times"></i>
         </span>
         <div class="submenu" id="dashboardMenu">
             <div class="submenu-info">
@@ -215,6 +238,28 @@
                 </ul>
             </div>
         </div>
+        <div class="submenu" id="addMenu">
+            <div class="submenu-info">
+                <div class="submenu-inner-info">
+                    <h5 class="mb-3">{{ __('backend.add') }}</h5>
+                </div>
+                <ul class="submenu-list">
+                    <li class="{{ active_class(['Add/Activities']) }}">
+                        <a class="app-submenu"
+                            href="{{ route('activites.all') }}">{{ __('backend.Activities') }}</a>
+                    </li>
+                    <li class="{{ active_class(['Add/AdditionalActivitie']) }}">
+                        <a class="app-submenu"
+                            href="{{ route('additionalactivitie.all') }}">{{ __('backend.Additional Activitie') }}</a>
+                    </li>
+                    <li class="{{ active_class(['Add/Services']) }}">
+                        <a class="app-submenu"
+                            href="{{ route('services.all') }}">{{ __('backend.Project Services') }}</a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
         <div class="submenu" id="appsMenu">
             <div class="submenu-info">
                 <div class="submenu-inner-info">
@@ -229,7 +274,9 @@
                         <a href="{{ url('/apps/chat') }}"> Chat </a>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#appsCompanies" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['apps/companies/*']) }}">
+                        <a data-toggle="collapse" href="#appsCompanies" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['apps/companies/*']) }}">
                             Companies <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="appsCompanies">
@@ -245,7 +292,9 @@
                         <a href="{{ url('/apps/contacts') }}"> Contacts </a>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#appsEcommerce" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['apps/ecommerce/*']) }}">
+                        <a data-toggle="collapse" href="#appsEcommerce" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['apps/ecommerce/*']) }}">
                             Ecommerce <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="appsEcommerce">
@@ -282,7 +331,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#appsEmail" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['apps/email/*']) }}">
+                        <a data-toggle="collapse" href="#appsEmail" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['apps/email/*']) }}">
                             Email <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="appsEmail">
@@ -304,7 +355,9 @@
                         <a href="{{ url('/apps/invoice-list') }}"> Invoice List </a>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#appsNotes" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['apps/notes/*']) }}">
+                        <a data-toggle="collapse" href="#appsNotes" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['apps/notes/*']) }}">
                             Notes <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="appsNotes">
@@ -326,7 +379,9 @@
                         <a href="{{ url('/apps/task-list') }}"> Task List </a>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#appsTickets" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['apps/tickets/*']) }}">
+                        <a data-toggle="collapse" href="#appsTickets" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['apps/tickets/*']) }}">
                             Tickets <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="appsTickets">
@@ -349,7 +404,9 @@
                 </div>
                 <ul class="submenu-list" data-parent-element="#dashboard">
                     <li>
-                        <a data-toggle="collapse" href="#authTypeOne" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style1/*']) }}">
+                        <a data-toggle="collapse" href="#authTypeOne" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['authentication/style1/*']) }}">
                             Type 1 <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeOne">
@@ -371,7 +428,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#authTypeTwo" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style2/*']) }}">
+                        <a data-toggle="collapse" href="#authTypeTwo" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['authentication/style2/*']) }}">
                             Type 2 <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeTwo">
@@ -393,7 +452,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#authTypeThree" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
+                        <a data-toggle="collapse" href="#authTypeThree" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
                             Type 3
                             <span class="menu-badge badge-danger">New</span>
                         </a>
@@ -438,7 +499,9 @@
                         <a href="{{ url('/pages/contact-form2') }}"> Contact Form 2 </a>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#otherPagesError" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['pages/error/*']) }}">
+                        <a data-toggle="collapse" href="#otherPagesError" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['pages/error/*']) }}">
                             Error <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="otherPagesError">
@@ -521,7 +584,7 @@
                 </div>
                 <ul class="submenu-list">
                     <li class=" {{ active_class(['basic-ui/accordions']) }}">
-                        <a href="{{ url('/basic-ui/accordions') }}"> Accordions  </a>
+                        <a href="{{ url('/basic-ui/accordions') }}"> Accordions </a>
                     </li>
                     <li class=" {{ active_class(['basic-ui/animation']) }}">
                         <a href="{{ url('/basic-ui/animation') }}"> Animation </a>
@@ -649,7 +712,9 @@
                 </div>
                 <ul class="submenu-list">
                     <li>
-                        <a data-toggle="collapse" href="#formControls" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['forms/controls/*']) }}">
+                        <a data-toggle="collapse" href="#formControls" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['forms/controls/*']) }}">
                             Controls <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="formControls">
@@ -671,7 +736,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#formWidgets" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle {{ active_class(['forms/widgets/*']) }}">
+                        <a data-toggle="collapse" href="#formWidgets" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['forms/widgets/*']) }}">
                             Widgets <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="formWidgets">
@@ -799,7 +866,9 @@
                 </div>
                 <ul class="submenu-list">
                     <li>
-                        <a data-toggle="collapse" href="#multiLevelLevelTwo" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle"> Level 2 <i class="las la-angle-right sidemenu-right-icon"></i> </a>
+                        <a data-toggle="collapse" href="#multiLevelLevelTwo" role="button" aria-expanded="false"
+                            aria-controls="collapseExample" class="dropdown-toggle"> Level 2 <i
+                                class="las la-angle-right sidemenu-right-icon"></i> </a>
                         <ul class="collapse sub-submenu-list" id="multiLevelLevelTwo">
                             <li>
                                 <a href="javascript:void(0)"> Link 1 </a>
@@ -810,13 +879,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#multiLevelLevelThree" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle"> Level 3 <i class="las la-angle-right sidemenu-right-icon"></i> </a>
+                        <a data-toggle="collapse" href="#multiLevelLevelThree" role="button" aria-expanded="false"
+                            aria-controls="collapseExample" class="dropdown-toggle"> Level 3 <i
+                                class="las la-angle-right sidemenu-right-icon"></i> </a>
                         <ul class="collapse sub-submenu-list" id="multiLevelLevelThree">
                             <li>
                                 <a href="javascript:void(0)"> Link 1</a>
                             </li>
                             <li>
-                                <a data-toggle="collapse" href="#multiLevelLevelThreeOne" role="button" aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle"> Link 2 <i class="las la-angle-right sidemenu-right-icon"></i> </a>
+                                <a data-toggle="collapse" href="#multiLevelLevelThreeOne" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample" class="dropdown-toggle"> Link
+                                    2 <i class="las la-angle-right sidemenu-right-icon"></i> </a>
                                 <ul class="collapse list-unstyled sub-sub-submenu-list" id="multiLevelLevelThreeOne">
                                     <li>
                                         <a href="javascript:void(0)"> Link 1</a>
