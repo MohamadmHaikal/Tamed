@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activitie;
 use App\Models\UserType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ActivitiesController extends Controller
 {
@@ -17,7 +18,8 @@ class ActivitiesController extends Controller
     public function index()
     {
         $activities = Activitie::all();
-        return view('dashboard.Activities.index', compact('activities'));
+        $userType = UserType::all();
+        return view('addItem.Activities.index', compact('activities', 'userType'));
     }
 
     /**
@@ -29,7 +31,7 @@ class ActivitiesController extends Controller
     {
         //
         $userType = UserType::all();
-        return view('dashboard.Activities.create', compact('userType'));
+        return view('addItem.Activities.create', compact('userType'));
     }
 
     /**
@@ -40,12 +42,33 @@ class ActivitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+
+            ],
+            [
+                'name.required' => __('First name is required'),
+
+            ]
+        );
+        if ($validator->fails()) {
+
+            return $this->sendJson([
+                'status' => 0,
+                'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
+            ]);
+        }
         $activitie = new Activitie;
         $activitie->activity = $request->name;
         $activitie->type_id = $request->type_id;
         $activitie->save();
-        return redirect()->route('activites.all');
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.Activity added successfully'), 'type' => 'success'])->render(),
+            'reload' => true,
+        ]);
     }
 
     /**
@@ -58,7 +81,7 @@ class ActivitiesController extends Controller
     {
 
         $activitie = Activitie::find($id);
-        return view('dashboard.Activities.show', compact('activitie'));
+        return view('addItem.Activities.show', compact('activitie'));
     }
 
     /**
@@ -71,7 +94,7 @@ class ActivitiesController extends Controller
     {
         $activitie = Activitie::find($id);
         $userType = UserType::all();
-        return view('dashboard.Activities.edit', compact('activitie', 'userType'));
+        return view('addItem.Activities.edit', compact('activitie', 'userType'));
     }
 
     /**
@@ -100,6 +123,10 @@ class ActivitiesController extends Controller
     {
         $activitie = Activitie::find($id);
         $activitie->delete();
-        return redirect()->back();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.Activity deleted successfully'), 'type' => 'success'])->render(),
+            'reload' => true,
+        ]);
     }
 }

@@ -18,7 +18,8 @@ class AdditionalActivitieController extends Controller
     {
         //
         $activities = AdditionalActivitie::all();
-        return view('dashboard.AdditionalActivitie.index', compact('activities'));
+        $mainActivitys = Activitie::all();
+        return view('addItem.AdditionalActivitie.index', compact('activities','mainActivitys'));
     }
 
     /**
@@ -30,7 +31,7 @@ class AdditionalActivitieController extends Controller
     {
         //
         $mainActivitys = Activitie::all();
-        return view('dashboard.AdditionalActivitie.create', compact('mainActivitys'));
+        return view('addItem.AdditionalActivitie.create', compact('mainActivitys'));
     }
 
     /**
@@ -59,7 +60,7 @@ class AdditionalActivitieController extends Controller
     {
         //
         $activitie = AdditionalActivitie::find($id);
-        return view('dashboard.AdditionalActivitie.show', compact('activitie'));
+        return view('addItem.AdditionalActivitie.show', compact('activitie'));
     }
 
     /**
@@ -73,7 +74,7 @@ class AdditionalActivitieController extends Controller
         //
         $activitie = AdditionalActivitie::find($id);
         $mainActivitys = Activitie::all();
-        return view('dashboard.AdditionalActivitie.edit', compact('activitie', 'mainActivitys'));
+        return view('addItem.AdditionalActivitie.edit', compact('activitie', 'mainActivitys'));
     }
 
     /**

@@ -17,7 +17,7 @@ class ServicesController extends Controller
     {
         //
         $Services = Service::all();
-        return view('dashboard.Services.index', compact('Services'));
+        return view('addItem.Services.index', compact('Services'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ServicesController extends Controller
     public function create()
     {
         //
-        return view('dashboard.Services.create');
+        return view('addItem.Services.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class ServicesController extends Controller
     {
         //
         $service = Service::find($id);
-        return view('dashboard.Services.show', compact('service'));
+        return view('addItem.Services.show', compact('service'));
     }
 
     /**
@@ -69,7 +69,7 @@ class ServicesController extends Controller
     {
         //
         $Service = Service::find($id);
-        return view('dashboard.Services.edit', compact('Service'));
+        return view('addItem.Services.edit', compact('Service'));
     }
 
     /**

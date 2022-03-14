@@ -44,6 +44,7 @@ div.dataTables_wrapper div.dataTables_length select {
   display: inline-block;
   height: 40px;
   padding: 0px 0px 0px 10px;
+  margin-top: 15px;
 }
 div.dataTables_wrapper div.dataTables_filter {
   text-align: right;
@@ -59,6 +60,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0.5em;
   display: inline-block;
   width: auto;
+  margin-top: 15px;
 }
 table.dataTable .form-control {
     color: #888ea8;

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'b3b6028805994f8b114f3a465da74a2c4dba32bc',
+    'reference' => '31d7de5367beae8e4c8c0607aa468cdd44e41546',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -530,6 +530,15 @@
         0 => 'v8.83.3',
       ),
     ),
+    'joedixon/laravel-translation' => 
+    array (
+      'pretty_version' => 'v1.1.2',
+      'version' => '1.1.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4a467398bae73cd16522d523b557e96f3455b9d2',
+    ),
     'justinrainbow/json-schema' => 
     array (
       'pretty_version' => '5.2.11',
@@ -562,7 +571,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b3b6028805994f8b114f3a465da74a2c4dba32bc',
+      'reference' => '31d7de5367beae8e4c8c0607aa468cdd44e41546',
     ),
     'laravel/sail' => 
     array (
