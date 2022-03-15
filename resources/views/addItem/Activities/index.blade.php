@@ -119,7 +119,7 @@
         </div>
     </div>
     <!-- Main Body Ends -->
-    {{-- @include('Common.modal',['onclick'=>'',"type"=>"Show","id"=>"Show","title"=>"Acivity Details"]) --}}
+    @include('Common.modal',['onclick'=>'',"type"=>"Show","id"=>"Show","title"=>"Acivity Details"])
     @include('Common.modal', [
         'onclick' => 'Create',
         'type' => 'create',

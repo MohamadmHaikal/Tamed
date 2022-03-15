@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '31d7de5367beae8e4c8c0607aa468cdd44e41546',
+    'reference' => '6e042bf1c6b631d2cf9d53b4a890196c94e03ff2',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -70,6 +70,24 @@ private static $installed = array (
       array (
       ),
       'reference' => 'ca57d18f028f84f777b2168cd1911b0dee2343ae',
+    ),
+    'cartalyst/sentinel' => 
+    array (
+      'pretty_version' => 'v5.1.0',
+      'version' => '5.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6f641c0c6fda3627a6aee9d1cd3c409e73e4fd0d',
+    ),
+    'cartalyst/support' => 
+    array (
+      'pretty_version' => 'v5.1.2',
+      'version' => '5.1.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1bf18efdc7e1c7bd4adabdbccfac48ce0fa946fe',
     ),
     'composer/ca-bundle' => 
     array (
@@ -595,7 +613,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '31d7de5367beae8e4c8c0607aa468cdd44e41546',
+      'reference' => '6e042bf1c6b631d2cf9d53b4a890196c94e03ff2',
     ),
     'laravel/sail' => 
     array (
