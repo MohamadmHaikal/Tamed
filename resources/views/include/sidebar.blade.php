@@ -307,13 +307,13 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeThree" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
-<<<<<<< HEAD
-                            Employee Type <i class="las la-angle-right sidemenu-right-icon"></i>
 
-=======
+                          
+
+
                             {{ __('backend.employment Type') }}<i class="las la-angle-right sidemenu-right-icon"></i>
                             
->>>>>>> walaa
+
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeThree">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
