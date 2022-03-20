@@ -12,15 +12,38 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('dashboard.dashboard1');
-})->middleware('LanguageSwitcher');
+})->middleware('LanguageSwitcher','auth','is_verified');
 
+Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
+    
+    Route::post('check', [AuthController::class,'checkMobileUser'])->name('check');
+
+  Route::get('login', [AuthController::class,'_getLogin'])->name('login');
+
+  Route::post('postLogin', [AuthController::class,'_postLogin'])->name('post.login');
+
+});
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('register', [AuthController::class,'_getRegister'])->name('get.register');
+});
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('logout', [AuthController::class,'_getLogout'])->name('get.logout');
+});
+Route::group(['prefix' => 'users','middleware'=>'LanguageSwitcher'], function(){
+    Route::get('/all', [UserController::class,'index'])->name('users.all');
+    
+});
 Route::group(['prefix' => 'dashboard','middleware'=>'LanguageSwitcher'], function(){
     Route::get('dashboard1', function () { return view('dashboard.dashboard1'); });
     Route::get('dashboard2', function () { return view('dashboard.dashboard2'); });

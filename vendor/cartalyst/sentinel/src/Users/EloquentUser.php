@@ -55,6 +55,7 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
      */
     protected $fillable = [
         'email',
+        'phone',
         'password',
         'last_name',
         'first_name',
@@ -92,7 +93,7 @@ class EloquentUser extends Model implements PermissibleInterface, PersistableInt
      *
      * @var array
      */
-    protected $loginNames = ['email'];
+    protected $loginNames = ['phone'];
 
     /**
      * The Roles model FQCN.

@@ -1,20 +1,20 @@
 "use strict";
 // Verification Code Inputs
-$('.digit-group').find('input').each(function() {
+$('.digit-group').find('input').each(function () {
     $(this).attr('maxlength', 1);
-    $(this).on('keyup', function(e) {
+    $(this).on('keyup', function (e) {
         var parent = $($(this).parent());
-        if(e.keyCode === 8 || e.keyCode === 37) {
+        if (e.keyCode === 8 || e.keyCode === 37) {
             var prev = parent.find('input#' + $(this).data('previous'));
-            if(prev.length) {
+            if (prev.length) {
                 $(prev).select();
             }
-        } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+        } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
             var next = parent.find('input#' + $(this).data('next'));
-            if(next.length) {
+            if (next.length) {
                 $(next).select();
             } else {
-                if(parent.data('autosubmit')) {
+                if (parent.data('autosubmit')) {
                     parent.submit();
                 }
             }
@@ -22,23 +22,101 @@ $('.digit-group').find('input').each(function() {
     });
 });
 // Form hide and show
-$("#getCodeButton").on('click',function(){
-    $(".form-1").removeClass("fadeInLeft show");
-    $(".form-1").hide();
-    $(".form-2").addClass("fadeInRight show");
+$("#getCodeButton").on('click', function () {
+    var mobile = document.getElementById("mobile").value;
+
+    let _token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url: "/auth/check",
+        type: "post",
+        dataType: "json",
+        data: {
+            _token: _token,
+            mobile: mobile,
+
+        },
+        success: function (data) {
+
+            document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                .length);
+
+            $('.toast').toast('show');
+            if (data['status'] == 1) {
+                document.getElementById("codeNote").innerText=document.getElementById("codeNote").innerText+' (966'+data['mobile']+')' ;
+                $(".form-1").removeClass("fadeInLeft show");
+                $(".form-1").hide();
+                $(".form-2").addClass("fadeInRight show");
+                document.getElementById("phone").value=data['mobile'] ;
+            }
+            if (data['reload']) {
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1300);
+
+            }
+
+        },
+
+
+    });
+
+
+
 });
-$("#changeEmailAddress").on('click',function(){
+$("#CodeSubmit").on('click', function () {
+    var mobile = document.getElementById("phone").value;
+    var data=$(".digit-group").serializeArray().reverse();
+    var code='';
+    $.each(data, function(i, field){
+       code=code+''+field.value;
+      });
+    console.log(code);
+    let _token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url: "/auth/postLogin",
+        type: "post",
+        dataType: "json",
+        data: {
+            _token: _token,
+            mobile: mobile,
+            code:code,
+
+        },
+        success: function (data) {
+
+            document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                .length);
+
+            $('.toast').toast('show');
+           
+            if (data['status'] == 1) {
+                setTimeout(function () {
+                    window.location.href = data['redirect'];
+                }, 2000);
+               
+            }
+            
+
+        },
+
+
+    });
+
+
+
+});
+$("#changeEmailAddress").on('click', function () {
     $(".form-2").removeClass("fadeInRight show");
     $(".form-2").hide();
     $(".form-1").addClass("fadeInLeft show");
 });
 // Captcha
-function Captcha(){
-    var alpha = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-        '0','1','2','3','4','5','6','7','8','9');
+function Captcha() {
+    var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
     var i;
-    for (i=0;i<6;i++){
+    for (i = 0; i < 6; i++) {
         var a = alpha[Math.floor(Math.random() * alpha.length)];
         var b = alpha[Math.floor(Math.random() * alpha.length)];
         var c = alpha[Math.floor(Math.random() * alpha.length)];
@@ -47,32 +125,35 @@ function Captcha(){
         var f = alpha[Math.floor(Math.random() * alpha.length)];
         var g = alpha[Math.floor(Math.random() * alpha.length)];
     }
-    var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
+    var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
     document.getElementById("mainCaptcha").innerHTML = code;
     document.getElementById("mainCaptcha").value = code;
     removeCaptcha();
 }
-function ValidCaptcha(){
+
+function ValidCaptcha() {
     var string1 = removeSpaces(document.getElementById('mainCaptcha').value);
     var string2 = removeSpaces(document.getElementById('txtInputCaptcha').value);
-    if (string1 == string2){
+    if (string1 == string2) {
         // return true;
         $("#Button1").hide();
         $("#checkMark").show();
         $("#checkMark").addClass("fadeInUp");
         $("#txtInputCaptcha").removeClass("error");
-    }else{
+    } else {
         $("#checkMark").hide();
         $("#checkMark").removeClass("fadeInUp");
         $("#Button1").show();
         $("#txtInputCaptcha").addClass("error");
     }
 }
-function removeCaptcha(){
+
+function removeCaptcha() {
     $("#checkMark").hide();
     $("#checkMark").removeClass("fadeInUp");
     $("#Button1").show();
 }
-function removeSpaces(string){
+
+function removeSpaces(string) {
     return string.split(' ').join('');
 }

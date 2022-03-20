@@ -1,11 +1,19 @@
+<?php
+$user = get_current_user_data();
+?>
 <nav id="sidebar">
     <div class="fixed-profile">
         <div class="premium-border">
-            <img src="{{ asset('assets/img/profile-16.jpg') }}" class="profile-avatar" />
+            @if (!empty($user['logo']))
+                <img src="{{ url("image/$user->logo") }}" class="profile-avatar" />
+            @else
+                <img src="{{ url('https://dummyimage.com/1200x900/e0e0e0/c7c7c7.png') }}" class="profile-avatar" />
+            @endif
+
         </div>
         <div class="mt-3">
-            <h6 class="text-white font-14 mb-1">Sara Smith</h6>
-            <p class="text-white font-13 mb-0">Britannia</p>
+            <h6 class="text-white font-14 mb-1">{{ $user->name }}</h6>
+
         </div>
         <ul class="flex-row profile-option-container">
             <li class="option-item dropdown message-dropdown">
@@ -15,8 +23,8 @@
                         <i class="las la-envelope"></i>
                     </a>
                     <div class="text-left">
-                        <h6>Mail</h6>
-                        <p>3 New Mails</p>
+                        <h6>{{__('backend.mail')}}</h6>
+                        <p>3 {{__("backend.New Mails")}}</p>
                     </div>
                 </div>
                 <div class="dropdown-menu position-absolute md-container" aria-labelledby="messageDropdown">
@@ -89,8 +97,8 @@
                         </div>
                     </div>
                     <div class="text-left">
-                        <h6>Notifications</h6>
-                        <p>4 Unread</p>
+                        <h6>{{__('backend.notifications')}}</h6>
+                        <p>4 {{__("backend.Unread")}}</p>
                     </div>
                 </a>
             </li>
@@ -122,7 +130,8 @@
             </a>
         </li>
         <li class="menu {{ active_class(['languages/*']) }}">
-            <a href="{{route('languages.translations.index',['ar'])}}" data-active={{ is_active_route(['languages/*']) }} class="dropdown-toggle">
+            <a href="{{ route('languages.translations.index', ['ar']) }}"
+                data-active={{ is_active_route(['languages/*']) }} class="dropdown-toggle">
                 <i class="las la-language"></i>
                 <span> {{ __('backend.Translation') }}</span>
             </a>
@@ -299,7 +308,7 @@
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
                             Employee Type <i class="las la-angle-right sidemenu-right-icon"></i>
-                            
+
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeThree">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
@@ -319,7 +328,7 @@
                             {{ __('backend.Activities') }} <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="Activities">
-                            
+
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
                                 <a href="{{ route('activites.all') }}"> {{ __('backend.Activities') }} </a>
                             </li>
@@ -336,7 +345,7 @@
                                 class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="AdditionalActivitie">
-                           
+
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
                                 <a href="{{ route('additionalactivitie.all') }}">
                                     {{ __('backend.Additional Activitie') }} </a>
@@ -354,7 +363,7 @@
                                 class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="services">
-                           
+
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
                                 <a href="{{ route('services.all') }}"> {{ __('backend.Project Services') }}
                                 </a>
@@ -508,17 +517,17 @@
         <div class="submenu" id="usersMenu">
             <div class="submenu-info">
                 <div class="submenu-inner-info">
-                    <h5 class="mb-3">{{__('backend.users')}}</h5>
+                    <h5 class="mb-3">{{ __('backend.users') }}</h5>
 
                 </div>
                 <ul class="submenu-list">
-                    <li class=" {{ active_class(['apps/calendar']) }}">
-                        <a href="{{ url('/apps/calendar') }}"> {{__('backend.all users')}} </a>
+                    <li class=" {{ active_class(['users/all']) }}">
+                        <a href="{{route('users.all')}}"> {{ __('backend.all users') }} </a>
                     </li>
-                    <li class=" {{ active_class(['apps/chat']) }}">
-                        <a href="{{ url('/apps/chat') }}"> {{__('backend.users types')}}</a>
+                    <li class=" {{ active_class(['users/chat']) }}">
+                        <a href="{{ url('/apps/chat') }}"> {{ __('backend.users types') }}</a>
                     </li>
-                
+
                 </ul>
             </div>
         </div>

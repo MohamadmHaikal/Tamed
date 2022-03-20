@@ -48,19 +48,6 @@ function is_user_logged_in()
     return !empty($userdata) ? true : false;
 }
 
-function get_username($user_id)
-{
-    $user = get_user_by_id($user_id);
-    if ($user) {
-        if (!empty($user->first_name) || !empty($user->last_name)) {
-            return $user->first_name . ' ' . $user->last_name;
-        } else {
-            return $user->email;
-        }
-    }
-    return '';
-}
-
 
 
 function get_current_user_id()
@@ -134,7 +121,15 @@ function get_user_by_email($user_email)
     return (is_object($user)) ? $user : false;
 }
 
+function get_user_by_mobile($user_mobile)
+{
+    $credentials = [
+        'phone' => $user_mobile,
+    ];
 
+    $user = Sentinel::findByCredentials($credentials);
+    return (is_object($user)) ? $user : false;
+}
 
 function get_users_by_role($role = 'administrator', $for_option = false)
 {
@@ -264,8 +259,8 @@ function create_new_user($data = [])
         'first_name' => '',
         'last_name' => '',
         'mobile' => '',
-         'code' => '',
-          'isNew' =>'',
+     'code' => '',
+        'isNew' =>'',
         'role' => 'customer',
     ];
 

@@ -1,12 +1,12 @@
 (function($) {
     "use strict";
-    $('.widget-content .message').on('click', function () {
+    $('.widget-content .message').on('click', function() {
         swal({
             title: 'Basic Message',
             padding: '1em'
         })
     })
-    $('.widget-content .success').on('click', function () {
+    $('.widget-content .success').on('click', function() {
         swal({
             title: 'Good job!',
             text: "You clicked the!",
@@ -14,18 +14,17 @@
             padding: '2em'
         })
     })
-    $('.widget-content .dynamic-queue').on('click', function () {
+    $('.widget-content .dynamic-queue').on('click', function() {
         const ipAPI = 'https://api.ipify.org?format=json'
         swal.queue([{
             title: 'Your public IP',
             confirmButtonText: 'Show my public IP',
-            text:
-                'Your public IP will be received ' +
+            text: 'Your public IP will be received ' +
                 'via AJAX request',
             showLoaderOnConfirm: true,
             preConfirm: function() {
                 return fetch(ipAPI)
-                    .then(function (response) {
+                    .then(function(response) {
                         return response.json();
                     })
                     .then(function(data) {
@@ -40,7 +39,7 @@
             }
         }])
     })
-    $('.widget-content .title-text').on('click', function () {
+    $('.widget-content .title-text').on('click', function() {
         swal({
             title: 'The Internet?',
             text: "That thing is still around?",
@@ -48,15 +47,14 @@
             padding: '2em'
         })
     })
-    $('.widget-content .step-by-step').on('click', function () {
+    $('.widget-content .step-by-step').on('click', function() {
         swal.mixin({
             input: 'text',
             confirmButtonText: 'Next &rarr;',
             showCancelButton: true,
             progressSteps: ['1', '2', '3'],
             padding: '2em',
-        }).queue([
-            {
+        }).queue([{
                 title: 'Question 1',
                 text: 'Step by step modal is easy'
             },
@@ -67,8 +65,7 @@
                 swal({
                     title: 'All done!',
                     padding: '2em',
-                    html:
-                        'Your answers: <pre>' +
+                    html: 'Your answers: <pre>' +
                         JSON.stringify(result.value) +
                         '</pre>',
                     confirmButtonText: 'Great!'
@@ -76,7 +73,7 @@
             }
         })
     })
-    $('.widget-content .custom-animation').on('click', function () {
+    $('.widget-content .custom-animation').on('click', function() {
         swal({
             title: 'Custom animation with Animate.css',
             animation: false,
@@ -84,16 +81,16 @@
             padding: '2em'
         })
     })
-    $('.widget-content .timer').on('click', function () {
+    $('.widget-content .timer').on('click', function() {
         swal({
             title: 'Auto close alert!',
             text: 'I will close in 1 seconds.',
             timer: 1000,
             padding: '2em',
-            onOpen: function () {
+            onOpen: function() {
                 swal.showLoading()
             }
-        }).then(function (result) {
+        }).then(function(result) {
             if (
                 // Read more about handling dismissals
                 result.dismiss === swal.DismissReason.timer
@@ -102,7 +99,7 @@
             }
         })
     })
-    $('.widget-content .custom-image').on('click', function () {
+    $('.widget-content .custom-image').on('click', function() {
         swal({
             title: 'Amazing!',
             text: 'Modal with a custom image.',
@@ -114,25 +111,22 @@
             padding: '2em'
         })
     })
-    $('.widget-content .html').on('click', function () {
+    $('.widget-content .html').on('click', function() {
         swal({
             title: '<i>Alert with</i> <u>HTML</u>',
             type: 'info',
-            html:
-                'You can use <b>bold text</b>, ' +
+            html: 'You can use <b>bold text</b>, ' +
                 '<a href="https://www.google.com">links</a> ' +
                 'and other HTML tags',
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: false,
-            confirmButtonText:
-                'OK',
-            cancelButtonText:
-                'Cancel',
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
             padding: '2em'
         })
     })
-    $('.widget-content .warning.confirm').on('click', function () {
+    $('.widget-content .warning.confirm').on('click', function() {
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -141,7 +135,9 @@
             confirmButtonText: 'Confirm',
             padding: '2em'
         }).then(function(result) {
+            console.log(121212);
             if (result.value) {
+
                 swal(
                     'Deleted!',
                     'Your file has been deleted.',
@@ -150,7 +146,7 @@
             }
         })
     })
-    $('.widget-content .custom-width-padding-background').on('click', function () {
+    $('.widget-content .custom-width-padding-background').on('click', function() {
         swal({
             title: 'Custom width, padding, background.',
             width: 600,
@@ -159,7 +155,7 @@
             background: '#fff url(assets/img/auth_1_bg_2.jpg) no-repeat 100% 100%',
         })
     })
-    $('.widget-content .footer').on('click', function () {
+    $('.widget-content .footer').on('click', function() {
         swal({
             type: 'error',
             title: 'Sorry!',

@@ -1,7 +1,7 @@
 <!-- Copyright Footer Starts -->
 <div class="footer-wrapper">
     <div class="footer-section f-section-1">
-        <p class=""> {{ __('Copyright © '.date("Y").' NeptuneWeb. All rights reserved.')}} </p>
+        <p class=""> {{ __('Copyright © '.date("Y").' Tamed. All rights reserved')}} </p>
 
     </div>
     <div class="footer-section f-section-2">

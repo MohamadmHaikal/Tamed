@@ -4,18 +4,19 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class Authenticate extends Middleware
+use Closure;
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Support\Facades\Redirect;
+
+class Authenticate
 {
-    /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
-     */
-    protected function redirectTo($request)
+    public function handle($request, Closure $next)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
+        if (\Cartalyst\Sentinel\Laravel\Facades\Sentinel::check()) {
+            return $next($request);
+        } else {
+            return Redirect::route('login')->withErrors('Please log in!');
         }
     }
 }

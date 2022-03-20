@@ -1,5 +1,5 @@
 <div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;">
-    <div class="toast toast-{{ $type }} fade hide" role="alert" data-delay="4000" aria-live="assertive"
+    <div class="toast toast-{{ $type }} fade hide" role="alert" data-delay="2000" aria-live="assertive"
         aria-atomic="true">
         <div class="toast-header-{{ $type }}">
             <strong class="mr-auto" id="mr-auto">{{ __('backend.system messages') }}</strong>
