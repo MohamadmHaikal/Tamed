@@ -23,13 +23,22 @@ return array (
   'Group' => 'مجموعة',
   'Languages' => 'اللغات',
   'Locale' => 'رمز اللغة',
+<<<<<<< HEAD
   'Logout' => 'تسجيل خروج',
   'My Account' => 'حسابي',
   'New Mails' => 'رسائل جديدة',
   'No data available in table' => 'لا توجد بيانات متوفرة في الجدول',
   'No matching records found' => 'لم يتم العثور على سجلات مطابقة',
   'Please enter the code to continue' => 'الرجاء إدخال الكود للمتابعة',
+=======
+  'Material' => 'المواد',
+  'Material type' => 'أنواع المواد',
+  'No data available in table' => 'لا توجد بيانات متوفرة في الجدول',
+  'No matching records found' => 'لم يتم العثور على سجلات مطابقة',
+  'Project' => 'المشاريع',
+>>>>>>> walaa
   'Project Services' => 'خدمات المشروع',
+  'Project Type' => 'أنواع المشاريع',
   'Search all translations' => 'ابحث في كل الترجمات',
   'Search here' => 'ابحث هنا',
   'Search:' => 'بحث:',
@@ -52,7 +61,12 @@ return array (
   'ar' => 'عربي',
   'back' => 'عودة',
   'dashboard' => 'لوحة التحكم',
+<<<<<<< HEAD
   'email' => 'البريد الإلكتروني',
+=======
+  'employment' => 'الوظائف',
+  'employment Type' => 'أنواع الوظائف',
+>>>>>>> walaa
   'en' => 'إنكليزي',
   'entries' => 'مدخلات',
   'id' => 'معرف',

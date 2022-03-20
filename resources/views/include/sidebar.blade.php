@@ -275,11 +275,11 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeOne" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style1/*']) }}">
-                            Material Type <i class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.Material type') }} <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeOne">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('material.index') }}"> {{ __('Material') }} </a>
+                                <a href="{{ route('material.index') }}"> {{ __('backend.Material') }} </a>
                             </li>
                             <li class=" {{ active_class(['authentication/style3/register']) }}">
                                 <a href="{{ route('material.create') }}"> {{ __('backend.add') }} </a>
@@ -291,7 +291,7 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeTwo" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style2/*']) }}">
-                            Project Type <i class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.Project Type') }}<i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeTwo">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
@@ -307,16 +307,21 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeThree" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
+<<<<<<< HEAD
                             Employee Type <i class="las la-angle-right sidemenu-right-icon"></i>
 
+=======
+                            {{ __('backend.employment Type') }}<i class="las la-angle-right sidemenu-right-icon"></i>
+                            
+>>>>>>> walaa
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeThree">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('emplyees.index') }}"> {{ __('employee') }} </a>
+                                <a href="{{ route('employment.index') }}"> {{ __('backend.employment') }} </a>
                             </li>
-                            <li class=" {{ active_class(['authentication/style3/register']) }}">
+                            {{-- <li class=" {{ active_class(['authentication/style3/register']) }}">
                                 <a href="{{ route('emplyees.create') }}"> {{ __('backend.add') }} </a>
-                            </li>
+                            </li> --}}
 
 
                         </ul>

@@ -14,4 +14,14 @@ class Activitie extends Model
     public function AdditionalActivitie(){
         return $this->hasMany('App\Models\AdditionalActivitie' , 'activitie_id');
     }
+    public function getColumn()
+    {
+        return [
+            (object)  [ 'columnName' => 'name',
+                     'columnType' => 'text'
+        ]
+            //  (object)   [ 'columnName' => 'name',
+            //             'columnType' => 'text']
+            ];
+    }
 }

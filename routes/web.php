@@ -53,9 +53,17 @@ Route::group(['prefix' => 'dashboard','middleware'=>'LanguageSwitcher'], functio
     Route::get('dashboard-social', function () { return view('dashboard.dashboard-social'); });
 });
 
+Route::post('delete-item', 'App\Http\Controllers\Controller@_deleteItem')->name('delete-item');
+Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-item');
+Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
+Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name('update-item');
+
+
 Route::group(['prefix' => 'addItem','middleware'=>'LanguageSwitcher' ,'namespace' => 'App\Http\Controllers\Dashboard'], function (){
+
     Route::group(['prefix' => 'emplyee'], function (){
-        Route::resource('emplyees', 'EmployeeTypeController');
+        Route::resource('employment', 'EmploymentTypeController');
+        
     });
     Route::group(['prefix' => 'project'], function (){
         Route::resource('project', 'ProjectTypeController');
@@ -64,7 +72,6 @@ Route::group(['prefix' => 'addItem','middleware'=>'LanguageSwitcher' ,'namespace
         Route::resource('material', 'MaterialTypeController');
     });
 });
-
 
 Route::group(['prefix' => 'apps','middleware'=>'LanguageSwitcher'], function(){
     Route::get('calendar', function () { return view('apps.calendar'); });

@@ -1,4 +1,22 @@
-<div id="{{$id}}" class="modal animated zoomInUp custo-zoomInUp" role="dialog">
+
+@php 
+session_start();
+    $modelName = 'App\\Models\\' .$model;
+    $Newmodel = new $modelName();
+    $arrayItem = $Newmodel->getColumn();
+
+@endphp
+
+
+{{-- <form id="checkout-payment-info" action="{{route($action)  }}"
+data-google-captcha="yes"  method="POST"  enctype="multipart/form-data"
+class="form checkout-form  relative"> --}}
+
+<form id="form-Item" action="{{route($action)  }}" method="POST" enctype="multipart/form-data"
+class="form form-action">
+
+<div id="Create" class="modal animated zoomInUp custo-zoomInUp" role="dialog">
+    
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -10,42 +28,42 @@
             </div>
 
             <div class="modal-body">
+                <h5 id="type"></h5>
 
                 <div class="widget-header">
                     <div class="row">
-
+                        <input type="hidden" name="model" id="model" value="{{ $model }}">
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content widget-content-area" id="widget-content-area">
+
+                    @foreach ($arrayItem as $key => $item)
                     <div class="form-group">
-                        <label>{{ __('backend.name of activities') }}</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <label>{{ __('backend.name of Item') }}</label>
+                        <input type="{{ $item->columnType }}" class="form-control" value=" {{ isset( $item->value) }}" name="{{ $item->columnName }}" id="{{ $item->columnName }}">
                     </div>
-                    
-                    <div class="form-group">
-                        <label>{{ __('backend.user type') }}</label>
-                        <select class="form-control form-control-sm" name="type_id" id="type_id">
-                            @foreach ($userType as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-
-
-                        </select>
-                    </div>
-
+                    @endforeach
 
                 </div>
 
             </div>
-            @if ($type!="Show")
+            
                 
             
-            <div class="modal-footer md-button">
+            <div class="modal-footer md-button" >
                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
                     {{ __('backend.Cancel') }}</button>
-                <button class="btn btn-primary" onclick="{{$onclick}}(this)">{{ __('backend.add') }}</button>
+                <button class="btn btn-primary createItem" id="createItem"
+                 onclick="Create(this)"
+                 >{{ __('backend.add') }}</button>
             </div>
-            @endif
+            
         </div>
     </div>
 </div>
+</form>
+@push('custom-scripts')
+{!! Html::script('assets/js/myJS.js') !!}
+@endpush
+
+
