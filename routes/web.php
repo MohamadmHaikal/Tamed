@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('dashboard.dashboard1');
-})->middleware('LanguageSwitcher','auth','is_verified');
+})->middleware('LanguageSwitcher','auth');
 
 Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
     
