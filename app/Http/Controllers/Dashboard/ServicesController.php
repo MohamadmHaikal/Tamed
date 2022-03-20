@@ -96,7 +96,7 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
         $Service = Service::find($id);
         $Service->delete();
         return redirect()->back();

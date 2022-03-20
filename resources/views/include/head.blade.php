@@ -18,6 +18,8 @@
   <link rel="stylesheet" media="all" href="{{ asset('assets/css/all.css') }}">
 @endif
 
+
+
 <link rel="stylesheet" href="{{ asset('plugins/line-awesome-1.3.0/css/line-awesome.min.css') }}">
 
 <!-- Stack array for including inline css or head elements -->

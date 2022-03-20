@@ -121,7 +121,8 @@
     <!-- Main Body Ends -->
     {{-- @include('Common.modal',['onclick'=>'',"type"=>"Show","id"=>"Show","title"=>"Acivity Details"]) --}}
     @include('Common.modal', [
-        'onclick' => 'Create',
+          'model' => 'Activitie',
+          'action' => 'add-item',
         'type' => 'create',
         'id' => 'Create',
         'title' => 'Add Acivity',
