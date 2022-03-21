@@ -1,17 +1,4 @@
 
-@php 
-session_start();
-    $modelName = 'App\\Models\\' .$model;
-    $Newmodel = new $modelName();
-    $arrayItem = $Newmodel->getColumn();
-
-@endphp
-
-
-{{-- <form id="checkout-payment-info" action="{{route($action)  }}"
-data-google-captcha="yes"  method="POST"  enctype="multipart/form-data"
-class="form checkout-form  relative"> --}}
-
 <form id="form-Item" action="{{route($action)  }}" method="POST" enctype="multipart/form-data"
 class="form form-action">
 
@@ -28,7 +15,6 @@ class="form form-action">
             </div>
 
             <div class="modal-body">
-                <h5 id="type"></h5>
 
                 <div class="widget-header">
                     <div class="row">
@@ -38,10 +24,18 @@ class="form form-action">
                 <div class="widget-content widget-content-area" id="widget-content-area">
 
                     @foreach ($arrayItem as $key => $item)
+                    @if ($item->columnType == 'select')
+                    <select class="form-control form-control-sm" name="{{ $item->columnName }}">
+                        @foreach ($item->options as $option)
+                            <option value="{{ $option->id }}">{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                   @else
                     <div class="form-group">
                         <label>{{ __('backend.name of Item') }}</label>
                         <input type="{{ $item->columnType }}" class="form-control" value=" {{ isset( $item->value) }}" name="{{ $item->columnName }}" id="{{ $item->columnName }}">
                     </div>
+                    @endif
                     @endforeach
 
                 </div>

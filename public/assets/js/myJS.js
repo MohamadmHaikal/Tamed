@@ -158,14 +158,30 @@
                                    </div>`  
                                    $(".md-button").css("display", "none");
                                     } else {
-                                        valueR +=`<div class="form-group">
-                                <label>{{ __('backend.name of Item') }}</label>
-                                <input type="${ value.columnType }" class="form-control"
-                                 value="${ value.ValueColumn }" name=" ${ value.columnName }" 
-                                 id="${ value.columnName }">
-                                 <input type="hidden" class="form-control"
-                                 value="${ value.IDColumn }" name="id" >
-                                     </div>` 
+                                        if(value.columnType == 'select') {
+                                          
+                                          valueR +=  `<select class="form-control form-control-sm" name="type_id">`
+                                          $.each( value.options, function( key, option ) {
+                                              if (option.name == value.ValueColumn) {
+                                                valueR +=  ` <option value="${option.id}" selected  >${ option.name }</option>`
+                                              } else {
+                                                valueR +=  ` <option value="${option.id}"  >${ option.name }</option>`
+                                              }
+                                        
+                                          });
+                                    `</select>` 
+                                        } else {
+                                      
+                                            valueR += `<div class="form-group">
+                                            <label>${ window.translations.nameOfItem }</label>
+                                            <input type="${ value.columnType }" class="form-control"
+                                             value="${ value.ValueColumn }" name=" ${ value.columnName }" 
+                                             id="${ value.columnName }">
+                                             <input type="hidden" class="form-control"
+                                             value="${ value.IDColumn }" name="id" >
+                                                 </div>` 
+                                        }
+                                    
                                      $(".md-button").css("display", "block"); 
                                     }
                                   });

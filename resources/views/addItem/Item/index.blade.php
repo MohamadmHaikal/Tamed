@@ -12,6 +12,16 @@
 
 @endpush
 
+@php 
+
+    $modelName = 'App\\Models\\' .$model;
+    $Newmodel = new $modelName();
+    $arrayItem = $Newmodel->getColumn();
+    $arrayTitle = $Newmodel->getTitleColumn();
+
+@endphp
+
+
 
 @section('content')
     <!--  Navbar Starts / Breadcrumb Area  -->
@@ -46,7 +56,7 @@
                             <div class="widget-content widget-content-area br-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h4 class="table-header">{{ __('backend.employment') }}</h4>
+                                        <h4 class="table-header">{{ __('backend.'.$model) }}</h4>
 
                                     </div>
                                     <div class="col-md-6">
@@ -56,25 +66,26 @@
 
                                     </div>
                                 </div>
+                              
                                 <div class="table-responsive mb-4">
                                     <table id="last-page-dt" class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>{{__('Name')}}</th>
-                                                <th>{{__('Position')}}</th>
-                                                <th>{{__('Office')}}</th>
-                                                <th>{{__('Age')}}</th>
-                                                <th>{{__('Start date')}}</th>
-                                                <th>{{__('Salary')}}</th>
-                                                <th class="no-content"></th>
+                                                @foreach ($arrayTitle as $item)
+                                                <th>{{ __('backend.'.$item) }}</th>
+                                                @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($TypeEmployment as $activitie)
+                                            @foreach ($Item as $key => $item)
+                                      
                                                 <tr>
-                                                    {{-- <td>{{ $activitie->id }}</td> --}}
-                                                    <td>{{ $activitie->name }}</td>
-                                                    {{-- <td>{{ $activitie->userType->name }}</td> --}}
+                                                    <td>{{ $item->id }}</td>
+                                                    <td>{{ $item->name }}</td>
+                                                    @if ( $item->type_id || $item->activitie_id)
+                                                    <td>{{ $item->relation->name }}</td>
+                                                        
+                                                    @endif
 
                                                     <td class="text-center">
                                                         <div class="dropdown custom-dropdown">
@@ -88,8 +99,8 @@
                                                                 style="will-change: transform;">
                                                                 <?php
                                                                 $data = [
-                                                                    'ID' => $activitie->id,
-                                                                    'model' => 'TypeEmployment'
+                                                                    'ID' => $item->id,
+                                                                    'model' => $model
                                                                 ];
                                                                 ?>
                                                                <a class="dropdown-item hh-link-action hh-link-delete-home"
@@ -97,7 +108,7 @@
                                                                data-params="{{ json_encode($data) }}"
                                                                data-action="{{ route('get-item')  }}"
                                                                href="javascript: void(0)"
-                                                                    data-type="show">
+                                                                    data-type="Show">
                                                                     {{ __('backend.Show') }}</a>
 
                                                                     <a class="dropdown-item hh-link-action hh-link-delete-home"
@@ -105,7 +116,7 @@
                                                                     data-params="{{ json_encode($data) }}"
                                                                     data-action="{{ route('get-item')  }}"
                                                                     href="javascript: void(0)"
-                                                                    data-type="edit">
+                                                                    data-type="Edit">
                                                                     {{ __('backend.Edit') }}</a>
 
                                                                     
@@ -119,7 +130,7 @@
                                                                     data-confirm-question="{{__('Are you sure want to delete this home?')}}"
                                                                     data-confirm-button="{{__('Delete it!')}}"
                                                                     data-params="{{ json_encode($data) }}"
-                                                                    href="javascript: void(0)">delete
+                                                                    href="javascript: void(0)"> {{ __('backend.Delete') }}
                                                                     
                                                                 </a>
 
@@ -131,13 +142,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>{{__('Name')}}</th>
-                                                <th>{{__('Position')}}</th>
-                                                <th>{{__('Office')}}</th>
-                                                <th>{{__('Age')}}</th>
-                                                <th>{{__('Start date')}}</th>
-                                                <th>{{__('Salary')}}</th>
-                                                <th></th>
+                                                @foreach ($arrayTitle as $item)
+                                                <th>{{ __('backend.'.$item) }}</th>
+                                                @endforeach
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -153,10 +160,10 @@
 <!-- Main Body Ends -->
 
 @include('Common.modal', [
-    'model' => 'TypeEmployment',
+    'model' => $model,
     'action' => 'add-item',
     'id' => 'Create',
-    'title' => 'Add Employment',
+    'title' => 'Add '.$model,
 ]) 
 <div id="alert">
 
@@ -182,5 +189,154 @@
 {!! Html::script('plugins/sweetalerts/promise-polyfill.js') !!}
 {!! Html::script('plugins/sweetalerts/sweetalert2.min.js') !!}
 {!! Html::script('assets/js/basicui/sweet_alerts.js') !!}
+
+@endpush
+
+
+@push('custom-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#basic-dt').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            $('#dropdown-dt').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            $('#last-page-dt').DataTable({
+                "pagingType": "full_numbers",
+                "language": {
+                    "paginate": {
+                        "first": "<i class='las la-angle-double-left'></i>",
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>",
+                        "last": "<i class='las la-angle-double-right'></i>"
+                    }
+                },
+                "lengthMenu": [3, 6, 9, 12],
+                "pageLength": 9
+            });
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var min = parseInt($('#min').val(), 10);
+                    var max = parseInt($('#max').val(), 10);
+                    var age = parseFloat(data[3]) || 0; // use data for the age column
+                    if ((isNaN(min) && isNaN(max)) ||
+                        (isNaN(min) && age <= max) ||
+                        (min <= age && isNaN(max)) ||
+                        (min <= age && age <= max)) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+            var table = $('#range-dt').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            $('#min, #max').keyup(function() {
+                table.draw();
+            });
+            $('#export-dt').DataTable({
+                dom: '<"row"<"col-md-6"B><"col-md-6"f> ><""rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>>',
+                buttons: {
+                    buttons: [{
+                            extend: 'copy',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'csv',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'excel',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'pdf',
+                            className: 'btn btn-primary'
+                        },
+                        {
+                            extend: 'print',
+                            className: 'btn btn-primary'
+                        }
+                    ]
+                },
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 7
+            });
+            // Add text input to the footer
+            $('#single-column-search tfoot th').each(function() {
+                var title = $(this).text();
+                $(this).html('<input type="text" class="form-control" placeholder="Search ' + title +
+                    '" />');
+            });
+            // Generate Datatable
+            var table = $('#single-column-search').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            // Search
+            table.columns().every(function() {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function() {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+            var table = $('#toggle-column').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            $('a.toggle-btn').on('click', function(e) {
+                e.preventDefault();
+                // Get the column API object
+                var column = table.column($(this).attr('data-column'));
+                // Toggle the visibility
+                column.visible(!column.visible());
+                $(this).toggleClass("toggle-clicked");
+            });
+        });
+</script>
 
 @endpush

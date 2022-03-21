@@ -21,6 +21,14 @@ class Controller extends BaseController
         }
     }
 
+    public function index($model)
+    { 
+        $modelName = 'App\\Models\\' .$model;
+        $modelNew = new $modelName();
+        $Item = $modelNew->all();
+        return view('addItem.Item.index',  compact('Item' ,'model')); 
+    }
+
     public function _deleteItem(Request $request)
     {
         $modelName = 'App\\Models\\' .$request->model;
@@ -36,7 +44,6 @@ class Controller extends BaseController
 
     public function _addItem(Request $request)
     {
-
         $modelName = 'App\\Models\\' .$request->model;
         $model = new $modelName();
         $arrayItem = $model->create($request->all());
@@ -56,7 +63,7 @@ class Controller extends BaseController
         $arrayItem = $Newmodel->getColumn( $request->ID);
   
        return $this->sendJson([
-           'title' =>  __('backend.edit'),
+           'title' =>  __('backend.'.$request->type),
            'type' =>   $request->type,
            'action' => ( $request->type == 'edit') ? route('update-item') : '' ,
            'model' => $request->model ,

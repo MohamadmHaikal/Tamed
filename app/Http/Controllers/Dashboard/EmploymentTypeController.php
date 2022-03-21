@@ -13,10 +13,12 @@ class EmploymentTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $TypeEmployment = TypeEmployment::all();
-        return view('addItem.employmentType.index',  compact('TypeEmployment')); 
+    public function index($model)
+    { 
+        $modelName = 'App\\Models\\' .$model;
+        $model = new $modelName();
+        $Item = $model->all();
+        return view('addItem.Item.index',  compact('Item')); 
     }
 
     /**

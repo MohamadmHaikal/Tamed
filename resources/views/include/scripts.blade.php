@@ -7,8 +7,10 @@
         Showing: "{{__('backend.Showing')}}" ,
         NoData: "{{__('backend.No data available in table')}}" ,
         to: "{{__('backend.to')}}" ,
+        nameOfItem:"{{__('backend.name of Item')}}" ,
         of:"{{__('backend.of')}}" ,
         noRecord:"{{__('backend.No matching records found')}}" ,
+       
     };
 </script>
 <!-- Stack array for including inline js or scripts -->
