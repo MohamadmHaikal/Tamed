@@ -275,15 +275,13 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeOne" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style1/*']) }}">
-                            {{ __('backend.Material type') }} <i class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.MaterialType') }} <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeOne">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('material.index') }}"> {{ __('backend.Material') }} </a>
+                                <a href="{{ route('Item','MaterialType') }}"> {{ __('backend.Material') }} </a>
                             </li>
-                            <li class=" {{ active_class(['authentication/style3/register']) }}">
-                                <a href="{{ route('material.create') }}"> {{ __('backend.add') }} </a>
-                            </li>
+                           
 
                         </ul>
                     </li>
@@ -291,15 +289,13 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#authTypeTwo" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style2/*']) }}">
-                            {{ __('backend.Project Type') }}<i class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.ProjectType') }}<i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeTwo">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('project.index') }}"> {{ __('project') }} </a>
+                                <a href="{{ route('Item','ProjectType') }}"> {{ __('backend.project') }} </a>
                             </li>
-                            <li class=" {{ active_class(['authentication/style3/register']) }}">
-                                <a href="{{ route('project.create') }}"> {{ __('backend.add') }} </a>
-                            </li>
+                           
 
                         </ul>
                     </li>
@@ -311,18 +307,15 @@ $user = get_current_user_data();
                           
 
 
-                            {{ __('backend.employment Type') }}<i class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.TypeEmployment') }}<i class="las la-angle-right sidemenu-right-icon"></i>
                             
 
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeThree">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('employment.index') }}"> {{ __('backend.employment') }} </a>
+                                <a href="{{ route('Item','TypeEmployment') }}"> {{ __('backend.employment') }} </a>
                             </li>
-                            {{-- <li class=" {{ active_class(['authentication/style3/register']) }}">
-                                <a href="{{ route('emplyees.create') }}"> {{ __('backend.add') }} </a>
-                            </li> --}}
-
+                
 
                         </ul>
                     </li>
@@ -335,7 +328,7 @@ $user = get_current_user_data();
                         <ul class="sub-submenu-list collapse" id="Activities">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('activites.all') }}"> {{ __('backend.Activities') }} </a>
+                                <a href="{{ route('Item','Activitie') }}"> {{ __('backend.Activities') }} </a>
                             </li>
 
 
@@ -352,7 +345,7 @@ $user = get_current_user_data();
                         <ul class="sub-submenu-list collapse" id="AdditionalActivitie">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('additionalactivitie.all') }}">
+                                <a href="{{ route('Item','AdditionalActivitie') }}">
                                     {{ __('backend.Additional Activitie') }} </a>
                             </li>
 
@@ -364,13 +357,31 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#services" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
-                            {{ __('backend.Project Services') }} <i
+                            {{ __('backend.Service') }} <i
                                 class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="services">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('services.all') }}"> {{ __('backend.Project Services') }}
+                                <a href="{{ route('Item','Service') }}"> {{ __('backend.Service') }}
+                                </a>
+                            </li>
+
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#userType" role="button" aria-expanded="false"
+                            aria-controls="collapseExample"
+                            class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
+                            {{ __('backend.UserType') }} <i
+                                class="las la-angle-right sidemenu-right-icon"></i>
+                        </a>
+                        <ul class="sub-submenu-list collapse" id="userType">
+
+                            <li class=" {{ active_class(['authentication/style3/login']) }}">
+                                <a href="{{ route('Item','UserType') }}"> {{ __('backend.UserType') }}
                                 </a>
                             </li>
 

@@ -57,12 +57,14 @@ Route::post('delete-item', 'App\Http\Controllers\Controller@_deleteItem')->name(
 Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-item');
 Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
 Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name('update-item');
+Route::get('Item/{model}', 'App\Http\Controllers\Controller@index')->name('Item');
+// Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
 
 
 Route::group(['prefix' => 'addItem','middleware'=>'LanguageSwitcher' ,'namespace' => 'App\Http\Controllers\Dashboard'], function (){
 
     Route::group(['prefix' => 'emplyee'], function (){
-        Route::resource('employment', 'EmploymentTypeController');
+        // Route::get('employment', 'EmploymentTypeController');
         
     });
     Route::group(['prefix' => 'project'], function (){

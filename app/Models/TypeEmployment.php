@@ -29,15 +29,18 @@ class TypeEmployment extends Model
                 //  (object)   [ 'columnName' => 'name',
                 //             'columnType' => 'text']
                 ];
-
-               
+ 
         }else{
             return [
                 (object)  [ 'columnName' => 'name',
                          'columnType' => 'text'
-            ]
+            ]   ]; }
+    }
+    public function getTitleColumn()
+    {
+        return [
+            'id',  
+                 'name'
                 ];
-        }
-        }
-      
+    }
 }
