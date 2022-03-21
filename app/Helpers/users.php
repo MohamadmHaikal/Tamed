@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ChMessage;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Http;
@@ -60,7 +61,20 @@ function get_current_user_id()
         return 0;
     }
 }
+function get_current_user_name()
+{
+    $user_data = get_current_user_data();
 
+    if ($user_data != null) {
+        return $user_data->name;
+    } else {
+        return 0;
+    }
+}
+function get_current_user_message_count()
+{
+    return ChMessage::where('to_id','=',get_current_user_id())->where('seen','=',0)->count();
+}
 function is_admin($user_id = '')
 {
     if (!$user_id) {

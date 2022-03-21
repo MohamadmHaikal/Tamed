@@ -243,7 +243,7 @@
                                 !</span>
                         </div>
                         <div class="nav-drop-body account-items pb-0">
-                            <a id="profile-link" class="account-item" href="{{ url('/pages/profile') }}">
+                            <a id="profile-link" class="account-item" href="{{ url('/pages/profile-edit') }}">
                                 <div class="media align-center">
                                     <div class="media-left">
                                         <div class="image">

@@ -63,7 +63,7 @@
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ $user->phone }}</td>
                                                         <td>{{ $user->email }}</td>
-                                                        <td>{{ __('2011/04/25') }}</td>
+                                                        <td>{{ __('مستخدم') }}</td>
 
                                                         <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
@@ -76,9 +76,11 @@
                                                                     aria-labelledby="dropdownMenuLink1"
                                                                     style="will-change: transform;">
                                                                     <a class="dropdown-item"
-                                                                        href="javascript:void(0);">{{ __('Edit') }}</a>
+                                                                    href="javascript:void(0);">{{ __('backend.Show') }}</a>
                                                                     <a class="dropdown-item"
-                                                                        href="javascript:void(0);">{{ __('Delete') }}</a>
+                                                                        href="javascript:void(0);">{{ __('backend.Edit') }}</a>
+                                                                    <a class="dropdown-item" href="{{route('user.delete',[$user->id])}}"
+                                                                        href="javascript:void(0);" style="color: red">{{ __('backend.Delete') }}</a>
                                                                 </div>
                                                             </div>
                                                         </td>

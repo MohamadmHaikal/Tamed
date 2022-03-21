@@ -15,17 +15,21 @@ $user = get_current_user_data();
             <h6 class="text-white font-14 mb-1">{{ $user->name }}</h6>
 
         </div>
+        <br>
         <ul class="flex-row profile-option-container">
             <li class="option-item dropdown message-dropdown">
-                <div class="option-link-container dropdown-toggle" id="messageDropdown" data-toggle="dropdown"
+                <div class="option-link-container dropdown-toggle" id="messageDropdown" 
                     aria-haspopup="true" aria-expanded="false">
-                    <a class="option-link dropdown-toggle">
+                    <a class="option-link dropdown-toggle" href="{{route('chat')}}" >
                         <i class="las la-envelope"></i>
                     </a>
-                    <div class="text-left">
-                        <h6>{{__('backend.mail')}}</h6>
-                        <p>3 {{__("backend.New Mails")}}</p>
-                    </div>
+                    <a href="{{route('chat')}}">
+                        <div class="text-left">
+                            <h6>{{__('backend.mail')}}</h6>
+                            <p>{{get_current_user_message_count()}} {{__("backend.New Mails")}}</p>
+                        </div>
+                    </a>
+                    
                 </div>
                 <div class="dropdown-menu position-absolute md-container" aria-labelledby="messageDropdown">
                     <div class="nav-drop is-notification-dropdown">
@@ -134,6 +138,20 @@ $user = get_current_user_data();
                 data-active={{ is_active_route(['languages/*']) }} class="dropdown-toggle">
                 <i class="las la-language"></i>
                 <span> {{ __('backend.Translation') }}</span>
+            </a>
+        </li>
+        <li class="menu">
+            <a data-active={{ is_active_route(['ads/*']) }} href="javascript:void(0);" id="ads"
+                class="main-item dropdown-toggle">
+                <i class="las la-file"></i>
+                <span>{{ __('backend.ads') }}</span>
+            </a>
+        </li>
+        <li class="menu {{ active_class(['Notifications/*']) }}">
+            <a href="/pages/notifications"
+                data-active={{ is_active_route(['Notifications/*']) }} class="dropdown-toggle">
+                <i class="las la-bell"></i>
+                <span> {{ __('backend.notifications') }}</span>
             </a>
         </li>
         <li class="menu">
@@ -515,6 +533,21 @@ $user = get_current_user_data();
                                 <a href="{{ url('/apps/tickets/details') }}"> Ticket Details </a>
                             </li>
                         </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="submenu" id="adsMenu">
+            <div class="submenu-info">
+                <div class="submenu-inner-info">
+                    <h5 class="mb-3">{{__('backend.ads')}}</h5>
+                </div>
+                <ul class="submenu-list">
+                    <li class=" {{ active_class(['ads/add']) }}">
+                        <a href="{{ url('ads/add') }}"> {{__('backend.Add Ads')}} </a>
+                    </li>
+                    <li class=" {{ active_class(['ads/all']) }}">
+                        <a href="{{ url('ads/all') }}"> {{__('backend.All Ads')}} </a>
                     </li>
                 </ul>
             </div>
