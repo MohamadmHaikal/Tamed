@@ -23,7 +23,7 @@
                                     
                                     <div class="login-two-inputs mt-5">
                                         <input type="text" placeholder="5678 234 51" name="mobile" id="mobile"  />
-                                        <div class="row">
+                                        <div class="row" dir="rtl">
                                             <img src="{{ asset('assets/img/saudia.png') }}">
                                             <small>966+</small>
 
@@ -46,7 +46,7 @@
                                    <h6>{{__('backend.Please enter the code to continue')}}</h6> 
                                     <input type="text" id='phone' hidden>
                                 <form method="get" class="digit-group mt-3" data-group-name="digits" data-autosubmit="false"
-                                    autocomplete="off">
+                                    autocomplete="off" dir="rtl">
                                     
                                     <input type="text" id="digit-1" name="digit-1" data-previous="digit-2" />
                                     <input type="text" id="digit-2" name="digit-2" data-next="digit-1" data-previous="digit-3"/>

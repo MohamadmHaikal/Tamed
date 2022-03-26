@@ -34,19 +34,19 @@
                     <div class="input-group input-group-sm">
                         <input id="rangeCalendarFlatpickr" class="form-control flatpickr flatpickr-input active" type="text" placeholder="{{__('Select Date')}}">
                         <div class="input-group-append">
-                                    <span class="input-group-text bg-primary border-primary" id="basic-addon2">
+                                    <span class="input-group-text  " id="basic-addon2" style="background-color: #509eb6;color:#fff;border-color: #509eb6;">
                                         <i class="lar la-calendar"></i>
                                     </span>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item more-dropdown">
-                    <a href="javascript: void(0);" data-original-title="{{__('Reload Data')}}"data-placement="bottom" class="btn btn-primary dash-btn btn-sm ml-2 bs-tooltip">
+                    <a href="javascript: void(0);" data-original-title="{{__('Reload Data')}}"data-placement="bottom" class="btn  dash-btn btn-sm ml-2 bs-tooltip">
                         <i class="las la-sync"></i>
                     </a>
                 </li>
                 <li class="nav-item custom-dropdown-icon">
-                    <a href="javascript: void(0);" data-original-title="{{__('Filter')}}" data-placement="bottom" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dash-btn btn-sm ml-2 bs-tooltip">
+                    <a href="javascript: void(0);" data-original-title="{{__('Filter')}}" data-placement="bottom" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn dash-btn btn-sm ml-2 bs-tooltip">
                         <i class="las la-filter"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">

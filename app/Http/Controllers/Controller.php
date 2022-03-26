@@ -21,7 +21,7 @@ class Controller extends BaseController
         }
     }
 
-    public function index($model)
+    public function indexItem($model)
     { 
         $modelName = 'App\\Models\\' .$model;
         $modelNew = new $modelName();

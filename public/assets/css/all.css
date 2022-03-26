@@ -1806,7 +1806,7 @@ pre code {
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: 1.75rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6
 }
@@ -12917,7 +12917,7 @@ textarea[readonly] {
 }
 
 .table>thead>tr>th {
-    color: #2f44b2;
+    color: #027496;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 1px;
@@ -14669,6 +14669,7 @@ code {
 
 .navbar .navbar-item .nav-item.dropdown.notification-dropdown .dropdown-menu .media {
     margin: 0;
+    padding: 0 10px 15px 0;
 }
 
 .navbar .navbar-item .nav-item.dropdown.notification-dropdown .dropdown-menu svg {
@@ -16093,7 +16094,7 @@ input:checked+.slider:before {
     top: -13px;
     right: -13px;
     color: #ffffff;
-    background: #2f44b2;
+    background: #027496;
     font-size: 16px;
     height: 30px;
     width: 30px;

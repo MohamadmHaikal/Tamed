@@ -158,65 +158,52 @@
                     <div class="circle"></div>
                 </div>
             </a>
+            <?php
+            $notification = get_current_user_header_notification();
+            
+            ?>
             <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
                 <div class="nav-drop is-notification-dropdown">
                     <div class="inner">
                         <div class="nav-drop-header">
-                            <span class="text-black font-12 strong">{{ __('5 Notifications') }}</span>
-                            <a class="text-muted font-12" href="#">
+                            <span class="text-black font-12 strong">{{ __('backend.notifications') }}</span>
+                            {{-- <a class="text-muted font-12" href="#">
                                 {{ __('Clear All') }}
-                            </a>
+                            </a> --}}
                         </div>
                         <div class="nav-drop-body account-items pb-0">
-                            <a class="account-item" href="{{ url('/apps/ecommerce/orders') }}">
-                                <div class="media align-center">
-                                    <div class="icon-wrap">
-                                        <i class="las la-box font-20"></i>
+                            @if ($notification)
+
+
+                                @foreach ($notification as $item)
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-calendar font-20  " style="border-radius: 25px;
+                                            padding: 5px 5px 5px 5px;
+                                            border: 1px;
+                                            background-color: #014e65;color:wheat"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong" style="color: blue">{!! balanceTags($item->title) !!}
+                                            </h6>
+                                            <p class="m-0 mt-1 font-10 text-muted">
+                                                {{ $item->created_at->diffForHumans() }}</p>
+                                        </div>
                                     </div>
-                                    <div class="media-content ml-3">
-                                        <h6 class="font-13 mb-0 strong">{{ __('2 New orders placed') }}</h6>
-                                        <p class="m-0 mt-1 font-10 text-muted"> {{ __('10 sec ago') }}</p>
-                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-center pb-5 pt-5">
+                                    {{ __('backend.no notification yet') }}
+
                                 </div>
-                            </a>
-                            <a class="account-item" href="javascript:void(0)">
-                                <div class="media align-center">
-                                    <div class="icon-wrap">
-                                        <i class="las la-user-plus font-20"></i>
-                                    </div>
-                                    <div class="media-content ml-3">
-                                        <h6 class="font-13 mb-0 strong"> {{ __('New User registered') }}</h6>
-                                        <p class="m-0 mt-1 font-10 text-muted"> {{ __('5 minute ago') }}</p>
-                                    </div>
+                            @endif
+                            @if ($notification)
+                                <hr class="account-divider">
+                                <div class="text-center">
+                                    <a class="text-primary strong font-13" href="{{ route('all-notifications') }}">
+                                        {{ __('backend.View All') }}</a>
                                 </div>
-                            </a>
-                            <a class="account-item" href="{{ url('/apps/tickets/list') }}">
-                                <div class="media align-center">
-                                    <div class="icon-wrap">
-                                        <i class="las la-grin-beam font-20"></i>
-                                    </div>
-                                    <div class="media-content ml-3">
-                                        <h6 class="font-13 mb-0 strong">{{ __('21 Queries solved') }}</h6>
-                                        <p class="m-0 mt-1 font-10 text-muted"> {{ __('1 hour ago') }}</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="account-item" href="javascript:void(0)">
-                                <div class="media align-center">
-                                    <div class="icon-wrap">
-                                        <i class="las la-cloud-download-alt font-20"></i>
-                                    </div>
-                                    <div class="media-content ml-3">
-                                        <h6 class="font-13 mb-0 strong"> {{ __('New update available') }}</h6>
-                                        <p class="m-0 mt-1 font-10 text-muted"> {{ __('1 day ago') }}</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="account-divider">
-                            <div class="text-center">
-                                <a class="text-primary strong font-13" href="{{ url('/pages/notifications') }}">
-                                    {{ __('View All') }}</a>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

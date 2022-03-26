@@ -10725,8 +10725,8 @@ p {
 }
 
 hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    /* margin-top: 20px;
+    margin-bottom: 20px; */
     border-top: 1px solid #f1f2f3;
 }
 
@@ -12989,7 +12989,7 @@ textarea[readonly] {
 }
 
 .table>thead>tr>th {
-    color: #2f44b2;
+    color: #027496;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 1px;
@@ -13840,8 +13840,8 @@ p {
 }
 
 hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    /* margin-top: 20px;
+    margin-bottom: 20px; */
     border-top: 1px solid #f1f2f3;
 }
 
@@ -16161,7 +16161,7 @@ input:checked+.slider:before {
     top: -13px;
     right: -13px;
     color: #ffffff;
-    background: #2f44b2;
+    background:#027496;
     font-size: 16px;
     height: 30px;
     width: 30px;

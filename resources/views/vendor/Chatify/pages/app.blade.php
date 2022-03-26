@@ -7,7 +7,7 @@
             <nav>
                 <div class="own-details">
                     <img
-                        src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . get_current_user_data()->avatar) }}" />
+                        src="{{url('image/'.get_current_user_data()->logo)}}" />
                     <h3> {{ get_current_user_data()->name }}</h3>
                     <p> {{ get_current_user_data()->email }}</p>
 
@@ -19,6 +19,12 @@
                         </nav>
 
                     </div>
+                     {{-- Search input --}}
+                <div class="search">
+                    <i class="las la-search toggle-search"></i>
+                    <input type="text" class="form-control messenger-search" placeholder="{{ __('Search') }}"
+                        style="border-radius: 25px" />
+                </div>
                 </div> {{-- header buttons --}}
 
             </nav>
@@ -42,12 +48,7 @@
 
                 {{-- Saved Messages --}}
                 {!! view('Chatify::layouts.listItem', ['get' => 'saved']) !!}
-                {{-- Search input --}}
-                <div class="search">
-                    <i class="las la-search toggle-search"></i>
-                    <input type="text" class="form-control messenger-search" placeholder="{{ __('Search') }}"
-                        style="border-radius: 25px" />
-                </div>
+               
 
                 {{-- Contact --}}
                 <div class="listOfContacts" style="width: 100%;height: calc(100% - 200px);position: relative;"></div>

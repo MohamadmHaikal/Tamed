@@ -33,59 +33,7 @@
                 <div class="row">
                     <div class="col-xl-12  col-md-12">
                         <div class="card-box file-manager">
-                            <div class="file-manager-left">
-                                <a href="#" class="ripple-button m-auto ripple-button-primary btn-sm text-white font-12" type="button">
-                                    <div class="ripple-ripple js-ripple">
-                                        <span class="ripple-ripple__circle"></span>
-                                    </div>
-                                    <i class="las la-upload"></i> {{__('Upload New File')}}
-                                </a>
-                                <div class="file-manager-list mt-4">
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-inbox mr-2 font-17"></i>
-                                        {{__('My Space')}}<span class="badge badge-primary ml-auto">7</span>
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-file-upload mr-2 font-17"></i> {{__('Uploaded Files')}}
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-users mr-2 font-17"></i>
-                                        {{__('Shared with me')}}
-                                        <span class="badge badge-primary ml-auto">2</span>
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="lar la-clock mr-2 font-17"></i> {{__('Recent')}}
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-star mr-2 font-17"></i> {{__('Starred')}}
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-trash mr-2 font-17"></i> {{__('Trash')}}
-                                    </a>
-                                    <a href="javascript: void(0);">
-                                        <i class="las la-history mr-2 font-17"></i> {{__('Backups')}}
-                                    </a>
-                                </div>
-                                <div class="position-relative">
-                                    <h6 class="mt-3 file-manager-label"> {{__('Storage Details')}}<span>&nbsp;</span></h6>
-                                </div>
-                                <div class="list-group b-0 mail-list mt-4">
-                                    <div class="flex-grow-1 pl-2 pr-2 text-left mb-3">
-                                        <span class="font-13"><small class="font-15 text-light-black strong mr-2"><i class="lar la-hdd"></i></small>{{__('Total Storage')}}</span>
-                                        <div class="progress progress-sm mt-1 mb-1">
-                                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="75" style="width:75%"></div>
-                                        </div>
-                                        <span class="font-10 text-muted"> {{__('750 MB of 1GB')}}</span>
-                                    </div>
-                                    <div class="flex-grow-1 pl-2 pr-2 text-left">
-                                        <span class="font-13"><small class="font-15 text-light-black strong mr-2"><i class="lar la-image"></i></small>{{__('Images')}}</span>
-                                        <div class="progress progress-sm mt-1 mb-1">
-                                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="10" style="width:10%"></div>
-                                        </div>
-                                        <span class="font-10 text-muted">{{__('110 MB of 1GB')}}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="file-manager-right">
                                 <div class="file-manager-right-top align-items-start row mb-3">
                                     <div class="col-md-6 col-sm-6 d-flex align-center">
@@ -348,6 +296,59 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-manager-left" >
+                                <a href="#" class="ripple-button m-auto ripple-button-primary btn-sm text-white font-12" type="button">
+                                    <div class="ripple-ripple js-ripple">
+                                        <span class="ripple-ripple__circle"></span>
+                                    </div>
+                                    <i class="las la-upload"></i> {{__('Upload New File')}}
+                                </a>
+                                <div class="file-manager-list mt-4">
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-inbox mr-2 font-17"></i>
+                                        {{__('My Space')}}<span class="badge badge-primary ml-auto">7</span>
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-file-upload mr-2 font-17"></i> {{__('Uploaded Files')}}
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-users mr-2 font-17"></i>
+                                        {{__('Shared with me')}}
+                                        <span class="badge badge-primary ml-auto">2</span>
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="lar la-clock mr-2 font-17"></i> {{__('Recent')}}
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-star mr-2 font-17"></i> {{__('Starred')}}
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-trash mr-2 font-17"></i> {{__('Trash')}}
+                                    </a>
+                                    <a href="javascript: void(0);">
+                                        <i class="las la-history mr-2 font-17"></i> {{__('Backups')}}
+                                    </a>
+                                </div>
+                                <div class="position-relative">
+                                    <h6 class="mt-3 file-manager-label"> {{__('Storage Details')}}<span>&nbsp;</span></h6>
+                                </div>
+                                <div class="list-group b-0 mail-list mt-4">
+                                    <div class="flex-grow-1 pl-2 pr-2 text-left mb-3">
+                                        <span class="font-13"><small class="font-15 text-light-black strong mr-2"><i class="lar la-hdd"></i></small>{{__('Total Storage')}}</span>
+                                        <div class="progress progress-sm mt-1 mb-1">
+                                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="75" style="width:75%"></div>
+                                        </div>
+                                        <span class="font-10 text-muted"> {{__('750 MB of 1GB')}}</span>
+                                    </div>
+                                    <div class="flex-grow-1 pl-2 pr-2 text-left">
+                                        <span class="font-13"><small class="font-15 text-light-black strong mr-2"><i class="lar la-image"></i></small>{{__('Images')}}</span>
+                                        <div class="progress progress-sm mt-1 mb-1">
+                                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="10" style="width:10%"></div>
+                                        </div>
+                                        <span class="font-10 text-muted">{{__('110 MB of 1GB')}}</span>
                                     </div>
                                 </div>
                             </div>

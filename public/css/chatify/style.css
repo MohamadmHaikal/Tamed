@@ -168,6 +168,7 @@ body {
     border-radius: 25px;
     margin-left: 10px;
     margin-right: 10px;
+    margin-top: 180px;
 }
 
 .add-to-favorite {
@@ -235,6 +236,7 @@ body {
     float: right;
     color: #fff;
     padding: 0px 4px;
+    margin-right: 5px;
     border-radius: 20px;
     font-size: 13px;
 }
@@ -300,6 +302,7 @@ body {
     color: #aeaeb7;
     font-size: 12px;
     font-weight: 600;
+    margin-left: 5px;
 }
 
 .messenger-infoView {
@@ -387,6 +390,7 @@ body {
     display: inline-flex;
     margin: 2px 15px;
     width: calc(100% - 30px);
+    padding-bottom: 15px;
 }
 
 .message-card div {

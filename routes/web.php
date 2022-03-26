@@ -13,6 +13,7 @@
 |
 */
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
+    SendAdsNotification(21,'test new',"<a href='/'>new Ads</a>",'ads notification');
+
     return view('dashboard.dashboard1');
 })->middleware('LanguageSwitcher', 'auth', 'is_verified');
 
@@ -67,16 +70,16 @@ Route::post('delete-item', 'App\Http\Controllers\Controller@_deleteItem')->name(
 Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-item');
 Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
 Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name('update-item');
-Route::get('Item/{model}', 'App\Http\Controllers\Controller@index')->name('Item');
+Route::get('Item/{model}', 'App\Http\Controllers\Controller@indexItem')->name('Item')->middleware('LanguageSwitcher');
 // Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
 
 
 Route::group(['prefix' => 'addItem', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 
 
-    Route::group(['prefix' => 'emplyee'], function (){
+    Route::group(['prefix' => 'emplyee'], function () {
         // Route::get('employment', 'EmploymentTypeController');
-        
+
 
     });
     Route::group(['prefix' => 'project'], function () {
@@ -535,7 +538,12 @@ Route::group(['prefix' => 'maps', 'middleware' => 'LanguageSwitcher'], function 
         return view('maps.vector-map');
     });
 });
+Route::group(['middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers'], function () {
 
+
+    Route::get('all-notifications/{page?}', [NotificationController::class, '_allNotifications'])->name('all-notifications');
+    Route::get('delete-notification/{id}', [NotificationController::class, '_deleteNotification'])->name('delete-notification');
+});
 Route::group(['prefix' => 'charts', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('apex-chart', function () {
         return view('charts.apex-chart');

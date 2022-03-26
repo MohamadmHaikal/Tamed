@@ -1267,6 +1267,8 @@ img.best-seller-trophy {
 
 .nav-item .dash-btn {
     padding: .40rem .45rem !important;
+    color: #fff;
+    background-color: #509eb6;
 }
 
 .nav-item .dash-btn i {
@@ -1402,4 +1404,9 @@ img.best-seller-trophy {
     .widget-activity-four.activity-status .row:nth-child(1)>.col-sm-12:nth-child(2)>.widget-content {
         padding-top: 50px;
     }
+}
+
+
+}
+
 }

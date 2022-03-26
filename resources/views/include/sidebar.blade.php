@@ -93,7 +93,7 @@ $user = get_current_user_data();
                 </div>
             </li>
             <li class="option-item dropdown notification-dropdown">
-                <a class="option-link-container" href="#">
+                <a class="option-link-container" href="{{route('all-notifications')}}">
                     <div class="option-link">
                         <i class="las la-bell"></i>
                         <div class="blink">
@@ -102,7 +102,7 @@ $user = get_current_user_data();
                     </div>
                     <div class="text-left">
                         <h6>{{__('backend.notifications')}}</h6>
-                        <p>4 {{__("backend.Unread")}}</p>
+                        <p>{{get_current_user_notification_count()}} {{__("backend.Unread")}}</p>
                     </div>
                 </a>
             </li>
@@ -147,11 +147,11 @@ $user = get_current_user_data();
                 <span>{{ __('backend.ads') }}</span>
             </a>
         </li>
-        <li class="menu {{ active_class(['Notifications/*']) }}">
-            <a href="/pages/notifications"
-                data-active={{ is_active_route(['Notifications/*']) }} class="dropdown-toggle">
-                <i class="las la-bell"></i>
-                <span> {{ __('backend.notifications') }}</span>
+          <li class="menu {{ active_class(['Quotations/*']) }}">
+            <a href="{{ route('languages.translations.index', ['ar']) }}"
+                data-active={{ is_active_route(['Quotations/*']) }} class="dropdown-toggle">
+                <i class="las la-copy"></i>
+                <span> {{ __('backend.Quotations') }}</span>
             </a>
         </li>
         <li class="menu">
