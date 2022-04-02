@@ -1,5 +1,6 @@
 <?php
 $user = get_current_user_data();
+$menu_dashboard = get_menu_dashboard();
 ?>
 <nav id="sidebar">
     <div class="fixed-profile">
@@ -18,20 +19,20 @@ $user = get_current_user_data();
         <br>
         <ul class="flex-row profile-option-container">
             <li class="option-item dropdown message-dropdown">
-                <div class="option-link-container dropdown-toggle" id="messageDropdown" 
-                    aria-haspopup="true" aria-expanded="false">
-                    <a class="option-link dropdown-toggle" href="{{route('chat')}}" >
+                <div class="option-link-container dropdown-toggle" id="messageDropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <a class="option-link dropdown-toggle" href="{{ route('chat') }}">
                         <i class="las la-envelope"></i>
                     </a>
-                    <a href="{{route('chat')}}">
+                    <a href="{{ route('chat') }}">
                         <div class="text-left">
-                            <h6>{{__('backend.mail')}}</h6>
-                            <p>{{get_current_user_message_count()}} {{__("backend.New Mails")}}</p>
+                            <h6>{{ __('backend.mail') }}</h6>
+                            <p>{{ get_current_user_message_count() }} {{ __('backend.New Mails') }}</p>
                         </div>
                     </a>
-                    
+
                 </div>
-                <div class="dropdown-menu position-absolute md-container" aria-labelledby="messageDropdown">
+                {{-- <div class="dropdown-menu position-absolute md-container" aria-labelledby="messageDropdown">
                     <div class="nav-drop is-notification-dropdown">
                         <div class="inner">
                             <div class="nav-drop-header">
@@ -90,10 +91,10 @@ $user = get_current_user_data();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </li>
             <li class="option-item dropdown notification-dropdown">
-                <a class="option-link-container" href="{{route('all-notifications')}}">
+                <a class="option-link-container" href="{{ route('all-notifications') }}">
                     <div class="option-link">
                         <i class="las la-bell"></i>
                         <div class="blink">
@@ -101,8 +102,8 @@ $user = get_current_user_data();
                         </div>
                     </div>
                     <div class="text-left">
-                        <h6>{{__('backend.notifications')}}</h6>
-                        <p>{{get_current_user_notification_count()}} {{__("backend.Unread")}}</p>
+                        <h6>{{ __('backend.notifications') }}</h6>
+                        <p>{{ get_current_user_notification_count() }} {{ __('backend.Unread') }}</p>
                     </div>
                 </a>
             </li>
@@ -110,14 +111,43 @@ $user = get_current_user_data();
     </div>
 
     <ul class="list-unstyled menu-categories" id="accordionExample">
-        <li class="menu ">
-            <a data-active={{ is_active_route(['dashboard/*']) }} href="javascript:void(0);" id="dashboard"
-                class="main-item dropdown-toggle">
+        @foreach ($menu_dashboard as $menu)
+            @if ($menu['type'] != 'parent')
+                @if (!isset($menu['parameter']))
+                    <li class="menu {{ active_class([$menu['screen']]) }}">
+                        <a href="{{ route($menu['screen']) }}"
+                            data-active={{ is_active_route([$menu['screen']]) }} class="dropdown-toggle">
+                            <i class="las {{ $menu['icon'] }}"></i>
+                            <span>{{ __($menu['label']) }}</span>
+                        </a>
+                    </li>
+                @else
+                    <li class="menu {{ active_class([$menu['screen']]) }}">
+                        <a href="{{ route($menu['screen'], [$menu['parameter']]) }}"
+                            data-active={{ is_active_route([$menu['screen']]) }} class="dropdown-toggle">
+                            <i class="las {{ $menu['icon'] }}"></i>
+                            <span>{{ __($menu['label']) }}</span>
+                        </a>
+                    </li>
+                @endif
+            @else
+                <li class="menu {{ active_class([$menu['screen'] . '/*']) }}">
+                    <a data-active={{ is_active_route([$menu['screen'] . '/*']) }} href="javascript:void(0);"
+                        id="{{ $menu['id'] }}" class="main-item dropdown-toggle">
+                        {{-- <span class="new-notification"></span> --}}
+                        <i class="las {{ $menu['icon'] }}"></i>
+                        <span>{{ __($menu['label']) }}</span>
+                    </a>
+                </li>
+            @endif
+        @endforeach
+        {{-- <li class="menu {{ active_class(['/']) }}">
+            <a href="/"
+                data-active={{ is_active_route(['/']) }} class="dropdown-toggle">
                 <i class="las la-home"></i>
-                <span>{{ __('backend.dashboard') }}</span>
+                <span> {{ __('backend.dashboard') }}</span>
             </a>
         </li>
-
         <li class="menu {{ active_class(['addItem/*']) }}">
             <a data-active={{ is_active_route(['addItem/*']) }} href="javascript:void(0);" id="addItem"
                 class="main-item dropdown-toggle">
@@ -147,11 +177,25 @@ $user = get_current_user_data();
                 <span>{{ __('backend.ads') }}</span>
             </a>
         </li>
-          <li class="menu {{ active_class(['Quotations/*']) }}">
-            <a href="{{ route('languages.translations.index', ['ar']) }}"
-                data-active={{ is_active_route(['Quotations/*']) }} class="dropdown-toggle">
+          <li class="menu {{ active_class(['Quotes']) }}">
+            <a href="{{ route('Quotes') }}"
+                data-active={{ is_active_route(['Quotes']) }} class="dropdown-toggle">
                 <i class="las la-copy"></i>
                 <span> {{ __('backend.Quotations') }}</span>
+            </a>
+        </li>
+        <li class="menu {{ active_class(['FileManger']) }}">
+            <a href="{{ route('FileManger') }}"
+                data-active={{ is_active_route(['FileManger']) }} class="dropdown-toggle">
+                <i class="las la-file"></i>
+                <span> {{ __('backend.FileManger') }}</span>
+            </a>
+        </li>
+        <li class="menu {{ active_class(['settings']) }}">
+            <a href="{{ route('settings') }}"
+                data-active={{ is_active_route(['settings']) }} class="dropdown-toggle">
+                <i class="las la-cog"></i>
+                <span> {{ __('backend.Settings') }}</span>
             </a>
         </li>
         <li class="menu">
@@ -250,7 +294,7 @@ $user = get_current_user_data();
                 <i class="las la-file-code"></i>
                 <span> {{ __('Documentation') }}</span>
             </a>
-        </li>
+        </li> --}}
 
     </ul>
     <div class="sidebar-submenu">
@@ -297,9 +341,9 @@ $user = get_current_user_data();
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeOne">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','MaterialType') }}"> {{ __('backend.Material') }} </a>
+                                <a href="{{ route('Item', 'MaterialType') }}"> {{ __('backend.Material') }} </a>
                             </li>
-                           
+
 
                         </ul>
                     </li>
@@ -311,9 +355,9 @@ $user = get_current_user_data();
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeTwo">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','ProjectType') }}"> {{ __('backend.project') }} </a>
+                                <a href="{{ route('Item', 'ProjectType') }}"> {{ __('backend.project') }} </a>
                             </li>
-                           
+
 
                         </ul>
                     </li>
@@ -322,18 +366,19 @@ $user = get_current_user_data();
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
 
-                          
+
 
 
                             {{ __('backend.TypeEmployment') }}<i class="las la-angle-right sidemenu-right-icon"></i>
-                            
+
 
                         </a>
                         <ul class="sub-submenu-list collapse" id="authTypeThree">
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','TypeEmployment') }}"> {{ __('backend.employment') }} </a>
+                                <a href="{{ route('Item', 'TypeEmployment') }}"> {{ __('backend.employment') }}
+                                </a>
                             </li>
-                
+
 
                         </ul>
                     </li>
@@ -346,7 +391,7 @@ $user = get_current_user_data();
                         <ul class="sub-submenu-list collapse" id="Activities">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','Activitie') }}"> {{ __('backend.Activities') }} </a>
+                                <a href="{{ route('Item', 'Activitie') }}"> {{ __('backend.Activities') }} </a>
                             </li>
 
 
@@ -363,7 +408,7 @@ $user = get_current_user_data();
                         <ul class="sub-submenu-list collapse" id="AdditionalActivitie">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','AdditionalActivitie') }}">
+                                <a href="{{ route('Item', 'AdditionalActivitie') }}">
                                     {{ __('backend.Additional Activitie') }} </a>
                             </li>
 
@@ -375,13 +420,12 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#services" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
-                            {{ __('backend.Service') }} <i
-                                class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.Service') }} <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="services">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','Service') }}"> {{ __('backend.Service') }}
+                                <a href="{{ route('Item', 'Service') }}"> {{ __('backend.Service') }}
                                 </a>
                             </li>
 
@@ -393,13 +437,12 @@ $user = get_current_user_data();
                         <a data-toggle="collapse" href="#userType" role="button" aria-expanded="false"
                             aria-controls="collapseExample"
                             class="dropdown-toggle {{ active_class(['authentication/style3/*']) }}">
-                            {{ __('backend.UserType') }} <i
-                                class="las la-angle-right sidemenu-right-icon"></i>
+                            {{ __('backend.UserType') }} <i class="las la-angle-right sidemenu-right-icon"></i>
                         </a>
                         <ul class="sub-submenu-list collapse" id="userType">
 
                             <li class=" {{ active_class(['authentication/style3/login']) }}">
-                                <a href="{{ route('Item','UserType') }}"> {{ __('backend.UserType') }}
+                                <a href="{{ route('Item', 'UserType') }}"> {{ __('backend.UserType') }}
                                 </a>
                             </li>
 
@@ -551,14 +594,14 @@ $user = get_current_user_data();
         <div class="submenu" id="adsMenu">
             <div class="submenu-info">
                 <div class="submenu-inner-info">
-                    <h5 class="mb-3">{{__('backend.ads')}}</h5>
+                    <h5 class="mb-3">{{ __('backend.ads') }}</h5>
                 </div>
                 <ul class="submenu-list">
                     <li class=" {{ active_class(['ads/add']) }}">
-                        <a href="{{ url('ads/add') }}"> {{__('backend.Add Ads')}} </a>
+                        <a href="{{ url('ads/add') }}"> {{ __('backend.Add Ads') }} </a>
                     </li>
                     <li class=" {{ active_class(['ads/all']) }}">
-                        <a href="{{ url('ads/all') }}"> {{__('backend.All Ads')}} </a>
+                        <a href="{{ url('ads/all') }}"> {{ __('backend.All Ads') }} </a>
                     </li>
                 </ul>
             </div>
@@ -571,7 +614,7 @@ $user = get_current_user_data();
                 </div>
                 <ul class="submenu-list">
                     <li class=" {{ active_class(['users/all']) }}">
-                        <a href="{{route('users.all')}}"> {{ __('backend.all users') }} </a>
+                        <a href="{{ route('users.all') }}"> {{ __('backend.all users') }} </a>
                     </li>
                     <li class=" {{ active_class(['users/chat']) }}">
                         <a href="{{ url('/apps/chat') }}"> {{ __('backend.users types') }}</a>

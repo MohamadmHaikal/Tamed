@@ -1268,7 +1268,7 @@ img.best-seller-trophy {
 .nav-item .dash-btn {
     padding: .40rem .45rem !important;
     color: #fff;
-    background-color: #509eb6;
+    /* background-color: #509eb6; */
 }
 
 .nav-item .dash-btn i {
@@ -1291,9 +1291,9 @@ img.best-seller-trophy {
     font-size: 11px;
     width: 181px;
     padding-right: 0px;
-    border-color: #509eb6;
+    /* border-color: #509eb6; */
     color: #ffffff;
-    background: #027496 !important;
+    /* background: #027496 !important; */
 }
 
 .nav-item.more-dropdown .flatpickr-input::placeholder {

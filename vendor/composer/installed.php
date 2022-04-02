@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '8f89a1942a52aebb2f1f288d6fa83556a8414d9c',
+    'reference' => '68cdce080296a5284b3eb25ac33c8df0621500ed',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -162,12 +162,12 @@
     ),
     'doctrine/dbal' => 
     array (
-      'pretty_version' => '3.3.3',
-      'version' => '3.3.3.0',
+      'pretty_version' => '3.3.4',
+      'version' => '3.3.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '82331b861727c15b1f457ef05a8729e508e7ead5',
+      'reference' => '83f779beaea1893c0bece093ab2104c6d15a7f26',
     ),
     'doctrine/deprecations' => 
     array (
@@ -598,7 +598,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '8f89a1942a52aebb2f1f288d6fa83556a8414d9c',
+      'reference' => '68cdce080296a5284b3eb25ac33c8df0621500ed',
     ),
     'laravel/sail' => 
     array (
@@ -789,12 +789,12 @@
     ),
     'paragonie/sodium_compat' => 
     array (
-      'pretty_version' => 'v1.17.0',
-      'version' => '1.17.0.0',
+      'pretty_version' => 'v1.17.1',
+      'version' => '1.17.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c59cac21abbcc0df06a3dd18076450ea4797b321',
+      'reference' => 'ac994053faac18d386328c91c7900f930acadf1e',
     ),
     'phar-io/manifest' => 
     array (

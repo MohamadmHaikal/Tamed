@@ -16201,7 +16201,38 @@ input:checked+.slider:before {
 .footer-wrapper .footer-section p a {
     color: #a0a0a0;
 }
-
+.file {
+    display: flex;
+    margin-top: 15px;
+    margin-right: 15px;
+    background: #edf4ff;
+    border-radius: 10px;
+    padding: 10px 20px 10px 10px;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+.file.doc p.main-title {
+    color: #2262c6;
+}
+.file.pdf p.main-title {
+    color: #dc3545;
+}
+.file.xlsx p.main-title {
+    color: #108a2c;
+   
+}
+.file .file-icon {
+    font-size: 22px;
+    background: #83b3ff;
+    color: white;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding-top: 4px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 .footer-wrapper .footer-section svg {
     color: #2f44b2;
     fill: #6c80e9;
@@ -19306,7 +19337,7 @@ label {
     max-width: 500px;
     margin-left: .5rem;
     margin-right: .5rem;
-    position: relative;
+   
     flex: 1
 }
 

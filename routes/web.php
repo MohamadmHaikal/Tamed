@@ -13,19 +13,22 @@
 |
 */
 
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
 use App\Http\Controllers\Dashboard\ServicesController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    SendAdsNotification(21,'test new',"<a href='/'>new Ads</a>",'ads notification');
+    SendAdsNotification(21, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
 
     return view('dashboard.dashboard1');
-})->middleware('LanguageSwitcher', 'auth', 'is_verified');
+})->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
+Route::post('store-file', [FileController::class, 'store']);
 
 Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
 
@@ -73,6 +76,28 @@ Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name(
 Route::get('Item/{model}', 'App\Http\Controllers\Controller@indexItem')->name('Item')->middleware('LanguageSwitcher');
 // Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
 
+//File Manger route
+Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\FileMangerController@index')->name('FileManger');
+    Route::post('store-file', 'App\Http\Controllers\Dashboard\FileMangerController@store')->name('store-file');
+    Route::get('delete-file/{id}', 'App\Http\Controllers\Dashboard\FileMangerController@destroy')->name('delete-file');
+});
+//Quotes route
+Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
+});
+// Options route
+Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
+
+Route::post('settings', [OptionController::class, '_saveSetting'])->name('save-settings');
+
+Route::post('save-quick-settings', [OptionController::class, '_saveQuickSetting'])->name('save-quick-settings');
+
+Route::post('set-featured-image', [OptionController::class, '_setFeaturedImage'])->name('set-featured-image');
+
+Route::post('delete-featured-image', [OptionController::class, '_deleteFeaturedImage'])->name('delete-featured-image');
+
+Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('get-list-item');
 
 Route::group(['prefix' => 'addItem', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 

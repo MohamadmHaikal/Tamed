@@ -12,16 +12,16 @@
                                         <i class="las la-sms"></i>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link " data-toggle="tab" href="#status-tab" role="tab" aria-selected="false">
                                         <i class="las la-tasks"></i>
                                     </a>
-                                </li>
-                                <li class="nav-item">
+                                </li> --}}
+                                {{-- <li class="nav-item">
                                     <a class="nav-link " data-toggle="tab" href="#settings-tab" role="tab" aria-selected="false">
                                         <i class="las la-cog"></i>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                             <!-- Tab panes starts -->
                             <div class="tab-content pt-0 rightbar-tab-container">

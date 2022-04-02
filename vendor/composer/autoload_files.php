@@ -42,4 +42,6 @@ return array(
     '361cb137becf93096d42fbcf815059ca' => $baseDir . '/app/Helpers/global.php',
     'af5fb090c9e7e33eed55849b5f55c7e9' => $baseDir . '/app/Helpers/users.php',
     'efdbf68afca8ca224825ed1b542b02e3' => $baseDir . '/app/Helpers/notifications.php',
+    '52802a1ad68abd948ef168f4e9240593' => $baseDir . '/app/Helpers/language.php',
+    '648bd0d61c05a2710e280033b4a54da3' => $baseDir . '/app/Libraries/ThemeOptions.php',
 );

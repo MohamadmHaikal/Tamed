@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <title>{{__('backend.Tamed Platform')}}</title>
+    <title>{{ page_title(true) }}</title>
     <!-- initiate head with meta tags, css and script -->
     @include('include.head')
 
 </head>
-<body class="{{ $theme . 'mode' }}" data-base-url="{{url('/')}}">
-    <!-- Loader Starts -->
-    {{-- @include('include.loader') --}}
-    <!--  Loader Ends -->
 
+<body class="{{ $theme . 'mode' }}" data-base-url="{{ url('/') }}">
+    <?php
+    $enable_lazyload = get_option('enable_lazyload', 'off');
+    $currentRoute = request()
+        ->route()
+        ->getName();
+    ?>
+    <!-- Loader Starts -->
+    @if ($enable_lazyload == 'on' && $currentRoute != 'languages.translations.index')
+        @include('include.loader')
+        <!--  Loader Ends -->
+    @endif
     <!--  Main Container Starts  -->
     <div class="main-container" id="container">
         @include('include.logo')
@@ -36,7 +45,9 @@
             <!-- Main Body Ends -->
 
             @include('include.responsive-message')
+            <div id="alert">
 
+            </div>
             <!-- Copyright Footer Starts -->
             @include('include.footer')
             <!-- Copyright Footer Ends -->
@@ -61,4 +72,5 @@
     <!-- Common Script Ends -->
 
 </body>
+
 </html>

@@ -2144,7 +2144,7 @@ pre code {
 .form-control {
     display: block;
     width: 100%;
-    height: calc(1.5em + .75rem + 2px);
+    
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -2784,8 +2784,8 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #fff;
-    background-color: #28a745;
-    border-color: #28a745
+    background-color: #1abc9c;
+    border-color: #1abc9c;
 }
 
 .btn-success:hover {
@@ -4521,7 +4521,7 @@ input[type=submit].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
     color: #fff;
-    background-color: #007bff
+    background-color: #027496;
 }
 
 .nav-fill .nav-item {
@@ -10638,8 +10638,8 @@ h6 {
 }
 
 ::selection {
-    color: #2f44b2;
-    background: transparent;
+    /* color: #2f44b2;
+    background: transparent; */
 }
 
 p {
@@ -10951,7 +10951,7 @@ label {
     font-size: 14px;
     padding: 8px 10px;
     /* letter-spacing: 1px; */
-    height: calc(1.4em + 1.4rem + 2px);
+    /* height: calc(1.4em + 1.4rem + 2px); */
     padding: .75rem 1.25rem;
     border-radius: 6px;
 }
@@ -13761,8 +13761,8 @@ h6 {
 }
 
 ::selection {
-    color: #2f44b2;
-    background: transparent;
+    /* color: #2f44b2;
+    background: transparent; */
 }
 
 p {
@@ -14791,7 +14791,7 @@ code {
 }
 
 .navbar .navbar-item .nav-item .form-inline.search .search-form-control {
-    border: 1px solid #63a9be;
+    border: 1px solid #ebf4f7;
     width: 100%;
     width: 350px;
 }
@@ -15259,7 +15259,7 @@ code {
 }
 
 .fixed-profile .profile-option-container .option-link-container p {
-    color: #bfcaff;
+    color: #fff;
     margin: 0px;
     font-size: 12px;
 }
@@ -16103,8 +16103,40 @@ input:checked+.slider:before {
     justify-content: center;
     border-radius: 50%;
 }
-
-
+.file {
+    display: flex;
+    margin-top: 15px;
+    margin-right: 15px;
+    background: #edf4ff;
+    border-radius: 10px;
+   
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+.file .file-icon {
+    font-size: 22px;
+    background: #83b3ff;
+    color: white;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding-top: 4px;
+    border-radius: 50%;
+   
+}
+.file.doc p.main-title {
+    color: #2262c6;
+    padding: 5px;
+}
+.file.pdf p.main-title {
+    color: #dc3545;
+    padding: 5px;
+}
+.file.xlsx p.main-title {
+    color: #108a2c;
+    padding: 5px;
+}
 /* Footer-wrapper */
 
 .footer-wrapper {
@@ -16789,7 +16821,7 @@ body.darkmode {
 }
 
 .darkmode .navbar .navbar-item .nav-item .form-inline.search .search-form-control {
-    border: 1px solid #9cc1cc !important;
+    border: 1px solid #f9f5f5 !important;
     background-color: #005f7c !important;
     color: #ffffff;
 }
@@ -17615,7 +17647,7 @@ body.darkmode {
     padding: 1.4rem 1.2rem;
     box-shadow: 0 0.75rem 6rem rgba(56, 65, 74, 0.15);
     margin-bottom: 20px;
-    border-radius: .25rem;
+  
 }
 
 .darkmode .chat-container .user-container {
@@ -20232,7 +20264,7 @@ img.skew-div-image {
     max-width: 500px;
     margin-left: .5rem;
     margin-right: .5rem;
-    position: relative;
+    
     flex: 1
 }
 

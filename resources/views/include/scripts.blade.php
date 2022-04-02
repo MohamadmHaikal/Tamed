@@ -10,7 +10,14 @@
         nameOfItem:"{{__('backend.name of Item')}}" ,
         of:"{{__('backend.of')}}" ,
         noRecord:"{{__('backend.No matching records found')}}" ,
-       
+        deletemodal1:"{{__('backend.Are you sure ?')}}",
+        deletemodal2:"{{__('backend.You wont be able to revert this!')}}",
+        cancle:"{{__('backend.Cancel')}}",
+        confirm:"{{__('backend.confirm')}}",
+        deleted:"{{__('backend.Deleted!')}}",
+        success:"{{__('backend.file has been deleted successfully.')}}",
+        continue:"{{__('backend.continue')}}",
+        
     };
 </script>
 <!-- Stack array for including inline js or scripts -->

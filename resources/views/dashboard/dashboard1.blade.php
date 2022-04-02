@@ -29,12 +29,12 @@
                 </li>
             </ul>
 
-            <ul class="navbar-nav d-flex align-center ml-auto right-side-filter">
+            {{-- <ul class="navbar-nav d-flex align-center ml-auto right-side-filter">
                 <li class="nav-item more-dropdown">
                     <div class="input-group input-group-sm">
                         <input id="rangeCalendarFlatpickr" class="form-control flatpickr flatpickr-input active" type="text" placeholder="{{__('Select Date')}}">
                         <div class="input-group-append">
-                                    <span class="input-group-text  " id="basic-addon2" style="background-color: #509eb6;color:#fff;border-color: #509eb6;">
+                                    <span class="input-group-text dash  " id="basic-addon2" style="color:#fff;">
                                         <i class="lar la-calendar"></i>
                                     </span>
                         </div>
@@ -55,7 +55,7 @@
                         <a class="dropdown-item" data-value="Filter 3" href="javascript:void(0);"> {{__('Filter 3')}}</a>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
         </header>
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->

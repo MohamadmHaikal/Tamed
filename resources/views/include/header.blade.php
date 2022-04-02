@@ -1,3 +1,8 @@
+<?php
+$enable_multi_language = get_option('multi_language', 'on');
+$enable_dark_mode = get_option('dark_mode', 'on');
+$current_theme=$_COOKIE['theme'];
+?>
 <header class="header navbar navbar-expand-sm">
     <ul class="navbar-item flex-row ml-md-0 ml-auto theme-brand">
         <li class="nav-item align-self-center d-md-none">
@@ -14,10 +19,10 @@
             </form>
         </li>
         <li class="nav-item dropdown megamenu-dropdown d-none d-lg-flex">
-            <a href="javascript:void(0);" class="nav-link dropdown-toggle d-flex align-center text-white"
+            {{-- <a href="javascript:void(0);" class="nav-link dropdown-toggle d-flex align-center text-white"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ __('Mega Menu') }} <i class="las la-angle-down font-11 ml-1"></i>
-            </a>
+            </a> --}}
             <div class="dropdown-menu megamenu">
                 <div class="row">
                     <div class="col-sm-6">
@@ -120,36 +125,44 @@
                 <p class="ml-3 text-dark">Dark</p>
             </div>
         </li>-->
-        <li class="nav-item dropdown fullscreen-dropdown">
-            <a class="nav-link night-light-mode" href="javascript:void(0);">
-                <i class="las la-moon" id="darkModeIcon"></i>
-            </a>
-        </li>
+        @if ($enable_dark_mode == 'on')
+            <li class="nav-item dropdown fullscreen-dropdown">
+                <a class="nav-link night-light-mode" href="javascript:void(0);">
+                    @if($current_theme=='lightmode')
+                    <i class="las la-moon" id="darkModeIcon"></i>
+                    @else
+                    <i class="las la-sun" id="darkModeIcon"></i>
+                    @endif
+                </a>
+            </li>
+        @endif
         <li class="nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
             <a class="nav-link full-screen-mode" href="javascript:void(0);">
                 <i class="las la-compress" id="fullScreenIcon"></i>
             </a>
         </li>
-        <li class="nav-item dropdown language-dropdown">
-            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="las la-language"></i>
-            </a>
-            <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
-                @if (session()->get('lang') == 'en')
-                    <a class="dropdown-item d-flex" href="{{ route('LanguageSwitcher', ['ar']) }}">
-                        <img src="{{ url('assets/img/flag/saudi-arabia-flag.png') }}" class="flag-width"
-                            alt="flag">
-                        <span class="align-self-center">&nbsp;{{ __('Arabic') }}</span>
-                    </a>
-                @else
-                    <a class="dropdown-item d-flex" href="{{ route('LanguageSwitcher', ['en']) }}">
-                        <img src="{{ url('assets/img/flag/usa-flag.png') }}" class="flag-width" alt="flag">
-                        <span class="align-self-center"> {{ __('English') }}</span>
-                    </a>
-                @endif
-            </div>
-        </li>
+        @if ($enable_multi_language == 'on')
+            <li class="nav-item dropdown language-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="las la-language"></i>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
+                    @if (session()->get('lang') == 'en')
+                        <a class="dropdown-item d-flex" href="{{ route('LanguageSwitcher', ['ar']) }}">
+                            <img src="{{ url('assets/img/flag/saudi-arabia-flag.png') }}" class="flag-width"
+                                alt="flag">
+                            <span class="align-self-center">&nbsp;{{ __('Arabic') }}</span>
+                        </a>
+                    @else
+                        <a class="dropdown-item d-flex" href="{{ route('LanguageSwitcher', ['en']) }}">
+                            <img src="{{ url('assets/img/flag/usa-flag.png') }}" class="flag-width" alt="flag">
+                            <span class="align-self-center"> {{ __('English') }}</span>
+                        </a>
+                    @endif
+                </div>
+            </li>
+        @endif
         <li class="nav-item dropdown notification-dropdown">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

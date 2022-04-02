@@ -43,6 +43,8 @@ class ComposerStaticInitdef00ff10eb0d3f73b21b47c404ee35a
         '361cb137becf93096d42fbcf815059ca' => __DIR__ . '/../..' . '/app/Helpers/global.php',
         'af5fb090c9e7e33eed55849b5f55c7e9' => __DIR__ . '/../..' . '/app/Helpers/users.php',
         'efdbf68afca8ca224825ed1b542b02e3' => __DIR__ . '/../..' . '/app/Helpers/notifications.php',
+        '52802a1ad68abd948ef168f4e9240593' => __DIR__ . '/../..' . '/app/Helpers/language.php',
+        '648bd0d61c05a2710e280033b4a54da3' => __DIR__ . '/../..' . '/app/Libraries/ThemeOptions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -672,10 +674,12 @@ class ComposerStaticInitdef00ff10eb0d3f73b21b47c404ee35a
         'App\\Http\\Controllers\\Dashboard\\AdditionalActivitieController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/AdditionalActivitieController.php',
         'App\\Http\\Controllers\\Dashboard\\CityController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/CityController.php',
         'App\\Http\\Controllers\\Dashboard\\EmploymentTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/EmploymentTypeController.php',
+        'App\\Http\\Controllers\\Dashboard\\FileMangerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/FileMangerController.php',
         'App\\Http\\Controllers\\Dashboard\\MaterialTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/MaterialTypeController.php',
         'App\\Http\\Controllers\\Dashboard\\NeighborhoodController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/NeighborhoodController.php',
         'App\\Http\\Controllers\\Dashboard\\ProjectTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/ProjectTypeController.php',
         'App\\Http\\Controllers\\Dashboard\\ServicesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/ServicesController.php',
+        'App\\Http\\Controllers\\Dashboard\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/SettingsController.php',
         'App\\Http\\Controllers\\LanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/LanguageController.php',
         'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
@@ -705,6 +709,7 @@ class ComposerStaticInitdef00ff10eb0d3f73b21b47c404ee35a
         'App\\Models\\MaterialType' => __DIR__ . '/../..' . '/app/Models/MaterialType.php',
         'App\\Models\\Neighborhood' => __DIR__ . '/../..' . '/app/Models/Neighborhood.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
+        'App\\Models\\Option' => __DIR__ . '/../..' . '/app/Models/Option.php',
         'App\\Models\\ProjectService' => __DIR__ . '/../..' . '/app/Models/ProjectService.php',
         'App\\Models\\ProjectType' => __DIR__ . '/../..' . '/app/Models/ProjectType.php',
         'App\\Models\\Quote' => __DIR__ . '/../..' . '/app/Models/Quote.php',
