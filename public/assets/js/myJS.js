@@ -11,7 +11,22 @@
                   name: '_token',
                   value: $('meta[name="csrf-token"]').attr('content')
               });
-              element.disabled = true;          
+              element.disabled = true;   
+              
+              var fd = new FormData();
+             var files = $(".file-upload")[0].files;
+        
+      
+              for (var i = 0; i < files.length; i++) {
+                  fd.append(i, $(".file-upload").get(0).files[i]);
+                  data.push({
+                    name: 'lolo',
+                    value: $(".file-upload").get(0).files[i]
+                });
+    
+              }
+
+             
               $.post(form.attr('action'), data, function (respon) {
                  
                   if (typeof respon === 'object') {
@@ -149,9 +164,10 @@
                                 }
                                var valueR='';
                                 $.each( respon.arrayItem, function( key, value ) {
-                                    if (respon.type =='show') {
+                                    console.log(value);
+                                    if (respon.type =='Show') {
                                         valueR +=`<div class="form-group">
-                                <label>{{ __('backend.name of Item') }}</label>
+                                <label>${ window.translations.nameOfItem }</label>
                                 <input type="${ value.columnType }" class="form-control" disabled
                                  value="${ value.ValueColumn }" name=" ${ value.columnName }" 
                                  id="${ value.columnName }">
@@ -160,7 +176,7 @@
                                     } else {
                                         if(value.columnType == 'select') {
                                           
-                                          valueR +=  `<select class="form-control form-control-sm" name="type_id">`
+                                          valueR +=  `<select class="form-control form-control-sm" name="${ value.columnName }">`
                                           $.each( value.options, function( key, option ) {
                                               if (option.name == value.ValueColumn) {
                                                 valueR +=  ` <option value="${option.id}" selected  >${ option.name }</option>`

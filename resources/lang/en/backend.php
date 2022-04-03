@@ -90,4 +90,10 @@ return array (
   'Add TypeEmployment' => 'Add Type Employment',
   'UserType' => 'User Type',
   'Add UserType' => 'Add User Type',
+ 'Contracting Project' => 'Contracting Project',
+  'deals' => 'deals',
+  'Auctions' => 'Auctions',
+  'Material' => 'Material',
+  'equipment' => 'equipment',
+  'job' => 'job',
 );

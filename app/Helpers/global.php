@@ -25,6 +25,12 @@ function is_dashboard()
     return !!str_replace('/', '', $prefix) == Config::get('awebooking.prefix_dashboard');
 }
 
+function getActivityItem()
+{
+    $activityItem=App\Models\Activitie::all();
+
+    return  $activityItem;
+}
 
 
 function get_dashboard_folder()

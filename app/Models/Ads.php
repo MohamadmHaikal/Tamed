@@ -8,4 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class Ads extends Model
 {
     use HasFactory;
+    protected $table = 'ads';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'type',
+        'title',
+        'description',
+       'city',
+       'neighborhood',
+       'price',
+       'pricestatus',
+       'onMap',
+       'lng',
+       'lat',
+       'deadline',
+       'startdate',
+       'seenCount',
+       'QuotesCount',
+       'infoArray',
+       'user_id',
+       'activitie_id',
+    ];
+
+    public function activity(){
+        return $this->belongsTo('App\Models\Activitie' , 'activitie_id');
+    }
+
 }

@@ -37,7 +37,7 @@ class Activitie extends Model
                                 'IDColumn' =>$ValueColumn->id ],
                     (object)   ['columnName' => 'type_id',
                     'columnType' => 'select',
-                    'ValueColumn' =>$ValueColumn->userType->name,
+                    'ValueColumn' =>$ValueColumn->relation->name,
                     'options' => $userType
                     ] ,
             

@@ -120,33 +120,49 @@
         var children = "";
         var count = 0;
         var count2 = 0
-        $('#file-upload').on('change', function(e) {
+        $('.file-upload').on('change', function(e) {
+            const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
+      
+            $(this).closest(".form-card").find(".fileContent").empty();
             count2++
             if(count2 > 1){
                 count++;
             }
-            var file = $('#file-upload')[0].files[0].name;
+            var file = $(this)[0].files[0].name;
+            $.each( $(this)[0].files, function( key, value ) {
+                
+            file = value.name;
             arr.push(file);
-            children = '<label>' + arr[count] + '<span title="Remove Attachment" class="delete-label bs-tooltip"><i class="las la-times"></i></span></label>';
+            children += ' <div class="attached-files" ><img id="image-preview" src='+ URL.createObjectURL(e.target.files.item(key))+' width="320"><label class="name">' + arr[key] + '<span title="Remove Attachment" data-idIMG=' + value.lastModified + ' class="delete-label bs-tooltip"><i class="las la-times"></i></span></label>   </div>';
             // console.log(children);
-            $(".attached-files").css({
-                'display': 'block',
-            });
-            $(".attached-files").append(children);
-            // If no file was selected, empty the preview <img>
-            if(!e.target.files.length){
-                return imgElement.src = '';
+
+        });
+
+        for (let file of this.files) {
+            dt.items.add(file);
+        }
+        // Mise à jour des fichiers de l'input file après ajout
+        this.files = dt.files;
+        $(this).closest(".form-card").find(".fileContent").append(children);
+    
+        $('span.delete-label').click(function(){
+            let name = $(this).data('idimg');
+            // Supprimer l'affichage du nom de fichier
+            $(this).parent().parent().remove();
+            for(let i = 0; i < dt.items.length; i++){
+                // Correspondance du fichier et du nom
+                if(name === dt.items[i].getAsFile().lastModified){
+                    // Suppression du fichier dans l'objet DataTransfer
+                    dt.items.remove(i);
+                    continue;
+                }
             }
-            // Set the <img>'s src to a reference URL to the selected file
-            return imgElement.src = URL.createObjectURL(e.target.files.item(0))
+            // Mise à jour des fichiers de l'input file après suppression
+            $(this).closest('.file-upload').files = dt.files;
         });
-        $('.attached-files').on('click', '.delete-label',  function(event) {
-            $(this).parent().remove();
-            imgElement.src = '';
-            $(".attached-files").css({
-                'display': 'none',
-            });
-        });
-        const imgElement = document.getElementById('image-preview');
+
+     });
+
+
     });
 })(jQuery);

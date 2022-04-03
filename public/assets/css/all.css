@@ -2702,7 +2702,10 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #007bff;
+    background-color: #2f44b2 !important;
+    background: linear-gradient(to right, #7988d1 0%, #2f44b2 100%);
+    box-shadow: 0px 5px 20px 0 rgb(0 0 0 / 10%);
+    border-radius: 1.875rem !important;
     border-color: #007bff
 }
 
@@ -3030,6 +3033,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-primary {
     color: #007bff;
+    border-radius: 1.875rem !important;
     border-color: #007bff
 }
 
@@ -12231,6 +12235,10 @@ select.form-control.form-custom {
 .btn-outline-primary:hover {
     color: #fff !important;
     background-color: #2f44b2;
+    box-shadow: 0px 5px 20px 0 rgb(0 0 0 / 10%);
+    border-radius: 1.875rem !important;
+
+
 }
 
 .btn-outline-info:hover {

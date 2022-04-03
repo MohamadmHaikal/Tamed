@@ -99,4 +99,10 @@ return array (
   'verification' => 'تحقق',
   'UserType' => 'نوع المستخدم',
   'Add UserType' => 'إضافة نوع المستخدم',
+  'Contracting Project' => 'مشروع مقاولات',
+  'deals' => 'صفقات',
+  'Auctions' => 'مزادات',
+  'Material' => 'مواد',
+  'equipment' => 'معدات',
+  'job' => 'وظيفة',
 );

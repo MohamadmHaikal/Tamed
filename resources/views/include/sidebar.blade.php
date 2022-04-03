@@ -555,10 +555,10 @@ $user = get_current_user_data();
                 </div>
                 <ul class="submenu-list">
                     <li class=" {{ active_class(['ads/add']) }}">
-                        <a href="{{ url('ads/add') }}"> {{__('backend.Add Ads')}} </a>
+                        <a href="{{ route('ads.create') }}"> {{__('backend.Add Ads')}} </a>
                     </li>
                     <li class=" {{ active_class(['ads/all']) }}">
-                        <a href="{{ url('ads/all') }}"> {{__('backend.All Ads')}} </a>
+                        <a href="{{ route('ads.index') }}"> {{__('backend.All Ads')}} </a>
                     </li>
                 </ul>
             </div>

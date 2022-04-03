@@ -21,7 +21,7 @@ class Controller extends BaseController
         }
     }
 
-    public function index($model)
+    public function indexItem($model)
     { 
         $modelName = 'App\\Models\\' .$model;
         $modelNew = new $modelName();
@@ -65,7 +65,7 @@ class Controller extends BaseController
        return $this->sendJson([
            'title' =>  __('backend.'.$request->type),
            'type' =>   $request->type,
-           'action' => ( $request->type == 'edit') ? route('update-item') : '' ,
+           'action' => ( $request->type == 'edit') ? '' : route('update-item') ,
            'model' => $request->model ,
            'arrayItem' => $arrayItem ,
         ], true);
@@ -73,7 +73,7 @@ class Controller extends BaseController
 
     public function _updateItem(Request $request)
     {
-  
+       
         $modelName = 'App\\Models\\' .$request->model;
         $model = new $modelName();
         $input = $request->all();

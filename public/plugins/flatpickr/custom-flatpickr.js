@@ -4,7 +4,7 @@
 // Flatpickr
         $(function () {
             // Basic Example
-            $("#basicExample").flatpickr();
+            $(".basicExample").flatpickr();
             // DateTime
             $("#dateTime").flatpickr({
                 enableTime: true,
