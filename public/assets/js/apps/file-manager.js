@@ -54,3 +54,43 @@
         });
     })
 })(jQuery);
+document.querySelector('#UploadFile').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+        var file = $('#UploadFile').val();
+        console.log(file);
+        var fd = new FormData();
+        fd.append('file', $('#UploadFile').get(0).files[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "FileManger/store-file",
+            data: fd,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                if (data['status'] == '1') {
+                    document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                        .length);
+                    $('.toast').toast('show');
+                }
+                if (data['reload']) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                }
+
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+
+
+    }
+});

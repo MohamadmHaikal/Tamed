@@ -22,7 +22,7 @@
                      {{-- Search input --}}
                 <div class="search">
                     <i class="las la-search toggle-search"></i>
-                    <input type="text" class="form-control messenger-search" placeholder="{{ __('Search') }}"
+                    <input type="text" class="form-control messenger-search" placeholder="{{ __('backend.Search') }}"
                         style="border-radius: 25px" />
                 </div>
                 </div> {{-- header buttons --}}
@@ -42,7 +42,7 @@
 
                 {{-- Favorites --}}
                 <div class="favorites-section">
-                    <p class="messenger-title">Favorites</p>
+                    <p class="messenger-title">{{__('backend.FAVORITES')}}</p>
                     <div class="messenger-favorites app-scroll-thin"></div>
                 </div>
 
@@ -68,9 +68,9 @@
             {{-- ---------------- [ Search Tab ] ---------------- --}}
             <div class="messenger-tab search-tab app-scroll" app-scroll" data-view="search">
                 {{-- items --}}
-                <p class="messenger-title">Search</p>
+                <p class="messenger-title">{{ __('backend.Search') }}</p>
                 <div class="search-records">
-                    <p class="message-hint center-el"><span>Type to search..</span></p>
+                    <p class="message-hint center-el"><span>{{__('backend.Type to search..')}}</span></p>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
                 padding: 0.5rem 1rem;
                 font-weight: 500;
                 border-radius: 5px;
-                font-size: 13px;"><span>Please select a chat to start messaging</span></p>
+                font-size: 13px;"><span>{{__('backend.Please select a chat to start messaging')}}</span></p>
             </div>
             {{-- Typing indicator --}}
             <div class="typing-indicator">

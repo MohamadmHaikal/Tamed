@@ -679,14 +679,14 @@ function page_title($is_dashboard = false)
         }
         foreach ($menu as $item) {
             if ($item['type'] == 'item' || $item['type'] == 'hidden') {
-                if ($item['screen'] === $name) {
+                if ($item['route_name'] === $name) {
                     $title = __($item['label']) . ' - ' . $title;
                     break;
                 }
             } elseif ($item['type'] == 'parent') {
                 foreach ($item['child'] as $sub_item) {
-                    if ($sub_item['screen'] === $name) {
-                        $title = $sub_item['label'] . ' - ' . $title;
+                    if ($sub_item['route_name'] === $name) {
+                        $title = __($sub_item['label']) . ' - ' . $title;
                         break;
                     }
                 }
@@ -709,7 +709,7 @@ function page_title($is_dashboard = false)
             $name = $current_route->getName();
             $pages_name = Config::get('config.pages_name');
             foreach ($pages_name as $item) {
-                if ($item['screen'] === $name) {
+                if ($item['route_name'] === $name) {
                     $title = __($item['label']) . ' - ' . $title;
                 }
             }

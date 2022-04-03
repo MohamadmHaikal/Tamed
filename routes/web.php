@@ -18,6 +18,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
@@ -45,6 +46,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
 });
+Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all', [UserController::class, 'index'])->name('users.all');
 });
@@ -85,6 +87,10 @@ Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], fun
 //Quotes route
 Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
+});
+//eBills route
+Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");

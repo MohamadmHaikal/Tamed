@@ -20,6 +20,7 @@
 
 .messenger-search[type="text"] {
     background: #f7f7f7;
+    text-align: right;
     color: #333;
 }
 

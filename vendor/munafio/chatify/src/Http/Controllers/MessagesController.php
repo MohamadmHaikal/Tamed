@@ -409,7 +409,7 @@ class MessagesController extends Controller
         }
         // send the response
         return Response::json([
-            'shared' => count($shared) > 0 ? $sharedPhotos : '<p class="message-hint"><span>Nothing shared yet</span></p>',
+            'shared' => count($shared) > 0 ? $sharedPhotos : '<p class="message-hint"><span>'.__("backend.Nothing shared yet").'</span></p>',
         ], 200);
     }
 

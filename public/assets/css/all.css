@@ -20114,16 +20114,19 @@ img.skew-div-image {
     border-bottom-width: 1px
 }
 
-.panel-body tbody tr:nth-child(2n),
-.panel-body thead tr {
-    background-color: #f1f5f8
+.darkmode .panel-body tbody tr:nth-child(2n),
+.darkmode .panel-body thead tr {
+    background-color:#272727; 
 }
 
+.darkmode .panel-body tbody tr:hover,
+.darkmode .panel-body tbody tr:nth-child(2n):hover {
+    background-color: #191919
+}
 .panel-body tbody tr:hover,
 .panel-body tbody tr:nth-child(2n):hover {
     background-color: #eff8ff
 }
-
 .panel-body tbody tr:last-child {
     border-style: none
 }
@@ -20196,7 +20199,10 @@ img.skew-div-image {
 }
 
 .panel-header {
-    padding: 1rem;
+    padding-top: 1rem;
+   
+    padding-bottom: 1rem;
+    
     font-size: 1.125rem;
     border-bottom-width: 1px;
     display: flex;
@@ -20217,6 +20223,22 @@ img.skew-div-image {
 
 .select-group:last-child {
     margin: 0
+}
+.darkmode .select-group select {
+    font-size: 1rem;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #272727;
+    border-width: 1px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: .5rem 2rem .5rem 1rem;
+    border-radius: .25rem;
+    line-height: 1.25;
+    max-width: 20rem;
+    font-weight: 200
 }
 
 .select-group select {
@@ -20279,12 +20301,26 @@ img.skew-div-image {
     border-width: 1px;
     color: #606f7b;
     font-weight: 200;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.darkmode .search-input {
+    background: url('data:image/svg+xml;charset=utf8,<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com"><path d="M 11.732 12.439 C 9.047 14.525 5.109 12.921 4.645 9.553 C 4.181 6.183 7.538 3.575 10.689 4.858 C 13.399 5.962 14.306 9.349 12.512 11.66 L 15.466 14.603 L 14.682 15.388 L 11.738 12.439 Z M 9.027 12.263 C 11.577 12.263 13.172 9.5 11.897 7.291 C 11.304 6.267 10.21 5.634 9.027 5.634 C 6.476 5.634 4.88 8.397 6.157 10.606 C 6.749 11.63 7.842 12.263 9.027 12.263 Z" style="fill: rgb(96, 111, 123);"/></svg>');
+    background-color: #272727;
+    border-radius: .25rem;
+    padding: .5rem 1rem .5rem 2.5rem;
+    margin-bottom: 5px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all .1s ease-in;
+    border-width: 1px;
+    color: #fff;
+    font-weight: 200;
     width: 100%
 }
-
 .search-input:focus {
     outline: 0;
-    background-color: #fff;
+    
     border-width: 1px;
     border-color: #dae1e7
 }

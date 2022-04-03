@@ -40,7 +40,7 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <h4 class="table-header">{{ __('backend.all users') }}</h4>
                                     <div class="table-responsive mb-4">
-                                        <table id="last-page-dt" class="table table-hover" style="width:100%">
+                                        <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>{{ __('backend.id') }}</th>
@@ -197,10 +197,7 @@
                             extend: 'copy',
                             className: 'btn btn-primary'
                         },
-                        {
-                            extend: 'csv',
-                            className: 'btn btn-primary'
-                        },
+                      
                         {
                             extend: 'excel',
                             className: 'btn btn-primary'
@@ -222,7 +219,7 @@
                     }
                 },
                 "lengthMenu": [7, 10, 20, 50],
-                "pageLength": 7
+                "pageLength": 20
             });
             // Add text input to the footer
             $('#single-column-search tfoot th').each(function() {

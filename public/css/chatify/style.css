@@ -296,11 +296,12 @@ body {
 
 .messenger-title {
     margin: 0;
-    padding: 10px;
+    padding: 20px;
     padding-bottom: 0px;
     text-transform: uppercase;
     color: #aeaeb7;
     font-size: 12px;
+    text-align: right;
     font-weight: 600;
     margin-left: 5px;
 }

@@ -39,7 +39,7 @@
             {{-- Last Message user indicator --}}
             {!!
                 $lastMessage->from_id == get_current_user_id()
-                ? '<span class="lastMessageIndicator">You :</span>'
+                ? '<span class="lastMessageIndicator">'.__('backend.You').':</span>'
                 : ''
             !!}
             {{-- Last message body --}}

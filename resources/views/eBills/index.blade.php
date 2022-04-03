@@ -21,7 +21,7 @@
 
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        href="javascript:void(0);">{{ __('backend.Quotations') }}</a>
+                                        href="javascript:void(0);">{{ __('backend.eBills') }}</a>
                                 </li>
 
                             </ol>
@@ -50,7 +50,7 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{ __('backend.Quotations') }}</h4>
+                                            <h4 class="table-header">{{ __('backend.eBills') }}</h4>
 
                                         </div>
                                     </div>
@@ -58,13 +58,12 @@
                                         <div class="widget-content widget-content-area text-center">
                                             <div class="button-list">
                                                 <button type="button"
-                                                    class="btn btn-primary btn-rounded">{{ __('backend.new') }}</button>
+                                                    class="btn btn-primary btn-rounded">{{ __('backend.Invoices issued') }}</button>
+                                                
                                                 <button type="button"
-                                                    class="btn btn-success btn-rounded">{{ __('backend.Accepted companies') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-warning btn-rounded">{{ __('backend.waiting for signature') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-danger btn-rounded">{{ __('backend.rejected') }}</button>
+                                                    class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
+                                                    <button type="button"
+                                                    class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
 
                                             </div>
                                         </div>
@@ -75,7 +74,7 @@
                                                     <th>{{ __('backend.name of company') }}</th>
                                                     <th>{{ __('backend.project name') }}</th>
                                                     <th>{{ __('backend.CompanyCompetence') }}</th>
-                                                    <th class="no-content">{{ __('backend.QuotesDetails') }}</th>
+                                                    <th class="no-content">{{ __('backend.Invoice details') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -90,14 +89,13 @@
                                                             <a class="dropdown-toggle  text-primary" href="#" role="button"
                                                                 data-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
-                                                                {{ __('backend.QuotesDetails') }}
+                                                                {{ __('backend.Invoice details') }}
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
 
                                             </tbody>
-                                            
                                         </table>
                                     </div>
                                 </div>
@@ -214,6 +212,7 @@
                             extend: 'copy',
                             className: 'btn btn-primary'
                         },
+                      
                         {
                             extend: 'excel',
                             className: 'btn btn-primary'
