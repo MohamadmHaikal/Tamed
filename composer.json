@@ -35,7 +35,10 @@
         "files": [
             "app/helpers.php",
             "app/Helpers/global.php",
-            "app/Helpers/users.php"
+            "app/Helpers/users.php",
+            "app/Helpers/notifications.php",
+            "app/Helpers/language.php",
+            "app/Libraries/ThemeOptions.php"
         ]
     },
     "autoload-dev": {

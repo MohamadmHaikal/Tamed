@@ -13,16 +13,23 @@
 |
 */
 
+use App\Http\Controllers\OptionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ServicesController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
+    SendAdsNotification(21, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
+
     return view('dashboard.dashboard1');
-})->middleware('LanguageSwitcher', 'auth', 'is_verified');
+})->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
+Route::post('store-file', [FileController::class, 'store']);
 
 Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
 
@@ -39,6 +46,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
 });
+Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all', [UserController::class, 'index'])->name('users.all');
 });
@@ -67,17 +75,41 @@ Route::post('delete-item', 'App\Http\Controllers\Controller@_deleteItem')->name(
 Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-item');
 Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
 Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name('update-item');
+
 Route::get('Item/{model}', 'App\Http\Controllers\Controller@indexItem')->name('Item');
 // Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
 Route::get('/getType/{id}','App\Http\Controllers\Dashboard\AdsController@getType')->name('getType');
 
-Route::group(['prefix' => 'addItem', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
+//File Manger route
+Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\FileMangerController@index')->name('FileManger');
+    Route::post('store-file', 'App\Http\Controllers\Dashboard\FileMangerController@store')->name('store-file');
+    Route::get('delete-file/{id}', 'App\Http\Controllers\Dashboard\FileMangerController@destroy')->name('delete-file');
+});
+//Quotes route
+Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
+});
+//eBills route
+Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+});
+// Options route
+Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
+
+Route::post('settings', [OptionController::class, '_saveSetting'])->name('save-settings');
+
+Route::post('save-quick-settings', [OptionController::class, '_saveQuickSetting'])->name('save-quick-settings');
+
+Route::post('set-featured-image', [OptionController::class, '_setFeaturedImage'])->name('set-featured-image');
+
+Route::post('delete-featured-image', [OptionController::class, '_deleteFeaturedImage'])->name('delete-featured-image');
+
+Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('get-list-item');
 
 
-    Route::group(['prefix' => 'ads'], function (){
+    Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
         Route::resource('ads', 'AdsController');
-        
-
     });
     Route::group(['prefix' => 'project'], function () {
         Route::resource('project', 'ProjectTypeController');
@@ -85,7 +117,7 @@ Route::group(['prefix' => 'addItem', 'middleware' => 'LanguageSwitcher', 'namesp
     Route::group(['prefix' => 'material'], function () {
         Route::resource('material', 'MaterialTypeController');
     });
-});
+
 Route::group(['prefix' => 'Users', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 
 
@@ -535,7 +567,12 @@ Route::group(['prefix' => 'maps', 'middleware' => 'LanguageSwitcher'], function 
         return view('maps.vector-map');
     });
 });
+Route::group(['middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers'], function () {
 
+
+    Route::get('all-notifications/{page?}', [NotificationController::class, '_allNotifications'])->name('all-notifications');
+    Route::get('delete-notification/{id}', [NotificationController::class, '_deleteNotification'])->name('delete-notification');
+});
 Route::group(['prefix' => 'charts', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('apex-chart', function () {
         return view('charts.apex-chart');

@@ -246,14 +246,16 @@
                         myIcon.classList.add("la-moon");
                         myIcon.classList.remove("la-sun");
 
-                        document.body.classList.remove("darkmode");
+                       // document.body.classList.remove("darkmode");
                         setCookie("theme", "lightmode", 365);
+                        location.reload();
                     } else {
                         myIcon.classList.remove("la-moon");
                         myIcon.classList.add("la-sun");
 
-                        document.body.classList.add("darkmode");
+                        //document.body.classList.add("darkmode");
                         setCookie("theme", "darkmode", 365);
+                        location.reload();
                     }
 
                     function setCookie(name, value) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ChMessage;
+use App\Models\Notification;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Http;
@@ -75,6 +76,14 @@ function get_current_user_message_count()
 {
     return ChMessage::where('to_id','=',get_current_user_id())->where('seen','=',0)->count();
 }
+function get_current_user_header_notification()
+{
+    return Notification::where('user_to','=',get_current_user_id())->take(4)->orderBy('ID', 'DESC')->get();
+}
+function get_current_user_notification_count()
+{
+    return Notification::where('user_to','=',get_current_user_id())->where('seen','=',0)->count();
+}
 function is_admin($user_id = '')
 {
     if (!$user_id) {
@@ -144,6 +153,7 @@ function get_user_by_mobile($user_mobile)
     $user = Sentinel::findByCredentials($credentials);
     return (is_object($user)) ? $user : false;
 }
+ 
 
 function get_users_by_role($role = 'administrator', $for_option = false)
 {

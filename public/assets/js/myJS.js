@@ -240,3 +240,51 @@
         });
     }
     
+    $('.confirmDelete').on('click', function () {
+        var id = $(this).data('id');
+        console.log(id);
+        swal({
+            title: window.translations.deletemodal1,
+            text: window.translations.deletemodal2,
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: window.translations.cancle,
+            confirmButtonText: window.translations.confirm,
+            padding: '2em'
+        }).then(function (result) {
+    
+            if (result.value) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: "FileManger/delete-file/" + id,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        if (data['status'] == '1') {
+                            swal(
+                                window.translations.deleted,
+                                window.translations.success,
+                                'success'
+                            )
+                        }
+                        if (data['reload']) {
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+    
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+    
+            }
+        })
+    });

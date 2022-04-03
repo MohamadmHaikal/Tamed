@@ -33,14 +33,13 @@
         {{-- center side --}}
         <td>
        
-        <p data-id="{{ $user->id }}" data-type="user">{{substr($user->name,0,12)}}
-            {{ $user->name }}
+        <p data-id="{{ $user->id }}" data-type="user">{{ strlen($user->name) > 12 ? trim(substr($user->name,0,12)).'..' : $user->name }}
             <span>{{ $lastMessage->created_at->diffForHumans() }}</span></p>
         <span>
             {{-- Last Message user indicator --}}
             {!!
                 $lastMessage->from_id == get_current_user_id()
-                ? '<span class="lastMessageIndicator">You :</span>'
+                ? '<span class="lastMessageIndicator">'.__('backend.You').':</span>'
                 : ''
             !!}
             {{-- Last message body --}}
@@ -60,6 +59,8 @@
 
     </tr>
 </table>
+<hr  style="margin-block-start: 0.0em;
+margin-block-end: 0.0em;">
 @endif
 
 {{-- -------------------- Search Item -------------------- --}}

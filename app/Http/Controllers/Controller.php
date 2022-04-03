@@ -7,7 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-
+use Sentinel;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -19,6 +19,16 @@ class Controller extends BaseController
         } else {
             return response()->json($data);
         }
+    }
+    public function getFolder()
+    {
+        $folder = 'customer';
+        if (Sentinel::inRole('administrator')) {
+            $folder = 'administrator';
+        } elseif (Sentinel::inRole('partner')) {
+            $folder = 'partner';
+        }
+        return $folder;
     }
 
     public function indexItem($model)

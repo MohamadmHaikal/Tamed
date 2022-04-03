@@ -57,9 +57,9 @@
     border-radius: 50%;
 }
 .file-manager-right {
-    margin: 0px 0 0rem 25px;
+    
     padding: 0px 0 0rem 10px;
-    width: 85%;
+    width: 100%;
 }
 .file-manager-right-top{
     display: flex;
@@ -319,17 +319,7 @@
 .folder:hover p.folder-name {
     color: #fff;
 }
-.file {
-    display: flex;
-    margin-top: 15px;
-    margin-right: 15px;
-    background: #edf4ff;
-    border-radius: 10px;
-    padding: 10px 20px 10px 10px;
-    border-left: 4px solid transparent;
-    cursor: pointer;
-    transition: all ease 0.3s;
-}
+
 .file:hover {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.27);
     transition: all ease 0.3s;
@@ -346,17 +336,7 @@
     background: #e6ffd9;
     border-left: 4px solid #108a2c;
 }
-.file .file-icon {
-    font-size: 22px;
-    background: #83b3ff;
-    color: white;
-    height: 30px;
-    width: 30px;
-    text-align: center;
-    padding-top: 4px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+
 .file.pdf .file-icon {
     background: #ffcad0;
     color: #dc3545;
@@ -374,15 +354,7 @@
     margin-bottom: 7px;
     color: #2262c6;
 }
-.file.doc p.main-title {
-    color: #2262c6;
-}
-.file.pdf p.main-title {
-    color: #dc3545;
-}
-.file.xlsx p.main-title {
-    color: #108a2c;
-}
+
 .file p.sub-title, .file p.date {
     font-size: 10px;
     font-weight: 600;
@@ -444,7 +416,7 @@
     -moz-border-radius: 30px;
     border-radius: 30px;
     color: #989898;
-    padding: 0px 4px 0px 40px;
+    padding: 0px 28px 0px 40px;
     height: 36px;
     font-weight: 500;
 }
