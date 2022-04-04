@@ -31,6 +31,19 @@ function getActivityItem()
 
     return  $activityItem;
 }
+function getArrayType()
+{
+    $ArrayType=[
+       'Project',
+       'deals',
+       'Auctions',
+       'Material',
+       'equipment',
+       'job',
+    ];
+
+    return  $ArrayType;
+}
 
 
 function get_dashboard_folder()

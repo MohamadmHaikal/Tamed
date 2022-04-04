@@ -83,7 +83,6 @@ Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name(
 
 Route::get('Item/{model}', 'App\Http\Controllers\Controller@indexItem')->name('Item');
 // Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
-Route::get('/getType/{id}','App\Http\Controllers\Dashboard\AdsController@getType')->name('getType');
 
 //File Manger route
 Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], function () {
@@ -129,6 +128,8 @@ Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('g
 
     Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
         Route::resource('ads', 'AdsController');
+        Route::get('/getType/{type}/{id?}','AdsController@getType')->name('getType');
+
     });
     Route::group(['prefix' => 'project'], function () {
         Route::resource('project', 'ProjectTypeController');

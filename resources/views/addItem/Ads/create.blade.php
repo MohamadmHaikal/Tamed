@@ -91,25 +91,20 @@ $item = isset($item) ? $item: null;
                                                             <input type="text" name="description" placeholder=""
                                                             value="{{ isset($item) ? $item->description : '' }}"
                                                                 class="form-control mb-3" />
-                                                            {{-- <label class="fieldlabels">{{__('type')}}</label> --}}
+                                                            @php
+                                                                $ArrayType = getArrayType();   
+                                                            @endphp
                                                             <div class="form-group">
                                                                 <label for="exampleSelectl">{{__('type')}}</label>
                                                                 <select class="form-control form-control-lg" id="type"
                                                                     name="type">
-                                                                    <option value="Project">
-                                                                        {{__('backend.Contracting Project')}}</option>
-                                                                    <option value="deals">{{__('backend.deals')}}
-                                                                    </option>
-                                                                    <option value="Auctions">{{__('backend.Auctions')}}
-                                                                    </option>
-                                                                    <option value="Material">{{__('backend.Material')}}
-                                                                    </option>
-                                                                    <option value="equipment">
-                                                                        {{__('backend.equipment')}}</option>
-                                                                    <option value="job">{{__('backend.job')}}</option>
+                                                                    @foreach ($ArrayType as $Type)
+                                                                    <option value="{{ $Type }}"
+                                                                    {{ isset($item) && $item->type == $Type ? 'selected' :'' }}>
+                                                                        {{__('backend.'.$Type)}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
-                                                            {{-- <input type="text" name="type" placeholder="" class="form-control mb-3"/> --}}
                                                             <label class="fieldlabels">{{__('city')}}</label>
                                                             <input type="text" name="city" placeholder=""
                                                                value="{{ isset($item) ? $item->city : '' }}"
@@ -182,7 +177,8 @@ $item = isset($item) ? $item: null;
                                                                 <select class="form-control form-control-lg" id="type"
                                                                     name="activitie_id">
                                                                     @foreach ($activityItem as $activity)
-                                                                    <option value="{{  $activity->id }}"  {{ isset($item) && $item->activity()->first()->id==$activity->id ? 'selected' :'' }} >{{  $activity->name }}</option>
+                                                                    <option value="{{  $activity->id }}"  
+                                                                        {{ isset($item) && $item->activity()->first()->id==$activity->id ? 'selected' :'' }} >{{  $activity->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -360,10 +356,13 @@ $item = isset($item) ? $item: null;
 
 @push('custom-scripts')
 <script>
-    $('#type').on('change', function () {
-        var id = this.value;
+    $( document ).ready(function() {
+        type('deals',1)
+    });
+    
+    function type(type,id ='') {
         $('#inputsAds').empty();
-        var url = "{{ URL::to('getType') }}/" + id;
+        var url = "{{ URL::to('ads/getType') }}/" + type +'/'+ id;
         $.ajax({
             url: url,
             type: "get",
@@ -373,7 +372,13 @@ $item = isset($item) ? $item: null;
             },
             error: function (xhr) {}
         });
+    }
+
+    $('#type').on('change', function () {
+        var id = this.value;
+        type(id)
     });
+
     $("#bestPrice").change(function () {
         if ($(this).prop("checked") == true) {
             $("#price").prop('disabled', true);
@@ -396,7 +401,7 @@ $item = isset($item) ? $item: null;
                 });
             //     console.log(fd);
 
-    $.ajaxSetup({
+         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }

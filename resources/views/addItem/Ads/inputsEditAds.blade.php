@@ -1,13 +1,16 @@
 <input type="hidden" name="model" value="{{ $type }}">
+@foreach ($itemValue as $kValue => $itemValue)
+    
 @foreach ($x as $item)
                                                        
                                                              
-@if ($item['type'] == 'radio')
+@if ($item['type'] == 'radio' )
 <div class="form-group">
 <div class="custom-radio-1">
     @foreach ($item['choices'] as $k => $choices)
     <label for="rdo-{{ $k }}" class="btn-radio">
-        <input type="{{ $item['type']  }}" id="rdo-{{ $k }}" name="{{ $item['name'] }}" value="{{ $choices }}">
+        <input type="{{ $item['type']  }}" id="rdo-{{ $k }}" name="{{ $item['name'] }}" {{ $kValue == $item['name'] && $choices == $itemValue ? 'checked' :'' }}
+        value="{{ $choices }}">
         <svg width="20px" height="20px" viewBox="0 0 20 20">
             <circle cx="10" cy="10" r="9"></circle>
             <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
@@ -19,6 +22,8 @@
    
 </div>
 </div>
+
+
 @elseif($item['type'] == 'select')
 <div class="form-group">
 <label for="exampleSelectl">{{  $item['label'] }}</label>
@@ -26,16 +31,17 @@
  
     @foreach ($item['choices'] as  $choices)
 
-    <option value="{{ $choices['value'] }}">{{ $choices['option'] }}</option>
+    <option value="{{ $choices['value'] }}"   {{ $kValue == $item['name'] && $choices['value'] == $itemValue ? 'selected' :'' }} >{{ $choices['option'] }}</option>
     @endforeach
 </select>
 </div>
 @else
 <div class="form-group">
 <label class="fieldlabels">{{ $item['label'] }}</label>
-<input type="{{ $item['type'] }}" name="{{ $item['name'] }}" placeholder="" class="form-control mb-3"/>
+<input type="{{ $item['type'] }}" name="{{ $item['name'] }}" placeholder="" value="{{ ($kValue == $item['name'] ) ? $itemValue : '' }}" class="form-control mb-3"/>
 </div>
 
 @endif
+@endforeach
 
 @endforeach
