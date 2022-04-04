@@ -129,14 +129,14 @@ return [
                     'type' => 'item',
                     'label' => awe_lang('Add Ads'),
                     'route_name' => 'ads.create',
-                    'active_class' => 'addItem/ads/ads/create'
+                    'active_class' => 'ads/ads/create'
 
                 ],
                 [
                     'type' => 'item',
                     'label' => awe_lang('All Ads'),
                     'route_name' => 'ads.index',
-                    'active_class' => 'addItem/ads/ads'
+                    'active_class' => 'ads/ads'
 
                 ],
 

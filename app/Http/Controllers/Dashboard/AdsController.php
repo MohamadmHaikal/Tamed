@@ -16,8 +16,15 @@ class AdsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getType($type){
-        $x = TypeAds::getTypeName($type);
+    public function getType($type,$id='')
+    {
+         
+            $x = TypeAds::getTypeName($type);
+            if ($id != '') {
+            $data['item'] = Ads::find($id);
+                $itemValue= unserialize($data['item']->infoArray);
+                return view('addItem.Ads.inputsEditAds',compact('x','type','itemValue') )->render();
+            }
        return view('addItem.Ads.inputsAds',compact('x','type') )->render();
      
     }

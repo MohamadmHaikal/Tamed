@@ -186,7 +186,7 @@ return array (
 
   'UserType' => 'نوع المستخدم',
   'Add UserType' => 'إضافة نوع المستخدم',
-  'Contracting Project' => 'مشروع مقاولات',
+  'Project' => 'مشروع مقاولات',
   'deals' => 'صفقات',
   'Auctions' => 'مزادات',
   'Material' => 'مواد',
