@@ -18921,7 +18921,7 @@ label {
 }
 
 .darkmode .profile-edit-left::before {
-    border-right: 5px solid #191919;
+    /* border-right: 5px solid #191919; */
     top: -40px;
 }
 

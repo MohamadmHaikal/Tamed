@@ -267,7 +267,7 @@ $current_theme=$_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a>
-                            <a class="account-item" href="{{ url('/pages/profile') }}">
+                            <a class="account-item" href="{{ route("profile")}}">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
                                         <i class="las la-user font-20"></i>

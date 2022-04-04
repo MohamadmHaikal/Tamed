@@ -46,7 +46,12 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
 });
-Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile');
+
+//profile
+Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile')->middleware('LanguageSwitcher');
+Route::post('update-your-avatar',[DashboardController::class,'_updateYourAvatar'])->name('update-your-avatar');
+Route::post('update-your-profile', [DashboardController::class,'_updateYourProfile'])->name('update-your-profile');
+
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all', [UserController::class, 'index'])->name('users.all');
 });
@@ -93,6 +98,20 @@ Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], functio
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+});
+//wallet route
+Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('RchargeAccount', 'App\Http\Controllers\Dashboard\WalletController@_getChargeAccount')->name('RchargeAccount');
+    Route::get('AccountStatement', 'App\Http\Controllers\Dashboard\WalletController@_getAccountStatement')->name('AccountStatement');
+    Route::get('Refund', 'App\Http\Controllers\Dashboard\WalletController@_getRefund')->name('Refund');
+
+
+});
+//Disputes route
+Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
+  
+
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");

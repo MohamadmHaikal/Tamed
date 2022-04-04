@@ -18863,7 +18863,7 @@ label {
 }
 
 .darkmode .profile-edit-left::before {
-    border-right: 5px solid #191919;
+    /* border-right: 5px solid #191919; */
     top: -40px;
 }
 
@@ -18885,7 +18885,7 @@ label {
 }
 
 .darkmode .profile-edit-right .img-thumbnail {
-    background-color: #191919;
+    background-color: #343434;
     border: 1px solid #4a4a4a;
 }
 
@@ -19851,7 +19851,7 @@ body.gu-unselectable .media.drag-type-3 img {
 }
 
 .profile-edit-right {
-    margin: 0px 25px 0rem 0px;
+    /* margin: 0px 25px 0rem 0px; */
     padding: 0px 10px 0rem 0px;
     width: 85%;
 }

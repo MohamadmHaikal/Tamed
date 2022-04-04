@@ -4,10 +4,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DisputesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,42 +15,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+    return view('Disputes.index');
     }
-    public function _getProfile()
-    {
-        return view('dashboard.profile-edit');
-    }
-    public function _updateYourAvatar(Request $request)
-    {
-        $filename = time() . '.' . request()->file->getClientOriginalExtension();
-        request()->file->move(public_path('image'), $filename);
-        $user = User::find(get_current_user_id());
-        $user->logo = $filename;
-        $user->save();
-        return $this->sendJson([
-            'status' => 1,
-            'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
-           
-        ]);
-    }
-    public function _updateYourProfile(Request $request)
-    {   
-        $name = request()->get('name');
-        $phone = request()->get('phone');
-        $email= request()->get('email');
-        $description = request()->get('description');
-        $user = User::find(get_current_user_id());
-        $user->name=$name;
-        $user->phone=$phone;
-        $user->email=$email;
-        $user->description=$description;
-        $user->save();
-        return $this->sendJson([
-            'status' => 1,
-            'message' => view('Common.alert', ['message' => __('backend.Profile Updated successfully'), 'type' => 'success'])->render(),
-           
-        ]);
-    }
+
     /**
      * Show the form for creating a new resource.
      *
