@@ -4,12 +4,19 @@
     {!! Html::style('assets/css/loader.css') !!}
     {!! Html::style('plugins/dropify/dropify.min.css') !!}
     {!! Html::style('assets/css/pages/profile_edit.css') !!}
+    {!! Html::style('assets/css/forms/form-widgets.css') !!}
+    {!! Html::style('assets/css/forms/file-upload.css') !!}
+    {!! Html::style('plugins/flatpickr/flatpickr.css') !!}
+    {!! Html::style('plugins/flatpickr/custom-flatpickr.css') !!}
 @endpush
 
 @section('content')
     <?php
     $user = get_current_user_data();
-    
+    $projects = get_current_user_projects();
+    $cities = get_cities();
+    $userType=get_users_type();
+    $curentType=get_facility_type($user->activitie_id);
     ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
@@ -56,7 +63,7 @@
                                                         data-toggle="pill" href="#v-border-pills-about" role="tab"
                                                         aria-controls="v-border-pills-about" aria-selected="false"><i
                                                             class="lar la-user"></i> {{ __('backend.About') }}</a>
-        
+
                                                     <a class="nav-link  text-center" id="v-border-pills-contact-tab"
                                                         data-toggle="pill" href="#v-border-pills-contact" role="tab"
                                                         aria-controls="v-border-pills-contact" aria-selected="false"><i
@@ -65,6 +72,10 @@
                                                         data-toggle="pill" href="#v-border-pills-work" role="tab"
                                                         aria-controls="v-border-pills-work" aria-selected="false"><i
                                                             class="las la-suitcase"></i> {{ __('backend.projects') }}</a>
+                                                    <a class="nav-link  text-center" id="v-border-pills-profile-tab"
+                                                        data-toggle="pill" href="#v-border-pills-profile" role="tab"
+                                                        aria-controls="v-border-pills-profile" aria-selected="false"><i
+                                                            class="las la-file"></i> {{ __('backend.profile') }}</a>
                                                 </div>
                                             </div>
                                             <div class="mt-3">
@@ -81,7 +92,7 @@
                                                     <div class=" text-center img-thumbnail">
                                                         <input type="file" id="UploadLogo" class="dropify"
                                                             data-default-file="{{ url("image/$user->logo") }}"
-                                                            data-max-file-size="2M"  name="logo"/>
+                                                            data-max-file-size="2M" name="logo" />
                                                         <p class="mt-2"><i class="flaticon-cloud-upload mr-1"></i>
                                                             {{ __('backend.Upload Picture') }}</p>
                                                     </div>
@@ -92,32 +103,62 @@
                                                             <div class="form-group">
                                                                 <label for="fullName">{{ __('backend.name') }}</label>
                                                                 <input type="text" class="form-control mb-4 "
-                                                                    placeholder="{{ __('backend.name') }}"
-                                                                    name="name"
+                                                                    placeholder="{{ __('backend.name') }}" name="name"
                                                                     value="{{ $user->name }}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="country">{{ __('backend.facility type') }}</label>
-                                                            <select class="form-control"  name="facility_type">
-                                                                <option selected >{{ __('شركة مقاولات') }}
-                                                                </option>
-                                                            </select>
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="country">{{ __('backend.facility type') }}</label>
+                                                                <select class="form-control" name="facility_type" id="facility_type"  data-now="{{ $curentType->id }}"
+                                                                    data-current="{{ $user->activitie_id }}">
+                                                                    @foreach ($userType as $type )
+                                                                    @if ($curentType->id==$type->id)
+                                                                    <option value="{{$type->id}}" selected>{{ $type->name }}
+                                                                    </option>
+                                                                    @else
+                                                                     <option value="{{$type->id}}">{{ $type->name }}
+                                                                    </option>
+                                                                    @endif
+                                                                   
+                                                                    @endforeach
+                                                                  
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="country">{{ __('backend.facility activity') }}</label>
-                                                            <select class="form-control"  name="facility_activity">
-                                                              
-                                                                <option selected >{{ __('تشيد وبناء') }}
-                                                                </option>
-                                                            </select>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="country">{{ __('backend.facility activity') }}</label>
+                                                                <select class="form-control" name="facility_activity" id="facility_activity">
+
+                                                                   
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="row col-md-12">
+                                                            <?php
+                                                                $i=0
+                                                                
+                                                                ?>
+                                                                <div class="form-group" style="padding-right: inherit;" id="subActivity">
+                                                                    {{-- @for ($i=0; $i<30;$i++)
+                                                                        
+                                                                   
+                                                                    <!-- Visible button -->
+                                                                    <input onclick="toogleButton(this,'hiddenButton')"
+                                                                        class="btn btn-outline-primary btn-rounded mb-2" type="button" value="ttt">
+                                                                    <!-- Hidden input -->
+                                                                    <input name="FM_city" id="hiddenButton" type="hidden"
+                                                                        value="0">
+                                                                        @endfor --}}
+                                                                </div>
+                                                               
+                                                           
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -133,7 +174,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="tab-pane fade" id="v-border-pills-contact" role="tabpanel"
                                                     aria-labelledby="v-border-pills-contact-tab">
                                                     <div class="row">
@@ -141,50 +182,59 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="country">{{ __('backend.City') }}</label>
-                                                                        <select class="form-control"  name="City">
-                                                                           
-                                                                            <option selected >{{ __('الرياض') }}
-                                                                            </option>
-                                                                            <option>{{ __('جدة') }}</option>
-                                                                            <option>{{ __('المدينة المنورة') }}</option>
-                                                                            <option>{{ __('جدة') }}</option>
-                                                                            <option>{{ __('ابها') }}</option>
+                                                                        <label
+                                                                            for="country">{{ __('backend.City') }}</label>
+                                                                        <select class="form-control" name="city" id="city"
+                                                                            data-now="{{ $user->city_id }}"
+                                                                            data-current="{{ $user->neighbor_id }}">
+                                                                            @foreach ($cities as $city)
+                                                                                @if ($user->city_id == $city->id)
+                                                                                    <option value="{{ $city->id }}"
+                                                                                        selected>{{ $city->name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $city->id }}">
+                                                                                        {{ $city->name }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="country">{{ __('backend.Neighborhood') }}</label>
-                                                                        <select class="form-control"  name="Neighborhood">
-                                                                           
-                                                                            <option selected>{{ __('غرناطة') }}
-                                                                            </option>
-                                                                            <option>{{ __('اليرموك') }}</option>
-                                                                            <option>{{ __('الدرعية') }}</option>
-                                                        
+                                                                        <label
+                                                                            for="country">{{ __('backend.Neighborhood') }}</label>
+                                                                        <select class="form-control" name="Neighborhood"
+                                                                            id="Neighborhood">
+
+
+
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                              
+
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="phone">{{ __('backend.phone') }}</label>
-                                                                        <input type="text"  name="phone" class="form-control mb-4"
+                                                                        <label
+                                                                            for="phone">{{ __('backend.phone') }}</label>
+                                                                        <input type="text" name="phone"
+                                                                            class="form-control mb-4"
                                                                             placeholder="{{ __('Write your phone number here') }}"
-                                                                            value="{{$user->phone}}" readonly>
+                                                                            value="{{ $user->phone }}" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="email">{{ __('backend.email') }}</label>
+                                                                        <label
+                                                                            for="email">{{ __('backend.email') }}</label>
                                                                         <input type="text" class="form-control mb-4"
-                                                                        name="email"
+                                                                            name="email"
                                                                             placeholder="{{ __('Write your email here') }}"
                                                                             value="{{ $user->email }}">
                                                                     </div>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,23 +357,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
-                                                <div class="tab-pane fade" id="v-border-pills-work" role="tabpanel"
-                                                    aria-labelledby="v-border-pills-work-tab">
+                                                <div class="tab-pane fade" id="v-border-pills-work1" role="tabpanel"
+                                                    aria-labelledby="v-border-pills-work1-tab1">
                                                     <div class="row">
-                                                        <div class="col-md-12 text-right mb-2">
-                                                            <button class="btn btn-primary">{{ __('Add') }}</button>
-                                                        </div>
                                                         <div class="col-md-12">
                                                             <div class="work-section">
+
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label
-                                                                                for="degree2">{{ __('Company Name') }}</label>
-                                                                            <input type="text" class="form-control mb-4"
-                                                                                placeholder="{{ __('Add your work here') }}"
-                                                                                value="{{ __('Amazon') }}">
+                                                                                for="degree2">{{ __('backend.name') }}</label>
+                                                                            <input type="text" name="project_name"
+                                                                                class="form-control mb-4"
+                                                                                placeholder="{{ __('backend.name') }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="degree2">{{ __('backend.description') }}</label>
+                                                                            <textarea type="text" class="form-control mb-4" rows="10" name="project_description"
+                                                                                placeholder="{{ __('backend.description') }}"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -331,180 +386,136 @@
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label
-                                                                                        for="degree3">{{ __('Company Name') }}</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control mb-4"
-                                                                                        placeholder="{{ __('Job Title') }}"
-                                                                                        value="{{ __('Data Analyst') }}">
+                                                                                        class="fieldlabels">{{ __('backend.Starting From') }}</label>
+                                                                                    <input id="basicExample"
+                                                                                        name="start_date"
+                                                                                        class="form-control flatpickr flatpickr-input active basicExample"
+                                                                                        type="text"
+                                                                                        placeholder="{{ __('Select Date') }}">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
-                                                                                    <label for="degree4"></label>
-                                                                                    <input type="text"
-                                                                                        class="form-control mb-4"
-                                                                                        placeholder="{{ __('Location') }}"
-                                                                                        value="{{ __('Geneva') }}">
+
+                                                                                    <label
+                                                                                        class="fieldlabels">{{ __('backend.Ending In') }}</label>
+                                                                                    <input id="basicExample" name="end_date"
+                                                                                        class="form-control flatpickr flatpickr-input active basicExample"
+                                                                                        type="text"
+                                                                                        placeholder="{{ __('Select Date') }}">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label>{{ __('Starting From') }}</label>
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-6">
-                                                                                            <select
-                                                                                                class="form-control mb-4">
-                                                                                                <option>
-                                                                                                    {{ __('Month') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jan') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Feb') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Mar') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Apr') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('May') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jun') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jul') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Aug') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Sep') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Oct') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Nov') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Dec') }}
-                                                                                                </option>
-                                                                                            </select>
+
+                                                                        <div class="form-group">
+                                                                            <label>{{ __('backend.project photos') }}</label>
+                                                                            {{-- <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                                        <div class="attached-files">
+                                                                                            <img id="image-preview" width="320">
                                                                                         </div>
-                                                                                        <div class="col-md-6">
-                                                                                            <select
-                                                                                                class="form-control mb-4">
-                                                                                                <option>
-                                                                                                    {{ __('Year') }}
-                                                                                                </option>
-                                                                                                <option>2020</option>
-                                                                                                <option>2019</option>
-                                                                                                <option>2018</option>
-                                                                                                <option>2017</option>
-                                                                                                <option>2016</option>
-                                                                                                <option>2015</option>
-                                                                                                <option>2014</option>
-                                                                                                <option>2013</option>
-                                                                                                <option>2012</option>
-                                                                                                <option>2011</option>
-                                                                                                <option>2010</option>
-                                                                                                <option>2009</option>
-                                                                                                <option>2008</option>
-                                                                                                <option>2007</option>
-                                                                                                <option>2006</option>
-                                                                                                <option>2005</option>
-                                                                                                <option>2004</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group">
-                                                                                    <label>{{ __('Ending In') }}</label>
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-6 mb-4">
-                                                                                            <select class="form-control">
-                                                                                                <option>
-                                                                                                    {{ __('Month') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jan') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Feb') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Mar') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Apr') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('May') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jun') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Jul') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Aug') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Sep') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Oct') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Nov') }}
-                                                                                                </option>
-                                                                                                <option>
-                                                                                                    {{ __('Dec') }}
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <div class="col-md-6">
-                                                                                            <select
-                                                                                                class="form-control input-sm">
-                                                                                                <option>
-                                                                                                    {{ __('Year') }}
-                                                                                                </option>
-                                                                                                <option>2020</option>
-                                                                                                <option>2019</option>
-                                                                                                <option>2018</option>
-                                                                                                <option>2017</option>
-                                                                                                <option>2016</option>
-                                                                                                <option>2015</option>
-                                                                                                <option>2014</option>
-                                                                                                <option>2013</option>
-                                                                                                <option>2012</option>
-                                                                                                <option>2011</option>
-                                                                                                <option>2010</option>
-                                                                                                <option>2009</option>
-                                                                                                <option>2008</option>
-                                                                                                <option>2007</option>
-                                                                                                <option>2006</option>
-                                                                                                <option>2005</option>
-                                                                                                <option>2004</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                                        <label for="file-upload" class="custom-file-upload mb-0">
+                                                                                            <a title="Attach a file" class="mr-2 pointer text-primary">
+                                                                                                <i class="las la-paperclip font-20"></i>
+                                                                                                <span class="font-17">{{__('Forms')}}Click here to attach an image</span>
+                                                                                            </a>
+                                                                                        </label>
+                                                                                        <input id="file-upload" name='upload_cont_img[]' type="file" accept="image/*" style="display:none;" onchange="handleFileChange()" multiple>
+                                                                                    </div> --}}
+
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
+
+                                                                <button class="btn btn-success" type="submit"
+                                                                    id="AddProject"
+                                                                    style="margin-right: 80%;">{{ __('backend.add') }}</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-border-pills-profile" role="tabpanel"
+                                                    aria-labelledby="v-border-pills-profile-tab">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="work-section text-center">
+                                                                <label for="profile" class="custom-file-upload mb-0">
+                                                                    <a title="Attach a file"
+                                                                        class="mr-2 pointer text-primary btn btn-outline-primary">
+                                                                        <i class="las la-paperclip font-20"></i>
+                                                                        <span
+                                                                            class="font-17">{{ __('backend.profile upload') }}</span>
+                                                                    </a>
+                                                                </label>
+                                                                <input id="profile" name='upload_3D_files' type="file"
+                                                                    accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                    style="display:none;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-border-pills-work" role="tabpanel"
+                                                    aria-labelledby="v-border-pills-work-tab">
+                                                    <div class="row">
+                                                        <div class="col-md-12 text-right mb-2">
+                                                            <button class="btn btn-primary" id="v-border-pills-work1-tab1"
+                                                                data-toggle="pill" href="#v-border-pills-work1" role="tab"
+                                                                aria-controls="v-border-pills-work1"
+                                                                aria-selected="false">{{ __('backend.Add Project') }}</button>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive mb-4">
+
+                                                                <table id="export-dt" class="table table-hover"
+                                                                    style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>{{ __('backend.id') }}</th>
+                                                                            <th>{{ __('backend.project name') }}</th>
+                                                                            <th>{{ __('backend.Starting From') }}</th>
+                                                                            <th>{{ __('backend.Ending In') }}</th>
+                                                                            <th class="no-content"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($projects as $project)
+                                                                            <tr>
+                                                                                <td>{{ $project->id }}</td>
+                                                                                <td>{{ $project->name }}</td>
+                                                                                <td>{{ $project->start_date }}</td>
+                                                                                <td>{{ $project->end_date }}</td>
+                                                                                <td class="text-center">
+                                                                                    <div class="dropdown custom-dropdown">
+                                                                                        <a class="dropdown-toggle font-20 text-primary"
+                                                                                            href="#" role="button"
+                                                                                            data-toggle="dropdown"
+                                                                                            aria-haspopup="true"
+                                                                                            aria-expanded="false">
+                                                                                            <i class="las la-cog"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu"
+                                                                                            aria-labelledby="dropdownMenuLink1"
+                                                                                            style="will-change: transform;">
+                                                                                            <a class="dropdown-item show-item"
+                                                                                                data-id="{{ $project->id }}"
+                                                                                                href="javascript:void(0);">{{ __('backend.Show') }}</a>
+                                                                                            <a class="dropdown-item edit-item"
+                                                                                                href="javascript:void(0);"
+                                                                                                data-id="{{ $project->id }}">{{ __('backend.Edit') }}</a>
+
+                                                                                            <a class="dropdown-item "
+                                                                                                href="{{ route('delete-your-project', [$project->id]) }}"
+                                                                                                style="color: red">{{ __('backend.Delete') }}</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -527,7 +538,12 @@
     {!! Html::script('assets/js/loader.js') !!}
     {!! Html::script('plugins/dropify/dropify.min.js') !!}
     {!! Html::script('assets/js/pages/profile_edit.js') !!}
+    {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
+    {!! Html::script('plugins/flatpickr/custom-flatpickr.js') !!}
 @endpush
 
 @push('custom-scripts')
+    <script>
+      
+    </script>
 @endpush

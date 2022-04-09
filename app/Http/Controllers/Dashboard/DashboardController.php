@@ -4,7 +4,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\User;
+use App\Models\UserProjects;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -31,25 +33,104 @@ class DashboardController extends Controller
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
-           
+
+        ]);
+    }
+    public static function formatBytes($size, $precision = 2)
+    {
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
+    }
+    public function _updateYourProfileFile(Request $request)
+    {
+        $size = $request->file('file')->getSize();
+        $size = $this->formatBytes($size, $precision = 2);
+        $name = $request->file('file')->getClientOriginalName();
+        $type = $request->file('file')->extension();
+        $modal = ['owner' => get_current_user_id(), 'size' => $size, 'type' => $type, 'section' => 'profile'];
+        $modal = serialize($modal);
+        $filename = time() . '.' . request()->file->getClientOriginalExtension();
+        request()->file->move(public_path('image'), $filename);
+        $file = new File;
+        $file->name = $name;
+        $file->modal = $modal;
+        $file->file = $filename;
+        $file->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
+
+        ]);
+    }
+    public function _showProject($id)
+    {
+        return UserProjects::find($id);
+    }
+    public function _deleteYourProject($id)
+    {
+        UserProjects::find($id)->delete();
+        return redirect()->back();
+    }
+    public function _editProject(Request $request, $id)
+    {
+        UserProjects::where('id', $id)->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'author' => get_current_user_id()
+        ]);
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.project updated successfully'), 'type' => 'success'])->render(),
+            'reload' => true
+        ]);
+    }
+    public function _addYourProject(Request $request)
+    {
+        UserProjects::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'author' => get_current_user_id()
+        ]);
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.project added successfully'), 'type' => 'success'])->render(),
+            'reload' => true
         ]);
     }
     public function _updateYourProfile(Request $request)
-    {   
+    {
         $name = request()->get('name');
         $phone = request()->get('phone');
-        $email= request()->get('email');
+        $email = request()->get('email');
         $description = request()->get('description');
+        $city = request()->get('city');
+        $neighbor = request()->get('neighbor');
+        $activitie_id = request()->get('activitie_id');
         $user = User::find(get_current_user_id());
-        $user->name=$name;
-        $user->phone=$phone;
-        $user->email=$email;
-        $user->description=$description;
+        $user->name = $name;
+        $user->phone = $phone;
+        $user->email = $email;
+        $user->verified=1;
+        $user->description = $description;
+        $user->city_id = $city;
+        $user->neighbor_id = $neighbor;
+         $user->activitie_id = $activitie_id;
         $user->save();
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.Profile Updated successfully'), 'type' => 'success'])->render(),
-           
+
         ]);
     }
     /**

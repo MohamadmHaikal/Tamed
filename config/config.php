@@ -111,9 +111,11 @@ return [
                 [
                     'type' => 'item',
                     'label' => awe_lang('users types'),
-                    'route_name' => 'users.all',
-                    'active_class' => 'chat'
+                    'route_name' => 'Item',
+                    'parameter' => 'UserType',
+                    'active_class' => 'Item/UserType'
                 ],
+
             ],
         ],
 
@@ -216,7 +218,67 @@ return [
         ],
     ],
     'partner_menu' => [],
-    'customer_menu' => [],
+    'customer_menu' => [
+        [
+            'type' => 'item',
+            'label' => awe_lang('MyAccount'),
+            'icon' => 'la-user',
+            'route_name' => 'profile',
+
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('eBills'),
+            'icon' => 'la-receipt',
+            'route_name' => 'eBills',
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('wallet'),
+            'icon' => 'la-wallet',
+            'id' => 'wallet',
+            'route_name' => 'wallet',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Rcharge the balance'),
+                    'route_name' => 'RchargeAccount',
+                    'active_class' => 'wallet/RchargeAccount'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Account statement'),
+                    'route_name' => 'AccountStatement',
+                    'active_class' => 'wallet/AccountStatement'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Refund'),
+                    'route_name' => 'Refund',
+                    'active_class' => 'wallet/Refund'
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('Disputes'),
+            'icon' => 'la-gavel',
+            'route_name' => "Disputes",
+
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('Disputes'),
+            'icon' => 'la-gavel',
+            'route_name' => "Disputes",
+
+        ],
+    ],
 
     'theme_options' => [
         'sections' => [

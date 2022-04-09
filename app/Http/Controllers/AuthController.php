@@ -54,6 +54,9 @@ class AuthController extends Controller
                 'password' => \Illuminate\Support\Str::random(12),
             ];
             $user = Sentinel::registerAndActivate($credentials);
+            $user_model = new \App\Models\User();
+            $role = $user_model->getRoleByName('customer');
+            $user_model->updateUserRole($user->getUserId(), $role->id);
             $users = User::find($user['id']);
             $users['v-code'] = $code;
             $users['password'] = bcrypt($code);

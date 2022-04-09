@@ -63,7 +63,7 @@
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ $user->phone }}</td>
                                                         <td>{{ $user->email }}</td>
-                                                        <td>{{ __('مستخدم') }}</td>
+                                                        <td>{{ get_user_role($user->id)?get_user_role($user->id)->name:'customer' }}</td>
 
                                                         <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
@@ -200,10 +200,6 @@
                       
                         {
                             extend: 'excel',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'pdf',
                             className: 'btn btn-primary'
                         },
                         {

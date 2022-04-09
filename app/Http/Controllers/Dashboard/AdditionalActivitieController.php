@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Activitie;
 use App\Models\AdditionalActivitie;
+use App\Models\UserActivities;
 use Illuminate\Http\Request;
 
 class AdditionalActivitieController extends Controller
@@ -19,7 +20,7 @@ class AdditionalActivitieController extends Controller
         //
         $activities = AdditionalActivitie::all();
         $mainActivitys = Activitie::all();
-        return view('addItem.AdditionalActivitie.index', compact('activities','mainActivitys'));
+        return view('addItem.AdditionalActivitie.index', compact('activities', 'mainActivitys'));
     }
 
     /**
@@ -33,7 +34,28 @@ class AdditionalActivitieController extends Controller
         $mainActivitys = Activitie::all();
         return view('addItem.AdditionalActivitie.create', compact('mainActivitys'));
     }
-
+    public function _getAdditional($id)
+    {
+        $activities = AdditionalActivitie::where('activitie_id', '=', $id)->get();
+        return $activities;
+    }
+    public function _get_user_Additional()
+    {
+        $activities = UserActivities::where('user_id', '=', get_current_user_id())->get();
+        return $activities;
+    }
+    public function _changeStatus(Request $request)
+    {
+        if ($request->type != 0) {
+            $activities = new UserActivities;
+            $activities->user_id = get_current_user_id();
+            $activities->activity_id = $request->id;
+            $activities->save();
+        } else {
+            $activities = UserActivities::where('activity_id', '=', $request->id)->where('user_id', '=', get_current_user_id())->first();
+            $activities->delete();
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *

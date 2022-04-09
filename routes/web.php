@@ -19,6 +19,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\NeighborhoodController;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
@@ -47,11 +48,24 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
 });
 
+//neighbor
+Route::get('neighbor/{id}', [NeighborhoodController::class, '_getNeighbor'])->name('get.Neighbor');
+
+//activity
+Route::get('activity/{id}', [ActivitiesController::class, '_getActivity'])->name('get.activity');
+Route::get('additional/{id}', [AdditionalActivitieController::class, '_getAdditional'])->name('get.additional');
+Route::get('userAdditional', [AdditionalActivitieController::class, '_get_user_Additional'])->name('get.Useradditional');
+Route::post('changeStatus/{type}/{id}', [AdditionalActivitieController::class, '_changeStatus'])->name('changeStatus');
+
 //profile
 Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile')->middleware('LanguageSwitcher');
-Route::post('update-your-avatar',[DashboardController::class,'_updateYourAvatar'])->name('update-your-avatar');
-Route::post('update-your-profile', [DashboardController::class,'_updateYourProfile'])->name('update-your-profile');
-
+Route::post('update-your-avatar', [DashboardController::class, '_updateYourAvatar'])->name('update-your-avatar');
+Route::post('update-your-file', [DashboardController::class, '_updateYourProfileFile'])->name('update-your-file');
+Route::post('update-your-profile', [DashboardController::class, '_updateYourProfile'])->name('update-your-profile');
+Route::post('add-your-project', [DashboardController::class, '_addYourProject'])->name('add-your-project');
+Route::get('delete-your-project/{id}', [DashboardController::class, '_deleteYourProject'])->name('delete-your-project');
+Route::get('show/project/{id}', [DashboardController::class, '_showProject'])->name('show-project');
+Route::post('edit/project/{id}', [DashboardController::class, '_editProject'])->name('edit-project');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all', [UserController::class, 'index'])->name('users.all');
 });
@@ -103,14 +117,11 @@ Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], functio
     Route::get('RchargeAccount', 'App\Http\Controllers\Dashboard\WalletController@_getChargeAccount')->name('RchargeAccount');
     Route::get('AccountStatement', 'App\Http\Controllers\Dashboard\WalletController@_getAccountStatement')->name('AccountStatement');
     Route::get('Refund', 'App\Http\Controllers\Dashboard\WalletController@_getRefund')->name('Refund');
-
-
 });
 //Disputes route
 Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
-  
-
+    Route::get('/{filter?}', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
+    Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\DisputesController@show')->name('Disputes.show');
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
@@ -126,17 +137,16 @@ Route::post('delete-featured-image', [OptionController::class, '_deleteFeaturedI
 Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('get-list-item');
 
 
-    Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
-        Route::resource('ads', 'AdsController');
-        Route::get('/getType/{type}/{id?}','AdsController@getType')->name('getType');
-
-    });
-    Route::group(['prefix' => 'project'], function () {
-        Route::resource('project', 'ProjectTypeController');
-    });
-    Route::group(['prefix' => 'material'], function () {
-        Route::resource('material', 'MaterialTypeController');
-    });
+Route::group(['prefix' => 'ads', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
+    Route::resource('ads', 'AdsController');
+    Route::get('/getType/{type}/{id?}', 'AdsController@getType')->name('getType');
+});
+Route::group(['prefix' => 'project'], function () {
+    Route::resource('project', 'ProjectTypeController');
+});
+Route::group(['prefix' => 'material'], function () {
+    Route::resource('material', 'MaterialTypeController');
+});
 
 Route::group(['prefix' => 'Users', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 

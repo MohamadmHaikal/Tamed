@@ -2,6 +2,7 @@
 
 use App\Models\ChMessage;
 use App\Models\Notification;
+use App\Models\UserProjects;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Http;
@@ -72,17 +73,22 @@ function get_current_user_name()
         return 0;
     }
 }
+function get_current_user_projects()
+{
+    $projects = UserProjects::where('author', '=', get_current_user_id())->get();
+    return $projects;
+}
 function get_current_user_message_count()
 {
-    return ChMessage::where('to_id','=',get_current_user_id())->where('seen','=',0)->count();
+    return ChMessage::where('to_id', '=', get_current_user_id())->where('seen', '=', 0)->count();
 }
 function get_current_user_header_notification()
 {
-    return Notification::where('user_to','=',get_current_user_id())->take(4)->orderBy('ID', 'DESC')->get();
+    return Notification::where('user_to', '=', get_current_user_id())->take(4)->orderBy('ID', 'DESC')->get();
 }
 function get_current_user_notification_count()
 {
-    return Notification::where('user_to','=',get_current_user_id())->where('seen','=',0)->count();
+    return Notification::where('user_to', '=', get_current_user_id())->where('seen', '=', 0)->count();
 }
 function is_admin($user_id = '')
 {
@@ -153,7 +159,7 @@ function get_user_by_mobile($user_mobile)
     $user = Sentinel::findByCredentials($credentials);
     return (is_object($user)) ? $user : false;
 }
- 
+
 
 function get_users_by_role($role = 'administrator', $for_option = false)
 {
@@ -214,48 +220,47 @@ function update_user_meta($user_id, $meta_key, $meta_value = '')
 
 function remove_user_meta($user_id, $meta_key)
 {
-	$user_model = new \App\Models\User();
+    $user_model = new \App\Models\User();
 
-	return $user_model->deleteUserMetaByWhere([
-		'user_id' => $user_id,
-		'meta_key' => $meta_key
-	]);
+    return $user_model->deleteUserMetaByWhere([
+        'user_id' => $user_id,
+        'meta_key' => $meta_key
+    ]);
 }
 
 
 function checkUser($mobile)
 {
-      $code =mt_rand(1000, 9999);
-    $msg="بلاجات تلبي الاحتياجات \r\n كود التفعيل". $code  ;
-    $x=   Http::post("https://www.msegat.com/gw/sendsms.php", [
-        "userName"=> "بلاجات",
-        "numbers"=> $mobile,
+    $code = mt_rand(1000, 9999);
+    $msg = "بلاجات تلبي الاحتياجات \r\n كود التفعيل" . $code;
+    $x =   Http::post("https://www.msegat.com/gw/sendsms.php", [
+        "userName" => "بلاجات",
+        "numbers" => $mobile,
         "userSender" => "Blagat",
-        "apiKey"=> "2e02b50ebe8e11e93c532c0b1b5cbdcf",
-        "msg"=> "$msg"
+        "apiKey" => "2e02b50ebe8e11e93c532c0b1b5cbdcf",
+        "msg" => "$msg"
     ]);
 
-     $user_model = new \App\Models\User();
-    $u=$user_model->getUserWithMobile($mobile);
+    $user_model = new \App\Models\User();
+    $u = $user_model->getUserWithMobile($mobile);
 
-    if($u != null || isset($u->isNew) != 0){
+    if ($u != null || isset($u->isNew) != 0) {
 
 
-            $data = [
-                'mobile' => $mobile,
-                'password' => bcrypt( $code ),
-                'code' =>   $code
-            ];
-            $new_user = $user_model->updateUser($u->id, $data);
-            //send mobile phone code
+        $data = [
+            'mobile' => $mobile,
+            'password' => bcrypt($code),
+            'code' =>   $code
+        ];
+        $new_user = $user_model->updateUser($u->id, $data);
+        //send mobile phone code
 
-            return  $u;
+        return  $u;
+    } else {
 
-    }else{
-
-         $user_model = new \App\Models\User();
-        $user_model->password=bcrypt( $code );
-        $user_model->code= $code ;
+        $user_model = new \App\Models\User();
+        $user_model->password = bcrypt($code);
+        $user_model->code = $code;
 
         $credentials = [
             'mobile' => $mobile,
@@ -265,12 +270,11 @@ function checkUser($mobile)
         ];
 
         $new_user = create_new_user($credentials);
-        $u=$user_model->getUserWithMobile($new_user['user']['mobile']);
+        $u = $user_model->getUserWithMobile($new_user['user']['mobile']);
 
-    //send mobile phone code
+        //send mobile phone code
 
-    return  $u;
-
+        return  $u;
     }
 }
 
@@ -283,15 +287,15 @@ function create_new_user($data = [])
         'first_name' => '',
         'last_name' => '',
         'mobile' => '',
-     'code' => '',
-        'isNew' =>'',
+        'code' => '',
+        'isNew' => '',
         'role' => 'customer',
     ];
 
     $data = wp_parse_args($data, $default);
 
 
-    if (empty($data['mobile']) ) {
+    if (empty($data['mobile'])) {
         return [
             'status' => 0,
             'message' => __('Invalid mobile ad')
@@ -321,7 +325,7 @@ function create_new_user($data = [])
 
             // } else {
 
-                $user = Sentinel::registerAndActivate($data);
+            $user = Sentinel::registerAndActivate($data);
             // }
 
         } catch (Exception $e) {

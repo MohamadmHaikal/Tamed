@@ -17,7 +17,12 @@
         deleted:"{{__('backend.Deleted!')}}",
         success:"{{__('backend.file has been deleted successfully.')}}",
         continue:"{{__('backend.continue')}}",
-        
+        nameOfProject:"{{__('backend.name of project')}}", 
+        description:"{{__('backend.description')}}",
+        startingFrom:"{{__('backend.Starting From')}}",
+        endingIn:"{{__('backend.Ending In')}}",
+        projectDetails:"{{__('backend.Project details')}}",
+
     };
 </script>
 <!-- Stack array for including inline js or scripts -->

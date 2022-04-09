@@ -1,6 +1,8 @@
 <?php
 
-
+use App\Models\Activitie;
+use App\Models\City;
+use App\Models\UserType;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
@@ -27,19 +29,19 @@ function is_dashboard()
 
 function getActivityItem()
 {
-    $activityItem=App\Models\Activitie::all();
+    $activityItem = App\Models\Activitie::all();
 
     return  $activityItem;
 }
 function getArrayType()
 {
-    $ArrayType=[
-       'Project',
-       'deals',
-       'Auctions',
-       'Material',
-       'equipment',
-       'job',
+    $ArrayType = [
+        'Project',
+        'deals',
+        'Auctions',
+        'Material',
+        'equipment',
+        'job',
     ];
 
     return  $ArrayType;
@@ -677,7 +679,19 @@ function get_site_description()
 {
     return get_option('site_description', __('Awesome Booking System'));
 }
-
+function get_cities()
+{
+    return City::all();
+}
+function get_users_type()
+{
+    return UserType::all();
+}
+function get_facility_type($id)
+{
+    $activity = Activitie::find($id);
+    return UserType::find($activity->type_id);
+}
 function page_title($is_dashboard = false)
 {
     $title = get_site_name() . ' - ' . get_site_description();

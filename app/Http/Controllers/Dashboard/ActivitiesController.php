@@ -21,12 +21,17 @@ class ActivitiesController extends Controller
         $userType = UserType::all();
         return view('addItem.Activities.index', compact('activities', 'userType'));
     }
-
+    public function _getActivity($id)
+    {
+        $activities = Activitie::where('type_id', '=', $id)->get();
+        return $activities;
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //

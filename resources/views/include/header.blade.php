@@ -243,7 +243,7 @@ $current_theme=$_COOKIE['theme'];
                                 !</span>
                         </div>
                         <div class="nav-drop-body account-items pb-0">
-                            <a id="profile-link" class="account-item" href="{{ url('/pages/profile-edit') }}">
+                            <a id="profile-link" class="account-item" href="{{ route('profile') }}">
                                 <div class="media align-center">
                                     <div class="media-left">
                                         <div class="image">
@@ -287,13 +287,13 @@ $current_theme=$_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a> --}}
-                            <a class="account-item settings">
+                            <a class="account-item " href="/">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
-                                        <i class="las la-cog font-20"></i>
+                                        <i class="las la-home font-20"></i>
                                     </div>
                                     <div class="media-content ml-3">
-                                        <h6 class="font-13 mb-0 strong">{{ __('backend.Settings') }}</h6>
+                                        <h6 class="font-13 mb-0 strong">{{ __('backend.Go to home page') }}</h6>
                                     </div>
                                 </div>
                             </a>
@@ -327,7 +327,7 @@ $current_theme=$_COOKIE['theme'];
     <ul class="navbar-item flex-row">
         <li class="nav-item dropdown header-setting">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle rightbarCollapse" data-placement="bottom">
-                <i class="las la-sliders-h"></i>
+                {{-- <i class="las la-sliders-h"></i> --}}
             </a>
         </li>
     </ul>

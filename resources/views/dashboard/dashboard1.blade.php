@@ -21,8 +21,7 @@
                     <div class="page-header">
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);"> {{__('Dashboards')}}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span> {{__('Dashboard 1')}}</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);"> {{__('backend.dashboard')}}</a></li>
                             </ol>
                         </nav>
                     </div>

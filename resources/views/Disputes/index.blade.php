@@ -61,16 +61,18 @@
                                     <div class="table-responsive mb-4">
                                         <div class="widget-content widget-content-area text-center">
                                             <div class="button-list">
-                                                <button type="button"
-                                                    class="btn btn-outline-primary btn-rounded">{{ __('backend.All orders') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-success btn-rounded">{{ __('backend.My active requests') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-warning btn-rounded">{{ __('backend.Action requests') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-danger btn-rounded">{{ __('backend.my late orders') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-dark btn-rounded">{{ __('backend.My requests are closed') }}</button>
+                                                <a href="{{ route('Disputes') }}">
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary btn-rounded">{{ __('backend.All orders') }}</button>
+                                                </a>
+                                                <a href="{{ route('Disputes', ['active']) }}">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success btn-rounded">{{ __('backend.My active requests') }}</button>
+                                                </a>
+                                                <a href="{{ route('Disputes', ['closed']) }}">
+                                                    <button type="button"
+                                                        class="btn btn-outline-dark btn-rounded">{{ __('backend.My requests are closed') }}</button>
+                                                </a>
                                             </div>
                                         </div>
                                         <table id="last-page-dt" class="table table-hover" style="width:100%">
@@ -80,10 +82,28 @@
                                                     <th>{{ __('backend.Created at') }}</th>
                                                     <th>{{ __('backend.the side') }}</th>
                                                     <th>{{ __('backend.status') }}</th>
-                                                    <th class="no-content"> {{ __('backend.action') }}</th>
+                                                    <th class="no-content"> </th>
                                                 </tr>
-                                            </thead>
                                             <tbody>
+                                                @foreach ($reports as $report)
+                                                    <tr>
+                                                        <td>{{ $report->id }}</td>
+                                                        <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
+                                                        <td>{{ get_user_by_id($report->against_id)->name }}</td>
+                                                        <td>{{ $report->status }}</td>
+                                                        <td>
+                                                            <div class="dropdown custom-dropdown">
+                                                                <a class="dropdown-toggle  text-primary"
+                                                                    href="{{ route('Disputes.show', [$report->id]) }}"
+                                                                    role="button">
+                                                                    {{ __('backend.Show') }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </thead>
+
 
 
                                             </tbody>

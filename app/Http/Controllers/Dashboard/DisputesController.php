@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class DisputesController extends Controller
@@ -13,9 +14,29 @@ class DisputesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filter = '')
     {
-    return view('Disputes.index');
+        $reports = null;
+        if (is_admin()) {
+            if ($filter) {
+                $reports = Report::where('status', '=', $filter)->get();
+            } else {
+                $reports = Report::all();
+            }
+        } else {
+            if ($filter) {
+                $reports = Report::where('applicant_id', get_current_user_id())
+                    ->orWhere('against_id', get_current_user_id())
+                    ->where('status', '=', $filter)
+                    ->get();
+            } else {
+                $reports = Report::where('applicant_id', get_current_user_id())
+                    ->orWhere('against_id', get_current_user_id())
+                    ->get();
+            }
+        }
+
+        return view('Disputes.index', compact('reports', 'filter'));
     }
 
     /**
@@ -47,7 +68,8 @@ class DisputesController extends Controller
      */
     public function show($id)
     {
-        //
+        $report = Report::find($id);
+        return view('Disputes.show', compact('report'));
     }
 
     /**

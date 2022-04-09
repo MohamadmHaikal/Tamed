@@ -12,20 +12,7 @@
                   value: $('meta[name="csrf-token"]').attr('content')
               });
               element.disabled = true;   
-              
-              var fd = new FormData();
-             var files = $(".file-upload")[0].files;
-        
-      
-              for (var i = 0; i < files.length; i++) {
-                  fd.append(i, $(".file-upload").get(0).files[i]);
-                  data.push({
-                    name: 'lolo',
-                    value: $(".file-upload").get(0).files[i]
-                });
-    
-              }
-
+           
              
               $.post(form.attr('action'), data, function (respon) {
                  
