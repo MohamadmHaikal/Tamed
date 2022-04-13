@@ -91,6 +91,20 @@ return [
                     'parameter' => 'UserType',
                     'active_class' => 'Item/UserType'
                 ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('City'),
+                    'route_name' => 'Item',
+                    'parameter' => 'City',
+                    'active_class' => 'Item/City'
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Neighborhood'),
+                    'route_name' => 'Item',
+                    'parameter' => 'Neighborhood',
+                    'active_class' => 'Item/Neighborhood'
+                ],
 
             ],
         ],
@@ -145,10 +159,30 @@ return [
             ],
         ],
         [
-            'type' => 'item',
+            'type' => 'parent',
             'label' => awe_lang('Quotations'),
             'icon' => 'la-copy',
             'route_name' => 'Quotes',
+            'id' => 'Quotes',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes issued'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes received'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
         ],
         [
             'type' => 'item',
@@ -180,12 +214,11 @@ return [
                 ],
                 [
                     'type' => 'item',
-                    'label' => awe_lang('Refund'),
-                    'route_name' => 'Refund',
-                    'active_class' => 'wallet/Refund'
+                    'label' => awe_lang('Refund request'),
+                    'route_name' => 'all-Refund',
+                    'active_class' => 'wallet/all-Refund'
 
                 ],
-
             ],
         ],
         [
@@ -254,11 +287,12 @@ return [
                     'active_class' => 'wallet/AccountStatement'
 
                 ],
+              
                 [
                     'type' => 'item',
-                    'label' => awe_lang('Refund'),
-                    'route_name' => 'Refund',
-                    'active_class' => 'wallet/Refund'
+                    'label' => awe_lang('Refund request'),
+                    'route_name' => 'all-Refund',
+                    'active_class' => 'wallet/all-Refund'
 
                 ],
 

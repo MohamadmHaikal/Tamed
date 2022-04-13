@@ -174,15 +174,15 @@
 
 @push('plugin-scripts')
 {!! Html::script('assets/js/loader.js') !!}
-{!! Html::script('plugins/table/datatable/datatables.js') !!}
+{{-- {!! Html::script('plugins/table/datatable/datatables.js') !!} --}}
 <!--  The following JS library files are loaded to use Copy CSV Excel Print Options-->
-{!! Html::script('plugins/table/datatable/button-ext/dataTables.buttons.min.js') !!}
+{{-- {!! Html::script('plugins/table/datatable/button-ext/dataTables.buttons.min.js') !!}
 {!! Html::script('plugins/table/datatable/button-ext/jszip.min.js') !!}
 {!! Html::script('plugins/table/datatable/button-ext/buttons.html5.min.js') !!}
 {!! Html::script('plugins/table/datatable/button-ext/buttons.print.min.js') !!}
 <!-- The following JS library files are loaded to use PDF Options-->
 {!! Html::script('plugins/table/datatable/button-ext/pdfmake.min.js') !!}
-{!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!}
+{!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!} --}}
 
 
 
@@ -194,7 +194,7 @@
 
 
 @push('custom-scripts')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#basic-dt').DataTable({
                 "language": {
@@ -337,6 +337,6 @@
                 $(this).toggleClass("toggle-clicked");
             });
         });
-</script>
+</script> --}}
 
 @endpush

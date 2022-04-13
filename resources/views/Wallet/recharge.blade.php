@@ -8,6 +8,9 @@
 @endpush
 
 @section('content')
+<?php
+$user=get_current_user_data();
+?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
@@ -58,40 +61,34 @@
                                         </div>
 
                                     </div>
-                                    <h4 class="pl-2">رصيد المحفظة</h4>
+                                    <h4 class="pl-2">{{__('backend.wallet balance')}}</h4>
                                     <div class="form-inline mt-3 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">رصيد المحفظة الحالي :</label>
-                                        <h5 id="tt" style="color: darkgreen;font-weight: 900;">35</h5>
+                                        <label for="tt" class="mr-5">{{__('backend.Current wallet balance:')}}</label>
+                                        <h5 id="tt" style="color: darkgreen;font-weight: 900;">{{$user->wallet_balance}}</h5>
                                     </div>
-                                    <h4 class="pl-2 mt-4">طلب شحن رصيد</h4>
+                                    <h4 class="pl-2 mt-4">{{__('backend.Balance recharge request')}}</h4>
                                     <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">التاريخ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <h6 id="tt">Mon, 04 Apr 2022 19:57:11 </h6>
-                                    </div>
-                                    <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">رقم العضوية</label>
-                                        <h6 id="tt" >منصة تعميد - 1212115</h6>
+                                        <label for="tt"
+                                            class="mr-5">{{__('backend.Date')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <h6 id="tt">{{date('h:s:ia , Y-m-d')}}</h6>
                                     </div>
                                     <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-5"> نوع الدفع&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <label for="tt" class="mr-5">{{__('backend.Membership No')}}</label>
+                                        <h6 id="tt">  {{$user->name}} - {{$user->id}}</h6>
+                                    </div>
+                                    <div class="form-inline mt-4 mb-3 pl-4">
+                                        <label for="tt" class="mr-5"> {{__('backend.Payment method')}}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
                                      
-                                       <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                          <input type="radio" class="form-check-input" name="optradio">سداد
-                                        </label>
-                                      </div>
-                                      <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                          <input type="radio" class="form-check-input" name="optradio">بطاقة ائتمانية
-                                        </label>
-                                      </div>
+                                        <img src="{{ asset('assets/img/visa-mas.png') }}" height="40px" />
                                     </div>
                                     <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">مبلغ الشحن </label>
-                                        <input class="form-control" type="text"  id="example-text-input">
+                                        <label for="tt" class="mr-5">{{__('backend.shipping cost')}} </label>
+                                        <input class="form-control" type="text" id="example-text-input">
 
                                     </div>
-                                    <button type="button" class="btn btn-primary" style="margin-right: 75%;">{{__('شحن الرصيد')}}</button>
+                                    <button type="button" class="btn btn-primary"
+                                        style="margin-right: 75%;">{{ __('backend.recharge') }}</button>
                                 </div>
                             </div>
                         </div>

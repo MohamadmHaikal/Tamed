@@ -5,9 +5,14 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/loader.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
+    {!! Html::style('plugins/flatpickr/flatpickr.css') !!}
+    {!! Html::style('plugins/flatpickr/custom-flatpickr.css') !!}
 @endpush
 
 @section('content')
+    <?php
+    $user = get_current_user_data();
+    ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
@@ -33,7 +38,7 @@
                     </div>
                 </li>
             </ul>
-            
+
         </header>
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->
@@ -53,42 +58,77 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{__('backend.Account statement')}}</h4>
-    
-                                        </div>
-                                       
-                                    </div> 
+                                            <h4 class="table-header">{{ __('backend.Account statement') }}</h4>
 
-                                    <h4 class="pl-2">كشف حساب منصة بلاجات </h4>
-                                    <div class="row">
-                                        <div class="form-inline mt-3 mb-3 pl-4">
-                                            <label for="tt" class="mr-5">الفترة من </label>
-                                            <input class="form-control" type="text"  id="example-text-input">
-    
-                                        </div>
-                                        <div class="form-inline mt-3 mb-3 pl-4">
-                                            <label for="tt" class="mr-5">الفترة إلى </label>
-                                            <input class="form-control" type="text"  id="example-text-input">
-    
                                         </div>
 
                                     </div>
-                                    <div class="ml-4 mt-3">
 
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                              <input type="radio" class="form-check-input" name="optradio">سداد
-                                            </label>
-                                          </div>
-                                          <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                              <input type="radio" class="form-check-input" name="optradio">بطاقة ائتمانية
-                                            </label>
-                                          </div>
-                                    </div>
-                                    
-                                    <button type="button" class="btn btn-primary" style="margin-right: 75%;">{{__('العرض')}}</button>
-                             
+                                    <h4 class="pl-2">{{ __('backend.Account statement') }} {{ $user->name }}
+                                    </h4>
+                                    <form action="{{ route('getStatement') }}" method="GET">
+                                        @csrf
+                                        <div class="row">
+
+                                            <div class="form-inline mt-3 mb-3 pl-4">
+                                                <label for="basicExample" class="mr-5">
+                                                    {{ __('backend.period from') }} </label>
+                                                <input id="basicExample" name="from_date"
+                                                    class="form-control flatpickr flatpickr-input active basicExample"
+                                                    type="text" placeholder="{{ __('backend.select date') }}" value="{{request()->from_date}}">
+
+                                            </div>
+                                            <div class="form-inline mt-3 mb-3 pl-4">
+                                                <label for="basicExample" class="mr-5">
+                                                    {{ __('backend.period to') }}
+                                                </label>
+                                                <input id="basicExample" name="to_date"
+                                                    class="form-control flatpickr flatpickr-input active basicExample"
+                                                    type="text" placeholder="{{ __('backend.select date') }}" value="{{request()->to_date}}">
+
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            style="margin-right: 75%;">{{ __('backend.Show') }}</button>
+                                    </form>
+
+                                    @if ($paymentInfo)
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4 class="table-header"></h4>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="table-responsive mb-4">
+
+                                            <table id="export-dt" class="table table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ __('backend.id') }}</th>
+                                                        <th>{{ __('backend.Membership No') }}</th>
+                                                        <th>{{ __('backend.Created at') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($paymentInfo as $req)
+                                                        <tr>
+                                                            <td>{{ $req->id }}</td>
+                                                            <td>
+                                                                {{ get_user_by_id($req->user_id)->name }}</td>
+
+
+                                                            <td> {{ date('Y-m-d', strtotime($req->created_at)) }}</td>
+
+
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -117,8 +157,158 @@
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
+    {!! Html::script('plugins/flatpickr/custom-flatpickr.js') !!}
 @endpush
 
 @push('custom-scripts')
- 
+<script>
+    $('#Show').on('show.bs.modal', function(event) {
+
+        var button = $(event.relatedTarget);
+        var ModalType = button.data('type')
+        var name = button.data('name')
+        var userType = button.data('usertype')
+        console.log(userType);
+        $("#name").prop('disabled', ModalType == null ? false : true);
+        $("#type_id").prop('disabled', ModalType == null ? false : true);
+        var modal = $(this)
+        modal.find('.modal-body #name').val(name)
+        modal.find('.modal-body #type_id').val(userType)
+    });
+    $(document).ready(function() {
+        $('#basic-dt').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
+        });
+        $('#dropdown-dt').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
+        });
+        $('#last-page-dt').DataTable({
+            "pagingType": "full_numbers",
+            "language": {
+                "paginate": {
+                    "first": "<i class='las la-angle-double-left'></i>",
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>",
+                    "last": "<i class='las la-angle-double-right'></i>"
+                }
+            },
+            "lengthMenu": [3, 6, 9, 12],
+            "pageLength": 9
+        });
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#min').val(), 10);
+                var max = parseInt($('#max').val(), 10);
+                var age = parseFloat(data[3]) || 0; // use data for the age column
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && age <= max) ||
+                    (min <= age && isNaN(max)) ||
+                    (min <= age && age <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        var table = $('#range-dt').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
+        });
+        $('#min, #max').keyup(function() {
+            table.draw();
+        });
+        $('#export-dt').DataTable({
+            dom: '<"row"<"col-md-6"B><"col-md-6"f> ><""rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>>',
+            buttons: {
+                buttons: [{
+                        extend: 'copy',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn btn-primary'
+                    }
+                ]
+            },
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7
+        });
+        // Add text input to the footer
+        $('#single-column-search tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control" placeholder="Search ' + title +
+                '" />');
+        });
+        // Generate Datatable
+        var table = $('#single-column-search').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
+        });
+        // Search
+        table.columns().every(function() {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var table = $('#toggle-column').DataTable({
+            "language": {
+                "paginate": {
+                    "previous": "<i class='las la-angle-left'></i>",
+                    "next": "<i class='las la-angle-right'></i>"
+                }
+            },
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
+        });
+        $('a.toggle-btn').on('click', function(e) {
+            e.preventDefault();
+            // Get the column API object
+            var column = table.column($(this).attr('data-column'));
+            // Toggle the visibility
+            column.visible(!column.visible());
+            $(this).toggleClass("toggle-clicked");
+        });
+    });
+</script>
 @endpush

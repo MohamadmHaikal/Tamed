@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activitie;
 use App\Models\User;
+use App\Models\UserType;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +14,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filter = '')
     {
-        $users = User::all();
+        $users = null;
+        if ($filter) {
+            $activity = get_activity_id_by_user_type($filter);
+            $array = [];
+            foreach ($activity as $a) {
+
+                array_push($array, $a['id']);
+            }
+
+            $users = User::whereIn('activitie_id', $array)->get();
+        } else {
+            $users = User::all();
+        }
         return view('Users.all-Users', compact('users'));
     }
 
@@ -36,7 +50,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->password = '';
+        $user->activitie_id = $request->activitie_id;
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.user added successfully'), 'type' => 'success'])->render(),
+            'reload' => true
+        ]);
     }
 
     /**
@@ -47,7 +72,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $user['allType'] = UserType::all();
+        $user['userType'] = get_facility_type($user->activitie_id)->name;
+        $user['userActivity'] = Activitie::find($user->activitie_id)->name;
+        $user['allActivity'] = Activitie::all();
+        return $user;
     }
 
     /**
@@ -58,7 +88,6 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -70,7 +99,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->activitie_id = $request->activitie_id;
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.Profile Updated successfully'), 'type' => 'success'])->render(),
+            'reload' => true
+        ]);
     }
 
     /**
@@ -82,6 +121,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->back();
+        return $this->sendJson([
+            'status' => 1,
+            'reload' => true,
+        ]);
     }
 }

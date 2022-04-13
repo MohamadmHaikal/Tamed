@@ -26,7 +26,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    SendAdsNotification(21, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
+    SendAdsNotification(28, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
 
     return view('dashboard.dashboard1');
 })->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
@@ -67,7 +67,11 @@ Route::get('delete-your-project/{id}', [DashboardController::class, '_deleteYour
 Route::get('show/project/{id}', [DashboardController::class, '_showProject'])->name('show-project');
 Route::post('edit/project/{id}', [DashboardController::class, '_editProject'])->name('edit-project');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/all', [UserController::class, 'index'])->name('users.all');
+    Route::get('/all/{filter?}', [UserController::class, 'index'])->name('users.all');
+    Route::get('delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::post('edit/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('create', [UserController::class, 'store'])->name('user.create');
 });
 Route::group(['prefix' => 'dashboard', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('dashboard1', function () {
@@ -106,7 +110,7 @@ Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], fun
 });
 //Quotes route
 Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
+    Route::get('/{source}/{filter?}', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
 });
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
@@ -117,6 +121,12 @@ Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], functio
     Route::get('RchargeAccount', 'App\Http\Controllers\Dashboard\WalletController@_getChargeAccount')->name('RchargeAccount');
     Route::get('AccountStatement', 'App\Http\Controllers\Dashboard\WalletController@_getAccountStatement')->name('AccountStatement');
     Route::get('Refund', 'App\Http\Controllers\Dashboard\WalletController@_getRefund')->name('Refund');
+    Route::get('all-Refund', 'App\Http\Controllers\Dashboard\WalletController@_getAllRefund')->name('all-Refund');
+    Route::post('sendRefund', 'App\Http\Controllers\Dashboard\WalletController@_sendRefund')->name('send-Refund');
+    Route::get('showRequest/{id}', 'App\Http\Controllers\Dashboard\WalletController@_showRequest')->name('show-Request');
+    Route::get('deleteRequest/{id}', 'App\Http\Controllers\Dashboard\WalletController@_deleteRequest')->name('delete-Request');
+    Route::post('changeStatus/{id}', 'App\Http\Controllers\Dashboard\WalletController@_changeStatus')->name('change-Request');
+    Route::get('getStatement', 'App\Http\Controllers\Dashboard\WalletController@_getStatement')->name('getStatement');
 });
 //Disputes route
 Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
@@ -148,11 +158,7 @@ Route::group(['prefix' => 'material'], function () {
     Route::resource('material', 'MaterialTypeController');
 });
 
-Route::group(['prefix' => 'Users', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 
-
-    Route::get('delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
-});
 Route::group(['prefix' => 'apps', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('calendar', function () {
         return view('apps.calendar');
@@ -580,6 +586,9 @@ Route::group(['prefix' => 'forms', 'middleware' => 'LanguageSwitcher'], function
     });
     Route::get('text-editor', function () {
         return view('forms.text-editor');
+    });
+    Route::get('text-editor2', function () {
+        return view('forms.text-editor2');
     });
     Route::get('file-upload', function () {
         return view('forms.file-upload');

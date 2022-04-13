@@ -8,6 +8,9 @@
 @endpush
 
 @section('content')
+    <?php
+    $user = get_current_user_data();
+    ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
@@ -20,8 +23,7 @@
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
 
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a
-                                        href="javascript:void(0);">{{ __('backend.Refund') }}</a>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{ __('backend.Refund') }}</a>
                                 </li>
 
                             </ol>
@@ -33,7 +35,7 @@
                     </div>
                 </li>
             </ul>
-            
+
         </header>
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->
@@ -53,39 +55,47 @@
                                 <div class="widget-content widget-content-area br-6">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{__('backend.Refund')}}</h4>
-    
+                                            <h4 class="table-header">{{ __('backend.Refund') }}</h4>
+
                                         </div>
-                                       
-                                    </div> 
 
-                                    <h4 class="pl-2">رصيد المحفظة</h4>
-                                    <div class="form-inline mt-3 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">الرصيد الحالي :</label>
-                                        <input class="form-control" type="text"  id="example-text-input" value="35">
-
-                                    </div>
-                                    <h4 class="pl-2 mt-4">طلب استرداد مبلغ</h4>
-                                    <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">التاريخ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <h6 id="tt">Mon, 04 Apr 2022 19:57:11 </h6>
-                                    </div>
-                                    <div class="form-inline mt-4 mb-3 pl-4">
-                                        <label for="tt" class="mr-4">رقم العضوية&nbsp;&nbsp;&nbsp;</label>
-                                        <h6 id="tt" >منصة تعميد - 1212115</h6>
                                     </div>
                                    
-                                    <div class="form-inline mt-3 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">المستفيد  :</label>
-                                        <input class="form-control" type="text"  id="example-text-input" value="منصة تعميد">
+                                      
+                                        <h4 class="pl-2"> {{ __('backend.wallet balance') }}</h4>
+                                        <div class="form-inline mt-3 mb-3 pl-4">
+                                            <label for="tt"
+                                                class="mr-5">{{ __('backend.Current wallet balance:') }}</label>
+                                            <input class="form-control" type="text" id="example-text-input"
+                                                value="{{ $user->wallet_balance }}" readonly>
 
-                                    </div>
-                                    <div class="form-inline mt-3 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">IBAN    :   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <input class="form-control" type="text"  id="example-text-input" value="">
+                                        </div>
+                                        <h4 class="pl-2 mt-4">{{ __('backend.Request a refund') }}</h4>
+                                        <div class="form-inline mt-4 mb-3 pl-4">
+                                            <label for="tt"
+                                                class="mr-5">{{ __('backend.Date') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <h6 id="tt">{{ date('h:s:ia , Y-m-d') }}</h6>
+                                        </div>
+                                        <div class="form-inline mt-4 mb-3 pl-4">
+                                            <label for="tt" class="mr-4">{{ __('backend.Membership No') }}
+                                                &nbsp;&nbsp;&nbsp;</label>
+                                            <h6 id="tt">{{ $user->id }} - {{ $user->name }}</h6>
+                                        </div>
 
-                                    </div>
-                                    <div class="form-inline mt-3 mb-3 pl-4">
+                                        <div class="form-inline mt-3 mb-3 pl-4">
+                                            <label for="tt" class="mr-5">{{ __('backend.beneficiary') }}
+                                                :</label>
+                                            <input class="form-control" type="text" id="example-text-input"
+                                                name="beneficiary" >
+
+                                        </div>
+                                        <div class="form-inline mt-3 mb-3 pl-4">
+                                            <label for="tt" class="mr-5">IBAN :
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <input class="form-control" type="text" id="example-text-input" name="IBAN">
+
+                                        </div>
+                                        {{-- <div class="form-inline mt-3 mb-3 pl-4">
                                         <label for="tt" class="mr-5">البنك  :  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                     <select class="form-control pl-9" id="exampleSelect1" style="padding-left: 27px;
                                     padding-right: 22px;">
@@ -95,15 +105,17 @@
                                         <option>البنك القطري الدولي</option>
                                         <option>البنك القطري الدولي</option>
                                     </select>
-                                    </div>
-                                    <div class="form-inline mt-3 mb-3 pl-4">
-                                        <label for="tt" class="mr-5">المبلغ  :  &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <input class="form-control" type="text"  id="example-text-input" value=" ">
+                                    </div> --}}
+                                        <div class="form-inline mt-3 mb-3 pl-4">
+                                            <label for="tt" class="mr-5">{{ __('backend.the amount') }} :
+                                                &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <input class="form-control" type="text" id="example-text-input" name="amount">
 
-                                    </div>
-                                   
-                                    <button type="button" class="btn btn-primary" style="margin-right: 75%;">{{__('تقديم طلب')}}</button>
-                                
+                                        </div>
+
+                                        <button  class="btn btn-primary " id="send-Refund"
+                                            style="margin-right: 75%;">{{ __('backend.Apply') }}</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -132,8 +144,8 @@
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('assets/js/myJS.js') !!}
 @endpush
 
 @push('custom-scripts')
- 
 @endpush

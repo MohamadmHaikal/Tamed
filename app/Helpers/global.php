@@ -687,10 +687,23 @@ function get_users_type()
 {
     return UserType::all();
 }
+function get_activity_id_by_user_type($id)
+{
+    return Activitie::where('type_id','=',$id)->get();
+}
+function get_users_type_by_id($id)
+{
+    return UserType::all();
+}
 function get_facility_type($id)
 {
     $activity = Activitie::find($id);
     return UserType::find($activity->type_id);
+}
+function get_facility_activity($id)
+{
+   
+    return  Activitie::find($id);
 }
 function page_title($is_dashboard = false)
 {

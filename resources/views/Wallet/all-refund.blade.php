@@ -5,6 +5,9 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
     {!! Html::style('assets/css/ui-elements/buttons.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert2.min.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert.css') !!}
+    {!! Html::style('assets/css/basic-ui/custom_sweetalert.css') !!}
 @endpush
 
 @section('content')
@@ -21,7 +24,7 @@
 
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        href="javascript:void(0);">{{ __('backend.Quotations') }}</a>
+                                        href="javascript:void(0);">{{ __('backend.Refund request') }}</a>
                                 </li>
 
                             </ol>
@@ -50,72 +53,87 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">
-                                                {{ __('backend.Quotations') }}&nbsp;{{ __('backend.' . $source) }}</h4>
+                                            <h4 class="table-header">{{ __('backend.Refund request') }}</h4>
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            <a href="{{ route('Refund') }}">
+                                                <button type="button" class="btn btn-primary mb-2 mr-2 add "
+                                                    data-toggle="modal"
+                                                    data-target="#CreateUser">{{ __('backend.Request a refund') }}</button>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="table-responsive mb-4">
-                                        <div class="widget-content widget-content-area text-center">
-                                            <div class="button-list">
-                                                <a href="{{ route('Quotes', ['filter' => 'new', 'source' => $source]) }}">
-                                                    <button type="button"
-                                                        class="btn btn-primary btn-rounded">{{ __('backend.new') }}</button>
 
-                                                </a>
-                                                <a
-                                                    href="{{ route('Quotes', ['filter' => 'accepted', 'source' => $source]) }}">
-                                                    <button type="button"
-                                                        class="btn btn-success btn-rounded">{{ __('backend.Accepted companies') }}</button>
-
-                                                </a>
-                                                <a
-                                                    href="{{ route('Quotes', ['filter' => 'waiting', 'source' => $source]) }}">
-                                                    <button type="button"
-                                                        class="btn btn-warning btn-rounded">{{ __('backend.waiting for signature') }}</button>
-
-                                                </a>
-                                                <a
-                                                    href="{{ route('Quotes', ['filter' => 'rejected', 'source' => $source]) }}">
-                                                    <button type="button"
-                                                        class="btn btn-danger btn-rounded">{{ __('backend.rejected') }}</button>
-
-                                                </a>
-
-                                            </div>
-                                        </div>
                                         <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>{{ __('backend.id') }}</th>
-                                                    <th>{{ __('backend.name of company') }}</th>
-                                                    <th>{{ __('backend.project name') }}</th>
-                                                    <th>{{ __('backend.CompanyCompetence') }}</th>
-                                                    <th class="no-content">{{ __('backend.QuotesDetails') }}</th>
+                                                    <th>{{ __('backend.Membership No') }}</th>
+                                                    <th>{{ __('backend.beneficiary') }}</th>
+                                                    <th>{{ __('backend.the amount') }}</th>
+                                                    <th>{{ __('backend.status') }}</th>
+                                                    <th>{{ __('backend.Created at') }}</th>
+                                                    <th class="no-content text-center">{{ __('backend.action') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($quotes as $quote)
+                                                @foreach ($request as $req)
                                                     <tr>
-                                                        <td>{{ $quote->id }}</td>
-                                                        <td>{{ $source == 'received' ? get_user_by_id($quote->form_id)->name : get_user_by_id($quote->to_id)->name }}
-                                                        </td>
-                                                        <td>test</td>
-                                                        <td>{{ $source == 'received'? get_facility_activity(get_user_by_id($quote->form_id)->activitie_id)->name: get_facility_activity(get_user_by_id($quote->to_id)->activitie_id)->name }}
-                                                        </td>
+                                                        <td>{{ $req->id }}</td>
+                                                        <td>{{ $req->Membership_id }} -
+                                                            {{ get_user_by_id($req->Membership_id)->name }}</td>
+                                                        <td>{{ $req->beneficiary }}</td>
+                                                        <td> {{ $req->amount }}</td>
                                                         <td>
+                                                            <p class="{{ $req->status }}">
+                                                                {{ __('backend.' . $req->status) }}</p>
+                                                        </td>
+                                                        <td> {{ date('Y-m-d', strtotime($req->created_at)) }}</td>
+
+                                                        <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
-                                                                <a class="dropdown-toggle  text-primary QuotesDetails"
-                                                                    href="javascript:void(0);"
-                                                                    data-id="{{ $quote->id }}">
-                                                                    {{ __('backend.QuotesDetails') }}
+                                                                <a class="dropdown-toggle font-20 text-primary" href="#"
+                                                                    role="button" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="las la-cog"></i>
                                                                 </a>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuLink1"
+                                                                    style="will-change: transform;">
+                                                                    <a class="dropdown-item show-request"
+                                                                        href="javascript:void(0);" data-toggle="modal"
+                                                                        data-type="show" data-target="#ShowRequest"
+                                                                        data-id="{{ $req->id }}">{{ __('backend.Show') }}</a>
+                                                                    <a class="dropdown-item changestatus"
+                                                                        href="javascript:void(0);" data-id="
+                                                                                {{ $req->id }}"
+                                                                        data-status="completed">{{ __('backend.completed') }}</a>
+
+                                                                    <a class="dropdown-item changestatus"
+                                                                        href="javascript:void(0);" data-id="
+                                                                                {{ $req->id }}"
+                                                                        data-status="waiting">{{ __('backend.waiting') }}</a>
+                                                                    <a class="dropdown-item changestatus"
+                                                                        href="javascript:void(0);" data-id="
+                                                                                {{ $req->id }}"
+                                                                        data-status="canceled">{{ __('backend.Cancel') }}</a>
+                                                                    <a class="dropdown-item confirmDelete"
+                                                                        href="javascript:void(0);"
+                                                                        data-id="{{ $req->id }}"
+                                                                        data-action="/wallet/deleteRequest/"
+                                                                        style="color: red">{{ __('backend.Delete') }}</a>
+                                                                </div>
                                                             </div>
                                                         </td>
 
 
+
+
                                                     </tr>
                                                 @endforeach
+
                                             </tbody>
 
                                         </table>
@@ -143,6 +161,9 @@
     <!-- The following JS library files are loaded to use PDF Options-->
     {!! Html::script('plugins/table/datatable/button-ext/pdfmake.min.js') !!}
     {!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!}
+    {!! Html::script('plugins/sweetalerts/promise-polyfill.js') !!}
+    {!! Html::script('plugins/sweetalerts/sweetalert2.min.js') !!}
+    {!! Html::script('assets/js/basicui/sweet_alerts.js') !!}
 @endpush
 
 
