@@ -3,10 +3,18 @@
 @push('plugin-styles')
     {!! Html::style('plugins/table/datatable/datatables.css') !!}
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert2.min.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert.css') !!}
+    {!! Html::style('assets/css/basic-ui/custom_sweetalert.css') !!}
+    {!! Html::style('assets/css/settings.css') !!}
 @endpush
 
 
 @section('content')
+    <?php
+    $userType = get_users_type();
+    
+    ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
@@ -38,8 +46,41 @@
                             <!-- Datatable go to last page -->
                             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                 <div class="widget-content widget-content-area br-6">
-                                    <h4 class="table-header">{{ __('backend.all users') }}</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4 class="table-header">{{ __('backend.all users') }}</h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-primary mb-2 mr-2 add " data-toggle="modal"
+                                                data-target="#CreateUser">{{ __('backend.add') }}</button>
+
+                                        </div>
+                                    </div>
+
                                     <div class="table-responsive mb-4">
+                                        <div id="hh-options-wrapper" class="hh-options-wrapper">
+                                            <div class="hh-options-tab" style="padding-bottom: 0px; margin-right:5%;"
+                                                data-tabs-calculation>
+                                                <div class="nav nav-pills nav-pills-tab" id="v-pills-tab" role="tablist"
+                                                    data-tabs aria-orientation="vertical">
+
+                                                    <?php
+                                               $i=0;
+                                                foreach ($userType as $key => $section){
+                                                $class = (request('filter')==$section['id']) ? 'active show' : '';
+                                               
+                                                ?>
+
+                                                    <a class="nav-link nav-settings mb-2 {{ $class }}"
+                                                        href="{{ route('users.all', [$section['id']]) }}"
+                                                       >
+                                                        {{ __($section['name']) }}
+                                                    </a>
+                                                    <?php } ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -63,7 +104,7 @@
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ $user->phone }}</td>
                                                         <td>{{ $user->email }}</td>
-                                                        <td>{{ __('مستخدم') }}</td>
+                                                        <td>{{ get_facility_type($user->activitie_id)->name }}</td>
 
                                                         <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
@@ -75,12 +116,16 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuLink1"
                                                                     style="will-change: transform;">
-                                                                    <a class="dropdown-item"
-                                                                    href="javascript:void(0);">{{ __('backend.Show') }}</a>
-                                                                    <a class="dropdown-item"
+                                                                    <a class="dropdown-item show-user"
+                                                                        data-id="{{ $user->id }}"
+                                                                        href="javascript:void(0);">{{ __('backend.Show') }}</a>
+                                                                    <a class="dropdown-item edit-user"
+                                                                        data-id="{{ $user->id }}"
                                                                         href="javascript:void(0);">{{ __('backend.Edit') }}</a>
-                                                                    <a class="dropdown-item" href="{{route('user.delete',[$user->id])}}"
-                                                                        href="javascript:void(0);" style="color: red">{{ __('backend.Delete') }}</a>
+                                                                    <a class="dropdown-item confirmDelete"
+                                                                        data-id="{{ $user->id }}" data-action="delete/"
+                                                                        href="javascript:void(0);"
+                                                                        style="color: red">{{ __('backend.Delete') }}</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -112,6 +157,62 @@
         </div>
     </div>
     <!-- Main Body Ends -->
+    <div class="modal fade" id="CreateUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('backend.userInfo') }}</h5> <button
+                        type="button" class="close" data-dismiss="modal" aria-label="Close"><i
+                            class="las la-times"></i> </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.name') }}</label><input
+                                    type="text" id="user-name" name="user-name" class="form-control mb-4"> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.phone') }}</label><input
+                                    type="text" id="user-phone" name="user-phone" class="form-control mb-4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.email') }}</label><input
+                                    type="text" id="user-email" name="user-email" class="form-control mb-4">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.user type') }}</label>
+                                <select class="form-control" name="facility_type_c" id="facility_type_c">
+                                    <option></option>
+                                    @foreach ($userType as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label
+                                    class="fieldlabels">{{ __('backend.name of activities') }}
+                                </label>
+                                <select class="form-control" id="Activities_type_c" name="Activities_type_c">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" id="create_user"
+                        class="btn btn-primary">{{ __('backend.save') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('plugin-scripts')
@@ -125,9 +226,17 @@
     <!-- The following JS library files are loaded to use PDF Options-->
     {!! Html::script('plugins/table/datatable/button-ext/pdfmake.min.js') !!}
     {!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!}
+    {!! Html::script('plugins/sweetalerts/promise-polyfill.js') !!}
+    {!! Html::script('plugins/sweetalerts/sweetalert2.min.js') !!}
+    {!! Html::script('assets/js/basicui/sweet_alerts.js') !!}
+    {!! Html::script('assets/js/option.js') !!}
+    {!! Html::script('assets/js/dashboard.js') !!}
+    {!! Html::script('assets/js/global.js') !!}
 @endpush
 
 @push('custom-scripts')
+    {!! Html::script('assets/js/myJS.js') !!}
+
     <script>
         $(document).ready(function() {
             $('#basic-dt').DataTable({
@@ -197,13 +306,9 @@
                             extend: 'copy',
                             className: 'btn btn-primary'
                         },
-                      
+
                         {
                             extend: 'excel',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'pdf',
                             className: 'btn btn-primary'
                         },
                         {

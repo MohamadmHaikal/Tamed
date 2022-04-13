@@ -2109,7 +2109,7 @@ pre code {
 .form-control {
     display: block;
     width: 100%;
-    height: calc(1.5em + .75rem + 2px);
+    /* height: calc(1.5em + .75rem + 2px); */
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -10714,8 +10714,8 @@ h6 {
 }
 
 ::selection {
-    color: #2f44b2;
-    background: transparent;
+    /* color: #2f44b2;
+    background: #2f44b2; */
 }
 
 p {
@@ -11023,7 +11023,7 @@ label {
     font-size: 14px;
     padding: 8px 10px;
     /* letter-spacing: 1px; */
-    height: calc(1.4em + 1.4rem + 2px);
+    /* height: calc(1.4em + 1.4rem + 2px); */
     padding: .75rem 1.25rem;
     border-radius: 6px;
 }
@@ -13829,8 +13829,8 @@ h6 {
 }
 
 ::selection {
-    color: #2f44b2;
-    background: transparent;
+    /* color: #2f44b2;
+    background: transparent; */
 }
 
 p {
@@ -18690,7 +18690,7 @@ body.darkmode.gu-unselectable .media.drag-type-3 .media-body h6 {
 
 .darkmode .form-group label,
 label {
-    color: #ffffff;
+    /* color: #ffffff; */
 }
 
 .darkmode .widget.box .widget-footer {
@@ -18921,7 +18921,7 @@ label {
 }
 
 .darkmode .profile-edit-left::before {
-    border-right: 5px solid #191919;
+    /* border-right: 5px solid #191919; */
     top: -40px;
 }
 

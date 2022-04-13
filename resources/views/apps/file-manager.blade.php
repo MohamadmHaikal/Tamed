@@ -159,6 +159,7 @@
                                                                             <a href="javascript:void(0);"
                                                                                 class="bs-tooltip font-20 ml-2 text-danger confirmDelete"
                                                                                 title="" data-id="{{ $file->id }}"
+                                                                                data-action="FileManger/delete-file/"
                                                                                 data-original-title="{{ __('backend.Delete') }}"><i
                                                                                     class="las la-trash"></i></a>
                                                                         </div>

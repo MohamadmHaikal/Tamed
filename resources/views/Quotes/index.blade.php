@@ -50,21 +50,37 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{ __('backend.Quotations') }}</h4>
+                                            <h4 class="table-header">
+                                                {{ __('backend.Quotations') }}&nbsp;{{ __('backend.' . $source) }}</h4>
 
                                         </div>
                                     </div>
                                     <div class="table-responsive mb-4">
                                         <div class="widget-content widget-content-area text-center">
                                             <div class="button-list">
-                                                <button type="button"
-                                                    class="btn btn-primary btn-rounded">{{ __('backend.new') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-success btn-rounded">{{ __('backend.Accepted companies') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-warning btn-rounded">{{ __('backend.waiting for signature') }}</button>
-                                                <button type="button"
-                                                    class="btn btn-danger btn-rounded">{{ __('backend.rejected') }}</button>
+                                                <a href="{{ route('Quotes', ['filter' => 'new', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-primary btn-rounded">{{ __('backend.new') }}</button>
+
+                                                </a>
+                                                <a
+                                                    href="{{ route('Quotes', ['filter' => 'accepted', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-success btn-rounded">{{ __('backend.Accepted companies') }}</button>
+
+                                                </a>
+                                                <a
+                                                    href="{{ route('Quotes', ['filter' => 'waiting', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-warning btn-rounded">{{ __('backend.waiting for signature') }}</button>
+
+                                                </a>
+                                                <a
+                                                    href="{{ route('Quotes', ['filter' => 'rejected', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-danger btn-rounded">{{ __('backend.rejected') }}</button>
+
+                                                </a>
 
                                             </div>
                                         </div>
@@ -79,25 +95,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($quotes as $quote)
+                                                    <tr>
+                                                        <td>{{ $quote->id }}</td>
+                                                        <td>{{ $source == 'received' ? get_user_by_id($quote->form_id)->name : get_user_by_id($quote->to_id)->name }}
+                                                        </td>
+                                                        <td>test</td>
+                                                        <td>{{ $source == 'received'? get_facility_activity(get_user_by_id($quote->form_id)->activitie_id)->name: get_facility_activity(get_user_by_id($quote->to_id)->activitie_id)->name }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown custom-dropdown">
+                                                                <a class="dropdown-toggle  text-primary QuotesDetails"
+                                                                    href="javascript:void(0);"
+                                                                    data-id="{{ $quote->id }}">
+                                                                    {{ __('backend.QuotesDetails') }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
 
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td>
-                                                        <div class="dropdown custom-dropdown">
-                                                            <a class="dropdown-toggle  text-primary" href="#" role="button"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                                {{ __('backend.QuotesDetails') }}
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
-                                            
+
                                         </table>
                                     </div>
                                 </div>
@@ -129,6 +149,7 @@
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('assets/js/myJS.js') !!}
 @endpush
 
 @push('custom-scripts')
@@ -216,10 +237,6 @@
                         },
                         {
                             extend: 'excel',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'pdf',
                             className: 'btn btn-primary'
                         },
                         {

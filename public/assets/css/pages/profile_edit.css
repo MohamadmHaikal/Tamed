@@ -11,16 +11,16 @@
     width: 25%;
     padding: 0 10px 20px 0px;
     position: relative;
-    text-align: center;
+    /* text-align: center; */
 }
 .profile-edit-right {
-    margin: 0px 0 0rem 25px;
-    padding: 0px 0 0rem 10px;
+    /* margin: 0px 0 0rem 25px; */
+    /* padding: 0px 0 0rem 10px; */
     width: 85%
 }
 /* PROFILE EDIT LEFT */
 .profile-edit-left::before {
-    border-right: 5px solid #f5f6f8;
+    /* border-right: 5px solid #f5f6f8; */
     content: "";
     position: absolute;
     top: 0;

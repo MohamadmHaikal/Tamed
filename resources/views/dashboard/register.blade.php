@@ -42,7 +42,7 @@
                             </form>
                             <div class="form-2"
                                 <p class="text-center text-muted mt-3 mb-3 font-14" id="codeNote">
-                                    {{ __('backend.We have sent a message to') }}</p>
+                                    </p>
                                    <h6>{{__('backend.Please enter the code to continue')}}</h6> 
                                     <input type="text" id='phone' hidden>
                                 <form method="get" class="digit-group mt-3" data-group-name="digits" data-autosubmit="false"

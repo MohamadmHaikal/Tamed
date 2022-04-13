@@ -19,13 +19,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\NeighborhoodController;
 use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    SendAdsNotification(21, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
+    SendAdsNotification(28, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
 
     return view('dashboard.dashboard1');
 })->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
@@ -46,9 +47,31 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
 });
-Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile');
+
+//neighbor
+Route::get('neighbor/{id}', [NeighborhoodController::class, '_getNeighbor'])->name('get.Neighbor');
+
+//activity
+Route::get('activity/{id}', [ActivitiesController::class, '_getActivity'])->name('get.activity');
+Route::get('additional/{id}', [AdditionalActivitieController::class, '_getAdditional'])->name('get.additional');
+Route::get('userAdditional', [AdditionalActivitieController::class, '_get_user_Additional'])->name('get.Useradditional');
+Route::post('changeStatus/{type}/{id}', [AdditionalActivitieController::class, '_changeStatus'])->name('changeStatus');
+
+//profile
+Route::get('/profile', [DashboardController::class, '_getProfile'])->name('profile')->middleware('LanguageSwitcher');
+Route::post('update-your-avatar', [DashboardController::class, '_updateYourAvatar'])->name('update-your-avatar');
+Route::post('update-your-file', [DashboardController::class, '_updateYourProfileFile'])->name('update-your-file');
+Route::post('update-your-profile', [DashboardController::class, '_updateYourProfile'])->name('update-your-profile');
+Route::post('add-your-project', [DashboardController::class, '_addYourProject'])->name('add-your-project');
+Route::get('delete-your-project/{id}', [DashboardController::class, '_deleteYourProject'])->name('delete-your-project');
+Route::get('show/project/{id}', [DashboardController::class, '_showProject'])->name('show-project');
+Route::post('edit/project/{id}', [DashboardController::class, '_editProject'])->name('edit-project');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/all', [UserController::class, 'index'])->name('users.all');
+    Route::get('/all/{filter?}', [UserController::class, 'index'])->name('users.all');
+    Route::get('delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::post('edit/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('create', [UserController::class, 'store'])->name('user.create');
 });
 Route::group(['prefix' => 'dashboard', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('dashboard1', function () {
@@ -87,11 +110,28 @@ Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], fun
 });
 //Quotes route
 Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
+    Route::get('/{source}/{filter?}', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
 });
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+});
+//wallet route
+Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('RchargeAccount', 'App\Http\Controllers\Dashboard\WalletController@_getChargeAccount')->name('RchargeAccount');
+    Route::get('AccountStatement', 'App\Http\Controllers\Dashboard\WalletController@_getAccountStatement')->name('AccountStatement');
+    Route::get('Refund', 'App\Http\Controllers\Dashboard\WalletController@_getRefund')->name('Refund');
+    Route::get('all-Refund', 'App\Http\Controllers\Dashboard\WalletController@_getAllRefund')->name('all-Refund');
+    Route::post('sendRefund', 'App\Http\Controllers\Dashboard\WalletController@_sendRefund')->name('send-Refund');
+    Route::get('showRequest/{id}', 'App\Http\Controllers\Dashboard\WalletController@_showRequest')->name('show-Request');
+    Route::get('deleteRequest/{id}', 'App\Http\Controllers\Dashboard\WalletController@_deleteRequest')->name('delete-Request');
+    Route::post('changeStatus/{id}', 'App\Http\Controllers\Dashboard\WalletController@_changeStatus')->name('change-Request');
+    Route::get('getStatement', 'App\Http\Controllers\Dashboard\WalletController@_getStatement')->name('getStatement');
+});
+//Disputes route
+Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/{filter?}', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
+    Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\DisputesController@show')->name('Disputes.show');
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
@@ -120,11 +160,8 @@ Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('g
         Route::resource('material', 'MaterialTypeController');
     });
 
-Route::group(['prefix' => 'Users', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
 
 
-    Route::get('delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
-});
 Route::group(['prefix' => 'apps', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('calendar', function () {
         return view('apps.calendar');
@@ -552,6 +589,9 @@ Route::group(['prefix' => 'forms', 'middleware' => 'LanguageSwitcher'], function
     });
     Route::get('text-editor', function () {
         return view('forms.text-editor');
+    });
+    Route::get('text-editor2', function () {
+        return view('forms.text-editor2');
     });
     Route::get('file-upload', function () {
         return view('forms.file-upload');

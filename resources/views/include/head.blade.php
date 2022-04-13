@@ -22,7 +22,13 @@ $favicon_url = get_attachment_url($favicon);
 @else
     <link rel="stylesheet" media="all" href="{{ asset('assets/css/all.css') }}">
 @endif
+<script>
+window.translate={
+auth:'{{__("backend.We have sent a message to")}}',
 
+};
+
+</script>
 <?php
 if(!isset($_COOKIE['theme'])) {
     setcookie('theme', 'lightmode');

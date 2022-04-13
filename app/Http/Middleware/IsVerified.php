@@ -18,7 +18,7 @@ class IsVerified
     public function handle(Request $request, Closure $next)
     {     $user=Sentinel::getUser();
         if ($user!=false && $user->verified==0) {
-           return Redirect::to('pages/profile-edit');
+           return Redirect::to('/profile');
         } else {
             return $next($request);
         }

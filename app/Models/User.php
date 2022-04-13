@@ -53,4 +53,21 @@ class User extends Authenticatable
         $result = $query->get()->first();
         return (is_object($result)) ? $result : null;
     }
+    public function getRoleByName($role_name = 'customer')
+    {
+        $role = DB::table('roles')->where('slug', $role_name)->get()->first();
+        return (is_object($role)) ? $role : null;
+    }
+    public function updateUserRole($user_id, $role_id)
+    {
+        DB::table('role_users')->where('user_id', $user_id)->delete();
+        $user = get_user_by_id($user_id);
+        $role = Sentinel::findRoleById($role_id);
+        if ($role && $user) {
+            $role->users()->attach($user);
+            return true;
+        }
+        return false;
+    }
+
 }

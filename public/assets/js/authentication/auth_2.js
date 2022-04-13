@@ -42,6 +42,7 @@ $("#getCodeButton").on('click', function () {
 
             $('.toast').toast('show');
             if (data['status'] == 1) {
+                document.getElementById("codeNote").innerText=window.translate.auth;
                 document.getElementById("codeNote").innerText=document.getElementById("codeNote").innerText+' (966'+data['mobile']+')' ;
                 $(".form-1").removeClass("fadeInLeft show");
                 $(".form-1").hide();

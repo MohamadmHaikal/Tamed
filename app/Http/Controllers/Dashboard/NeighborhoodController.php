@@ -70,7 +70,11 @@ class NeighborhoodController extends Controller
         $Neigh = Neighborhood::find($id);
         return view('dashboard.neighborhood.edit', compact('citys', 'Neigh'));
     }
-
+    public function _getNeighbor($id)
+    {
+        $Neigh = Neighborhood::where('city_id', '=', $id)->get();
+        return $Neigh;
+    }
     /**
      * Update the specified resource in storage.
      *

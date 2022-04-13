@@ -19,7 +19,7 @@ return [
     ],
 
     'admin_menu' => [
-        
+
         [
             'type' => 'item',
             'label' => awe_lang('dashboard'),
@@ -31,7 +31,7 @@ return [
             'label' => awe_lang('MyAccount'),
             'icon' => 'la-user',
             'route_name' => 'profile',
-            
+
         ],
         [
             'type' => 'parent',
@@ -91,13 +91,27 @@ return [
                     'parameter' => 'UserType',
                     'active_class' => 'Item/UserType'
                 ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('City'),
+                    'route_name' => 'Item',
+                    'parameter' => 'City',
+                    'active_class' => 'Item/City'
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Neighborhood'),
+                    'route_name' => 'Item',
+                    'parameter' => 'Neighborhood',
+                    'active_class' => 'Item/Neighborhood'
+                ],
 
             ],
         ],
         [
             'type' => 'parent',
             'label' => awe_lang('users'),
-            'icon' => 'la-user',
+            'icon' => 'la-users',
             'id' => 'users',
             'route_name' => 'users',
             'child' =>
@@ -111,12 +125,14 @@ return [
                 [
                     'type' => 'item',
                     'label' => awe_lang('users types'),
-                    'route_name' => 'users.all',
-                    'active_class' => 'chat'
+                    'route_name' => 'Item',
+                    'parameter' => 'UserType',
+                    'active_class' => 'Item/UserType'
                 ],
+
             ],
         ],
-        
+
         [
             'type' => 'parent',
             'label' => awe_lang('ads'),
@@ -143,16 +159,73 @@ return [
             ],
         ],
         [
-            'type' => 'item',
+            'type' => 'parent',
             'label' => awe_lang('Quotations'),
             'icon' => 'la-copy',
             'route_name' => 'Quotes',
+            'id' => 'Quotes',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes issued'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes received'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
         ],
         [
             'type' => 'item',
             'label' => awe_lang('eBills'),
             'icon' => 'la-receipt',
             'route_name' => 'eBills',
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('wallet'),
+            'icon' => 'la-wallet',
+            'id' => 'wallet',
+            'route_name' => 'wallet',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Rcharge the balance'),
+                    'route_name' => 'RchargeAccount',
+                    'active_class' => 'wallet/RchargeAccount'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Account statement'),
+                    'route_name' => 'AccountStatement',
+                    'active_class' => 'wallet/AccountStatement'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Refund request'),
+                    'route_name' => 'all-Refund',
+                    'active_class' => 'wallet/all-Refund'
+
+                ],
+            ],
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FileManger'),
+            'icon' => 'la-file',
+            'route_name' => 'FileManger',
         ],
         [
             'type' => 'item',
@@ -164,10 +237,12 @@ return [
         ],
         [
             'type' => 'item',
-            'label' => awe_lang('FileManger'),
-            'icon' => 'la-file',
-            'route_name' => 'FileManger',
+            'label' => awe_lang('Disputes'),
+            'icon' => 'la-gavel',
+            'route_name' => "Disputes",
+
         ],
+
         [
             'type' => 'item',
             'label' => awe_lang('Settings'),
@@ -176,7 +251,68 @@ return [
         ],
     ],
     'partner_menu' => [],
-    'customer_menu' => [],
+    'customer_menu' => [
+        [
+            'type' => 'item',
+            'label' => awe_lang('MyAccount'),
+            'icon' => 'la-user',
+            'route_name' => 'profile',
+
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('eBills'),
+            'icon' => 'la-receipt',
+            'route_name' => 'eBills',
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('wallet'),
+            'icon' => 'la-wallet',
+            'id' => 'wallet',
+            'route_name' => 'wallet',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Rcharge the balance'),
+                    'route_name' => 'RchargeAccount',
+                    'active_class' => 'wallet/RchargeAccount'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Account statement'),
+                    'route_name' => 'AccountStatement',
+                    'active_class' => 'wallet/AccountStatement'
+
+                ],
+              
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Refund request'),
+                    'route_name' => 'all-Refund',
+                    'active_class' => 'wallet/all-Refund'
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('Disputes'),
+            'icon' => 'la-gavel',
+            'route_name' => "Disputes",
+
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('Disputes'),
+            'icon' => 'la-gavel',
+            'route_name' => "Disputes",
+
+        ],
+    ],
 
     'theme_options' => [
         'sections' => [
