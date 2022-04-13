@@ -34,5 +34,12 @@ class Ads extends Model
     public function activity(){
         return $this->belongsTo('App\Models\Activitie' , 'activitie_id');
     }
+    public function user(){
+        return $this->belongsTo('App\Models\User' , 'user_id');
+    }
+
+    public function File(){
+        return $this->hasMany('App\Models\File' , 'FK');
+    }
 
 }

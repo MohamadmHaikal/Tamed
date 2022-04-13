@@ -36,7 +36,6 @@ function getArrayType()
     $ArrayType=[
        'Project',
        'deals',
-       'Auctions',
        'Material',
        'equipment',
        'job',
@@ -45,6 +44,11 @@ function getArrayType()
     return  $ArrayType;
 }
 
+function getAdsCover($id,$model)
+{
+    $image= App\Models\File::where('FK',$id)->where('model',$model)->first() ;
+    return $image;
+}
 
 function get_dashboard_folder()
 {

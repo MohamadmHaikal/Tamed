@@ -8,6 +8,7 @@
 {!! Html::style('plugins/flatpickr/custom-flatpickr.css') !!}
 {!! Html::style('assets/css/forms/switch-theme.css') !!}
 {!! Html::style('assets/css/forms/radio-theme.css') !!}
+{!! Html::style('assets/css/forms/jquery.dropdown.css') !!}
 @endpush
 
 @section('content')
@@ -27,8 +28,8 @@ $item = isset($item) ? $item: null;
                 <div class="page-header">
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('Forms')}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><span>{{__('Forms')}}Multiple
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">{{__('backend.Forms')}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>{{__('backend.Forms')}}Multiple
                                     Step</span></li>
                         </ol>
                     </nav>
@@ -83,11 +84,11 @@ $item = isset($item) ? $item: null;
                                                                     <h2 class="steps">{{__('Forms')}}Step 1 - 4</h2>
                                                                 </div>
                                                             </div>
-                                                            <label class="fieldlabels">{{__('title')}}</label>
+                                                            <label class="fieldlabels">{{__('backend.title')}}</label>
                                                             <input type="text" name="title" placeholder=""
                                                             value="{{ isset($item) ? $item->title : '' }}"
                                                                 class="form-control mb-3" />
-                                                            <label class="fieldlabels">{{__('description')}}</label>
+                                                            <label class="fieldlabels">{{__('backend.description')}}</label>
                                                             <input type="text" name="description" placeholder=""
                                                             value="{{ isset($item) ? $item->description : '' }}"
                                                                 class="form-control mb-3" />
@@ -95,9 +96,11 @@ $item = isset($item) ? $item: null;
                                                                 $ArrayType = getArrayType();   
                                                             @endphp
                                                             <div class="form-group">
-                                                                <label for="exampleSelectl">{{__('type')}}</label>
+                                                              
+                                                                <label for="exampleSelectl">{{__('backend.type')}}</label>
                                                                 <select class="form-control form-control-lg" id="type"
                                                                     name="type">
+                                                                  
                                                                     @foreach ($ArrayType as $Type)
                                                                     <option value="{{ $Type }}"
                                                                     {{ isset($item) && $item->type == $Type ? 'selected' :'' }}>
@@ -105,11 +108,11 @@ $item = isset($item) ? $item: null;
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <label class="fieldlabels">{{__('city')}}</label>
+                                                            <label class="fieldlabels">{{__('backend.city')}}</label>
                                                             <input type="text" name="city" placeholder=""
                                                                value="{{ isset($item) ? $item->city : '' }}"
                                                                 class="form-control mb-3" />
-                                                            <label class="fieldlabels">{{__('neighborhood')}}</label>
+                                                            <label class="fieldlabels">{{__('backend.neighborhood')}}</label>
                                                             <input type="text" name="neighborhood" placeholder=""
                                                                value="{{ isset($item) ? $item->neighborhood : '' }}"
                                                                 class="form-control mb-3" />
@@ -122,30 +125,32 @@ $item = isset($item) ? $item: null;
                                                         <div class="form-card">
                                                             <div class="row">
                                                                 <div class="col-7">
-                                                                    <h2 class="fs-title mb-4">{{__('Forms')}}Personal
+                                                                    <h2 class="fs-title mb-4">{{__('backend.Forms')}}Personal
                                                                         Information:</h2>
                                                                 </div>
                                                                 <div class="col-5">
-                                                                    <h2 class="steps">{{__('Forms')}}Step 2 - 4</h2>
+                                                                    <h2 class="steps">{{__('backend.Forms')}}Step 2 - 4</h2>
                                                                 </div>
                                                             </div>
                                                             <div id="inputsAds"></div>
 
-                                                            <label class="fieldlabels">{{__('startdate')}}</label>
+                                                            {{-- <label class="fieldlabels">{{__('backend.startdate')}}</label>
                                                             <input id="basicExample" name="startdate"
                                                               value="{{ isset($item) ? $item->startdate : '' }}"
                                                                 class="form-control flatpickr flatpickr-input active basicExample"
-                                                                type="text" placeholder="{{__('Select Date')}}">
-                                                            <label class="fieldlabels">{{__('deadline')}}</label>
+                                                                type="text" placeholder="{{__('backend.Select Date')}}"> --}}
+
+                                                            <label class="fieldlabels">{{__('backend.Last date for receiving bids')}}</label>
                                                             <input id="basicExample" name="deadline"
                                                               value="{{ isset($item) ? $item->deadline : '' }}"
                                                                 class="form-control flatpickr flatpickr-input active basicExample"
-                                                                type="text" placeholder="{{__('Select Date')}}">
-                                                            <label class="fieldlabels">{{__('Price')}}</label>
+                                                                type="text" placeholder="{{__('backend.Select Date')}}">
+
+                                                            <label class="fieldlabels">{{__('backend.Price')}}</label>
                                                             <div class="input-group mb-3">
                                                                 <div class="input-group-prepend col-md-6">
                                                                     <label
-                                                                        for="">{{__('total value to project')}}</label>
+                                                                        for="">{{__('backend.total value to project')}}</label>
 
                                                                     <input type="text" name="price" id="price"
                                                                       value="{{ isset($item) ? $item->price : '' }}"
@@ -153,14 +158,14 @@ $item = isset($item) ? $item: null;
                                                                 </div>
                                                                 <div
                                                                     class="input-group-prepend col-md-6 switch-outer-container">
-                                                                    <label for=""> {{__('best price')}}</label>
+                                                                    <label for=""> {{__('backend.best price')}}</label>
 
                                                                     <span
                                                                         class="switch switch-outline switch-icon switch-primary">
                                                                         <label>
 
                                                                             <input type="checkbox" id="bestPrice"
-                                                                              value="{{ isset($item) ? $item->bestPrice : '' }}"
+                                                                              value="{{ isset($item) ? $item->bestPrice : 'on' }}"
                                                                                 checked="checked" name="pricestatus">
                                                                                 
                                                                             <span></span>
@@ -168,12 +173,12 @@ $item = isset($item) ? $item: null;
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            @php
+                                                            {{-- @php
                                                                 $activityItem = getActivityItem();
                                                             @endphp
                                                             <div class="form-group">
                                                                 <label
-                                                                    for="exampleSelectl">{{__('Submit Project To')}}</label>
+                                                                    for="exampleSelectl">{{__('backend.Submit Project To')}}</label>
                                                                 <select class="form-control form-control-lg" id="type"
                                                                     name="activitie_id">
                                                                     @foreach ($activityItem as $activity)
@@ -181,7 +186,7 @@ $item = isset($item) ? $item: null;
                                                                         {{ isset($item) && $item->activity()->first()->id==$activity->id ? 'selected' :'' }} >{{  $activity->name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
                                                         </div>
                                                         <input type="button" name="previous"
@@ -192,112 +197,11 @@ $item = isset($item) ? $item: null;
                                                             value="{{__('Forms')}}Next" />
                                                     </fieldset>
                                                     <fieldset>
-                                                        <div class="form-card">
-                                                            <div class="row">
-                                                                <div class="col-7">
-                                                                    <h2 class="fs-title mb-4">{{__('Image Upload')}}:
-                                                                    </h2>
-                                                                </div>
-                                                                <div class="col-5">
-                                                                    <h2 class="steps">{{__('Forms')}}Step 3 - 4</h2>
-                                                                </div>
-                                                            </div>
-                                                            <div id="ImgContent" class="row fileContent">
-
-                                                            </div>
-
-                                                            <label for="file-upload" class="custom-file-upload mb-0">
-                                                                <a title="Attach a file"
-                                                                    class="mr-2 pointer text-primary">
-                                                                    <i class="las la-paperclip font-20"></i>
-                                                                    <span
-                                                                        class="font-17">{{__('Click here to attach an image/video')}}</span>
-                                                                </a>
-                                                            </label>
-                                                            <input id="file-upload" name='upload_cont_img[]' multiple class="file-upload"
-                                                                type="file" accept="image/*,video/*"
-                                                                style="display:none;">
-
-                                                        </div>
-                                                        <div class="form-card">
-                                                            <div class="row">
-                                                                <div class="col-7">
-                                                                    <h2 class="fs-title mb-4">{{__('File Upload')}}:
-                                                                    </h2>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div id="55" class="row fileContent">
-
-                                                                    </div>
-
-                                                                    <label for="file-upload"
-                                                                        class="custom-file-upload mb-0">
-                                                                        <a title="Attach a file"
-                                                                            class="mr-2 pointer text-primary btn btn-outline-primary">
-                                                                            <i class="las la-paperclip font-20"></i>
-                                                                            <span
-                                                                                class="font-17">{{__('Specifications + Quantities')}}</span>
-                                                                        </a>
-                                                                    </label>
-                                                                    <input class="file-upload"
-                                                                        name='upload_Specif_Quant[]' multiple
-                                                                        type="file" accept="image/*,video/*"
-                                                                        style="display:none;">
-
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div id="55" class="row fileContent">
-
-                                                                    </div>
-
-                                                                    <label for="file-upload"
-                                                                        class="custom-file-upload mb-0">
-                                                                        <a title="Attach a file"
-                                                                            class="mr-2 pointer text-primary btn btn-outline-primary">
-                                                                            <i class="las la-paperclip font-20"></i>
-                                                                            <span
-                                                                                class="font-17">{{__('3D files upload')}}</span>
-                                                                        </a>
-                                                                    </label>
-                                                                    <input class="file-upload" name='upload_3D_files[]'
-                                                                        multiple type="file"
-                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                                                                        style="display:none;">
-
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div id="55" class="row fileContent">
-
-                                                                    </div>
-
-                                                                    <label for="file-upload"
-                                                                        class="custom-file-upload mb-0">
-                                                                        <a title="Attach a file"
-                                                                            class="mr-2 pointer text-primary btn btn-outline-primary">
-                                                                            <i class="las la-paperclip font-20"></i>
-                                                                            <span
-                                                                                class="font-17 ">{{__('Upload project plans')}}</span>
-                                                                        </a>
-                                                                    </label>
-                                                                    <input class="file-upload"
-                                                                        name='upload_project_plans[]' multiple
-                                                                        type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                                                text/plain, application/pdf" style="display:none;">
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <input type="button" name="previous"
-                                                            class="previous action-button-previous btn btn-outline-primary"
-                                                            value="{{__('Forms')}}Previous" />
-                                                        <input type="button" name="next" id="createItem"
-
-                                                            class="next action-button btn btn-primary"
-                                                            value="{{__('Forms')}}Next" />
+                                                        @if ( isset($item))
+                                                        @include('addItem.Ads.editFile') 
+                                                        @else
+                                                        @include('addItem.Ads.createFile') 
+                                                        @endif
                                                     </fieldset>
                                                     <fieldset>
                                                         <div class="form-card">
@@ -351,17 +255,24 @@ $item = isset($item) ? $item: null;
 {!! Html::script('assets/js/forms/multiple-step.js') !!}
 {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
 {!! Html::script('plugins/flatpickr/custom-flatpickr.js') !!}
-{{-- {!! Html::script('assets/js/myJS.js') !!} --}}
+{!! Html::script('assets/js/jquery.dropdown.js') !!}
 @endpush
 
 @push('custom-scripts')
 <script>
     $( document ).ready(function() {
-        type('deals',1)
+        var url = window.location.pathname;     
+        var stuff = url.split('/');
+        if (stuff[stuff.length-1] == 'edit') {
+            var id = stuff[stuff.length-2];
+            type($('#type').val(),id)
+        }
+    
     });
     
     function type(type,id ='') {
         $('#inputsAds').empty();
+        console.log(type);
         var url = "{{ URL::to('ads/getType') }}/" + type +'/'+ id;
         $.ajax({
             url: url,
@@ -390,16 +301,17 @@ $item = isset($item) ? $item: null;
     
     $('#createItem').on('click', function () {
         var fd = new FormData();
-             var files = $(".file-upload")[0].files;
-             let form = $(this).closest("form").serializeArray();
-
-              for (var i = 0; i < files.length; i++) {
-                  fd.append(i, $(".file-upload").get(0).files[i]);
+         $.each( $(".file-upload"), function( key, value ) {
+             console.log(value);
+             var files = value.files;
+             for (var i = 0; i < files.length; i++) {
+                  fd.append(value.name, $(".file-upload").get(0).files[i]);
               }
+         });
+             let form = $(this).closest("form").serializeArray();
               $.each( form,function(key,input){
                     fd.append(input.name,input.value);
                 });
-            //     console.log(fd);
 
          $.ajaxSetup({
             headers: {

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MaterialType;
 
 class TypeAds extends Model
 {
@@ -38,7 +37,6 @@ class TypeAds extends Model
                             ['option' => __('no'),
                             'value' =>  'no'],
 
-                         
                         ],
                     ],
 
@@ -100,7 +98,7 @@ class TypeAds extends Model
                     'layout' => 'col-12 col-sm-6',
                     'style' => 'wide',
                     'choices' => 
-                    self::getSelectOption()
+                    self::getSelectOption('MaterialType')
 
                 ],
                 [
@@ -124,84 +122,6 @@ class TypeAds extends Model
                 ],
 
             ],
-            'Auctions' => [
-                [
-                    'id' => 'Pricing_with_materials',
-                    'label' => __('Pricing with materials'),
-                    'name' => 'PricingWithMaterials',
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
-                [
-                    'id' => 'Choose_the_type_of_project',
-                    'label' => __('Choose the type of project'),
-                    'type' => 'select',
-                    'choices' => 'page',
-                    'name' => 'projectType',
-                    'layout' => 'col-12 col-sm-6',
-                    'style' => 'wide',
-                    'choices' => [
-                        ['option' =>   __('Turnkey'),
-                            'value' => 'Turnkey'],
-                            ['option' => __('no'),
-                            'value' =>  'no'],
-                    ],
-                ],
-
-                [
-                    'id' => 'Classification_is_required',
-                    'label' => __('Classification is required'),
-                    'type' => 'radio',
-                    'name' => 'Classification',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
-
-                [
-                    'id' => 'Category_Category',
-                    'label' => __('Category Category'),
-                    'name' => 'CategoryCategory',
-                    'type' => 'text',
-                    'layout' => 'col-12 col-md-6'
-                ],
-                [
-                    'h3' => __('Do you provide this on the site?'),
-                    'id' => 'accommodation_available',
-                    'label' => __('Is there accommodation?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'electricity_available',
-                    'label' => __('Is there electricity?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'transportation_available',
-                    'label' => __('Is transportation available?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
-
-                [
-                    'id' => 'project_value',
-                    'label' => __('project value'),
-                    'type' => 'text',
-                    'layout' => 'col-12 col-md-6'
-                ],
-
-            ],
             'Material' => [
                  
                 [
@@ -213,124 +133,93 @@ class TypeAds extends Model
                     'layout' => 'col-12 col-sm-6',
                     'style' => 'wide',
                     'choices' => 
-                    self::getSelectOption()
+                    self::getSelectOption('MaterialType')
 
                 ],
-               
-
                 [
-                    'id' => 'Category_Category',
-                    'label' => __('Category Category'),
+                    'id' => 'country_of_manufacture',
+                    'label' => __('country of manufacture'),
+                    'name' => 'countryManufacture',
                     'type' => 'text',
                     'layout' => 'col-12 col-md-6'
                 ],
-
                 [
-                    'id' => 'project_value',
-                    'label' => __('project value'),
-                    'type' => 'text',
+                    'id' => 'Required_warranty_period',
+                    'label' => __('Required warranty period'),
+                    'name' => 'warrantyPeriod',
+                    'type' => 'number',
                     'layout' => 'col-12 col-md-6'
                 ],
+           
 
             ],
             'equipment' => [
+
                 [
-                    'id' => 'Pricing_with_materials',
-                    'label' => __('Pricing with materials'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
-                [
-                    'id' => 'Choose_the_type_of_project',
-                    'label' => __('Choose the type of project'),
+                    'id' => 'Choose_category',
+                    'label' => __('Choose Category'),
                     'type' => 'select',
                     'choices' => 'page',
+                    'name' => 'CategoryEquipment',
                     'layout' => 'col-12 col-sm-6',
                     'style' => 'wide',
-                    'choices' => [
-                        'Turnkey' => __('Turnkey'),
-                        'no' => __('no')
-                    ],
+                    'multiple' => 'multiple',
+                    'choices' => 
+                    self::getSelectOption('MaterialType')
+
                 ],
+             
 
                 [
-                    'id' => 'Classification_is_required',
-                    'label' => __('Classification is required'),
+                    'id' => 'status_equipment',
+                    'label' => __('status equipment'),
+                    'name' => 'equipmentStatus',
                     'type' => 'radio',
                     'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
+                        'new' => __('new'),
+                        'old' => __('old')
                     ],
                 ],
 
                 [
-                    'id' => 'Category_Category',
-                    'label' => __('Category Category'),
-                    'type' => 'text',
+                    'id' => 'quantity',
+                    'label' => __('quantity equipment'),
+                    'name' => 'quantityEquipment',
+                    'type' => 'number',
                     'layout' => 'col-12 col-md-6'
                 ],
-                [
-                    'h3' => __('Do you provide this on the site?'),
-                    'id' => 'accommodation_available',
-                    'label' => __('Is there accommodation?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'electricity_available',
-                    'label' => __('Is there electricity?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'transportation_available',
-                    'label' => __('Is transportation available?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
 
                 [
-                    'id' => 'project_value',
-                    'label' => __('project value'),
-                    'type' => 'text',
-                    'layout' => 'col-12 col-md-6'
+                    'id' => 'Receiving_orders',
+                    'label' => __('Receiving orders'),
+                    'name' => 'ReceivingOrders',
+                    'type' => 'radio',
+                    'choices' => [
+                        'Individuals' => __('Individuals'),
+                        'Institutions' => __('Institutions'),
+                        'Both' => __('Both')
+                    ],
                 ],
 
             ],
             'job' => [
                 [
-                    'id' => 'Pricing_with_materials',
-                    'label' => __('Pricing with materials'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
-                [
-                    'id' => 'Choose_the_type_of_project',
-                    'label' => __('Choose the type of project'),
+                    'id' => 'Type_Employment',
+                    'label' => __('Choose Type Employment'),
                     'type' => 'select',
                     'choices' => 'page',
+                    'name' => 'TypeEmployment',
                     'layout' => 'col-12 col-sm-6',
                     'style' => 'wide',
-                    'choices' => [
-                        'Turnkey' => __('Turnkey'),
-                        'no' => __('no')
-                    ],
+                    'choices' => 
+                    self::getSelectOption('TypeEmployment')
+
                 ],
 
                 [
-                    'id' => 'Classification_is_required',
-                    'label' => __('Classification is required'),
+                    'id' => 'salary_on_off',
+                    'label' => __('salary on off'),
+                    'name' => 'salary_on_off',
                     'type' => 'radio',
                     'choices' => [
                         'yes' => __('yes'),
@@ -339,40 +228,18 @@ class TypeAds extends Model
                 ],
 
                 [
-                    'id' => 'Category_Category',
-                    'label' => __('Category Category'),
-                    'type' => 'text',
+                    'id' => 'salary',
+                    'label' => __('salary'),
+                    'name' => 'salary',
+                    'type' => 'number',
                     'layout' => 'col-12 col-md-6'
                 ],
-                [
-                    'h3' => __('Do you provide this on the site?'),
-                    'id' => 'accommodation_available',
-                    'label' => __('Is there accommodation?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'electricity_available',
-                    'label' => __('Is there electricity?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                    'id' => 'transportation_available',
-                    'label' => __('Is transportation available?'),
-                    'type' => 'radio',
-                    'choices' => [
-                        'yes' => __('yes'),
-                        'no' => __('no')
-                    ],
-                ],
 
                 [
-                    'id' => 'project_value',
-                    'label' => __('project value'),
-                    'type' => 'text',
+                    'id' => 'Submission_deadline',
+                    'label' => __('Submission deadline'),
+                    'name' => 'Submission_deadline',
+                    'type' => 'date',
                     'layout' => 'col-12 col-md-6'
                 ],
 
@@ -383,11 +250,13 @@ class TypeAds extends Model
 
     }
 
-    public function getSelectOption()
+    public function getSelectOption($model)
     {
-        $MaterialType=MaterialType::all();
+       
+        $modelName = 'App\\Models\\' .$model;
+        $item =new $modelName;
         $array;
-        foreach ($MaterialType as $key => $value) {
+        foreach ($item->all() as $key => $value) {
             $array []  = [
             'option' =>  $value->name,
             'value' =>  $value->id];

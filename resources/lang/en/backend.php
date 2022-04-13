@@ -177,6 +177,9 @@ return array (
   'users types' => 'Users Type',
   'value' => 'Value',
   'verification' => 'verification',
+  'city' => 'city',
+  'neighborhood' => 'neighborhood',
+  'description' => 'description',
 
   'MaterialType' => 'Material Type',
   'Add MaterialType' => 'Add Material Type',
@@ -189,13 +192,16 @@ return array (
   'UserType' => 'User Type',
   'Add UserType' => 'Add User Type',
  'Project' => 'Contracting Project',
-  'deals' => 'deals',
-  'Auctions' => 'Auctions',
-  'Material' => 'Material',
+  'deals' => 'deals/Auctions',
+  'Material' => 'Material/Factories',
   'equipment' => 'equipment',
   'job' => 'job',
-
+  'Last date for receiving bids' => 'Last date for receiving bids',
   'waiting for signature' => 'waiting for signature',
   'ملفات pdf' => 'pdf files',
-
+ 'Select Date' => 'Select Date',
+ 'Price' => 'Price',
+ 'total value to project' => 'total value to project',
+ 'best price' => 'best price',
+  'All Ads' => 'All Ads',
 );

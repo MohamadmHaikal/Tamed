@@ -110,6 +110,7 @@ Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('g
     Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
         Route::resource('ads', 'AdsController');
         Route::get('/getType/{type}/{id?}','AdsController@getType')->name('getType');
+        Route::get('/deleteFile/{id}','AdsController@deleteFile')->name('deleteFile');
 
     });
     Route::group(['prefix' => 'project'], function () {

@@ -183,17 +183,22 @@ return array (
   'users types' => 'أنواع المستخدمين',
   'value' => 'القيمة',
   'verification' => 'تحقق',
-
+  'city' => 'المدينة',
+  'neighborhood' => 'الحي',
+  'description' => 'الوصف',
   'UserType' => 'نوع المستخدم',
   'Add UserType' => 'إضافة نوع المستخدم',
   'Project' => 'مشروع مقاولات',
-  'deals' => 'صفقات',
-  'Auctions' => 'مزادات',
-  'Material' => 'مواد',
+  'deals' => 'صفقات/مزادات',
+  'Material' => 'مواد/مصانع',
   'equipment' => 'معدات',
   'job' => 'وظيفة',
-
+  'Last date for receiving bids' => 'اخر تاريخ لاستقبال عروض لاسعار',
   'waiting for signature' => 'بإنتظار التوقيع',
   'ملفات pdf' => 'ملفات pdf',
-
+  'Select Date' => 'اختر تاريخ',
+  'Price' => 'السعر',
+  'total value to project' => 'قيمة المشروع',
+  'best price' => 'لأفضل سعر',
+  'All Ads' => 'جميع الإعلانات',
 );
