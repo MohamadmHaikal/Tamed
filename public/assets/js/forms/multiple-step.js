@@ -117,13 +117,15 @@
         })
         // For file attachment
         var arr = [];
-        var children = "";
         var count = 0;
         var count2 = 0
+    
         $('.file-upload').on('change', function(e) {
+        
             const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
-      
-            $(this).closest(".form-card").find(".fileContent").empty();
+
+            var children = "";
+            $(this).closest(".Content").find(".fileContent").empty();
             count2++
             if(count2 > 1){
                 count++;
@@ -143,7 +145,7 @@
         }
         // Mise à jour des fichiers de l'input file après ajout
         this.files = dt.files;
-        $(this).closest(".form-card").find(".fileContent").append(children);
+        $(this).closest(".Content").find(".fileContent").append(children);
     
         $('span.delete-label').click(function(){
             let name = $(this).data('idimg');

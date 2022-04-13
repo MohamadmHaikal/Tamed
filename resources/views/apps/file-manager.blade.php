@@ -131,7 +131,7 @@
                                                         <tbody>
                                                             @foreach ($files as $file)
                                                                 <?php
-                                                                $modal = unserialize($file->modal);
+                                                                $modal = unserialize($file->info);
                                                                 $owner = get_user_by_id($modal['owner']);
                                                                 ?>
                                                                 <tr>

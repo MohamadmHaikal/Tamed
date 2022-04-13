@@ -7,7 +7,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Models\File;
 use Sentinel;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -33,6 +35,7 @@ class Controller extends BaseController
 
     public function indexItem($model)
     { 
+        
         $modelName = 'App\\Models\\' .$model;
         $modelNew = new $modelName();
         $Item = $modelNew->all();
@@ -93,6 +96,48 @@ class Controller extends BaseController
             'reload' => true,
             'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
         ], true);
+    }
+
+
+    public static function formatBytes($size, $precision = 2)
+    {
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
+    }
+
+    public function fileUpload( $value , $model ,$fk)
+    {
+ 
+        
+        $size = $value->getSize();
+        $size = $this->formatBytes($size, $precision = 2);
+        $name = $value->getClientOriginalName();
+        $type = $value->extension();
+        $info = ['owner' => get_current_user_id(), 'size' => $size, 'type' => $type ];
+        $info = serialize($info);
+        $filename = time() . '.' . $value->getClientOriginalName();
+        $value->move(public_path('image'), $filename);
+        $file = new File;
+        $file->name = $name;
+        $file->info = $info;
+        $file->model = $model;
+        $file->FK = $fk;
+        $file->file = $filename;
+        $file->save();
+    
+
+        // return $this->sendJson([
+        //     'status' => 1,
+        //     'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
+        //     'reload' => true,
+        // ]);
     }
 
 }

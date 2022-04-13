@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\TypeEmployment;
 use App\Models\TypeAds;
 use App\Models\Ads;
+use App\Models\File;
 
 class AdsController extends Controller
 {
@@ -18,15 +19,20 @@ class AdsController extends Controller
 
     public function getType($type,$id='')
     {
-         
+        
             $x = TypeAds::getTypeName($type);
             if ($id != '') {
             $data['item'] = Ads::find($id);
                 $itemValue= unserialize($data['item']->infoArray);
-                return view('addItem.Ads.inputsEditAds',compact('x','type','itemValue') )->render();
+                return view('addItem.Ads.inputsAds',compact('x','type','itemValue') )->render();
             }
        return view('addItem.Ads.inputsAds',compact('x','type') )->render();
      
+    }
+
+    public function deleteFile($id)
+    {
+        File::where('id',$id)->delete(); 
     }
 
 
@@ -57,7 +63,6 @@ class AdsController extends Controller
      */
     public function store(Request $request)
     {
-        dd(566);
         $x = TypeAds::getTypeName($request->model);
         $infoArray=[];
         foreach ($x as $key => $value) {
@@ -66,8 +71,14 @@ class AdsController extends Controller
          }
         }
         $infoArray +=['model' => $request->model];
-        Ads::create(array_merge($request->all(), ['infoArray' => serialize ($infoArray) ]));
-      
+        $item=Ads::create(array_merge($request->all(), ['infoArray' => serialize ($infoArray) ]));
+
+        foreach ($request->file() as $key => $v) {
+            foreach ($request->file($key) as $key => $value) {
+                $this->fileUpload($value,'Ads', $item->id );
+            }
+        }
+
         $this->sendJson([
             'status' => 0,
             'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
@@ -100,7 +111,7 @@ class AdsController extends Controller
      */
     public function edit($id)
     {
-        $data['item'] = Ads::find($id);
+        $data['item'] = Ads::with('activity','File')->find($id);
         return isset($data['item']) ? view('addItem.Ads.create', $data) : redirect()->back();
 
     }

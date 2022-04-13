@@ -37,29 +37,33 @@
                         <!-- Datatable go to last page -->
                         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                             <div class="widget-content widget-content-area br-6">
-                                <h4 class="table-header">{{__('Go to last page of the datatable')}}</h4>
+                                <h4 class="table-header">{{__('backend.All Ads')}}</h4>
                                 <div class="table-responsive mb-4">
                                     <table id="last-page-dt" class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>{{__('Name')}}</th>
-                                                <th>{{__('Position')}}</th>
-                                                <th>{{__('Office')}}</th>
-                                                <th>{{__('Age')}}</th>
-                                                <th>{{__('Start date')}}</th>
-                                                <th>{{__('Salary')}}</th>
+                                                <th>{{__('Title')}}</th>
+                                                <th>{{__('Description')}}</th>
+                                                <th>{{__('publisher')}}</th>
+                                                <th>{{__('image')}}</th>
+                                        
                                                 <th class="no-content"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           
                                             @foreach ($Ads as $item)
+                                         @php
+                                        $image=getAdsCover( $item->id,'Ads');
+                         
+                                         @endphp
                                             <tr>
-                                                <td>{{__('Tiger Nixon')}}</td>
-                                                <td>{{__('System Architect')}}</td>
-                                                <td>{{__('Edinburgh')}}</td>
-                                                <td>{{__('61')}}</td>
-                                                <td>{{__('2011/04/25')}}</td>
-                                                <td>{{__('$320,800')}}</td>
+                                                <td>{{ $item->title }}</td>
+                                                <td>{{ $item->description }}</td>
+                                                <td>{{ $item->user->name }}</td>
+                                                <td>
+                                                    <img style="width: 50%"
+                                                    src="{{ isset($image) ? asset('image/'.$image->file) : url('https://dummyimage.com/1200x900/e0e0e0/c7c7c7.png')}}" alt=""></td>
                                                 <td class="text-center">
                                                     <div class="dropdown custom-dropdown">
                                                         <a class="dropdown-toggle font-20 text-primary" href="#"
@@ -83,12 +87,10 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>{{__('Name')}}</th>
-                                                <th>{{__('Position')}}</th>
-                                                <th>{{__('Office')}}</th>
-                                                <th>{{__('Age')}}</th>
-                                                <th>{{__('Start date')}}</th>
-                                                <th>{{__('Salary')}}</th>
+                                                <th>{{__('Title')}}</th>
+                                                <th>{{__('Description')}}</th>
+                                                <th>{{__('publisher')}}</th>
+                                                <th>{{__('image')}}</th>
                                                 <th></th>
                                             </tr>
                                         </tfoot>

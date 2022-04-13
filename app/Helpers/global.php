@@ -35,18 +35,23 @@ function getActivityItem()
 }
 function getArrayType()
 {
-    $ArrayType = [
-        'Project',
-        'deals',
-        'Auctions',
-        'Material',
-        'equipment',
-        'job',
+
+    $ArrayType=[
+       'Project',
+       'deals',
+       'Material',
+       'equipment',
+       'job'
     ];
 
     return  $ArrayType;
 }
 
+function getAdsCover($id,$model)
+{
+    $image= App\Models\File::where('FK',$id)->where('model',$model)->first() ;
+    return $image;
+}
 
 function get_dashboard_folder()
 {

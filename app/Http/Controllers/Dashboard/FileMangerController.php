@@ -49,19 +49,8 @@ class FileMangerController extends Controller
      */
     public function store(Request $request)
     {
-        $size = $request->file('file')->getSize();
-        $size = $this->formatBytes($size, $precision = 2);
-        $name = $request->file('file')->getClientOriginalName();
-        $type = $request->file('file')->extension();
-        $modal = ['owner' => get_current_user_id(), 'size' => $size, 'type' => $type];
-        $modal = serialize($modal);
-        $filename = time() . '.' . request()->file->getClientOriginalExtension();
-        request()->file->move(public_path('image'), $filename);
-        $file = new File;
-        $file->name = $name;
-        $file->modal = $modal;
-        $file->file = $filename;
-        $file->save();
+        $this->fileUpload($request->file('file'),'File', 0 );
+      
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
