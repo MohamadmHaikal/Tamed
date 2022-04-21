@@ -48,7 +48,7 @@ class WalletController extends Controller
         $req = RefundRequests::find($id);
         $req->status = $request->status;
         $req->save();
-        addNotification('1', $req->Membership_id, __('backend.Refund request'), 'status of request '.$request->status, ' request notification');
+        addNotification('1', $req->Membership_id, __('backend.Refund request'), 'status of request ' . $request->status, ' request notification');
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.Request status updated successfully'), 'type' => 'success'])->render(),

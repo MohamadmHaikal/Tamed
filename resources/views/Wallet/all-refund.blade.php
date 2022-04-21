@@ -109,8 +109,11 @@
                                                                     <a class="dropdown-item changestatus"
                                                                         href="javascript:void(0);" data-id="
                                                                                 {{ $req->id }}"
-                                                                        data-status="completed">{{ __('backend.completed') }}</a>
-
+                                                                        data-status="retrieved">{{ __('backend.retrieved') }}</a>
+                                                                        <a class="dropdown-item changestatus"
+                                                                        href="javascript:void(0);" data-id="
+                                                                                {{ $req->id }}"
+                                                                        data-status="Processing">{{ __('backend.Processing') }}</a>
                                                                     <a class="dropdown-item changestatus"
                                                                         href="javascript:void(0);" data-id="
                                                                                 {{ $req->id }}"

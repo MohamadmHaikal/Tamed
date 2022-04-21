@@ -13,14 +13,18 @@
 |
 */
 
+
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ElectronicContractsController;
 use App\Http\Controllers\Dashboard\NeighborhoodController;
+use App\Http\Controllers\Dashboard\SendMessageController;
 use App\Http\Controllers\Dashboard\ServicesController;
+use App\Http\Controllers\Dashboard\TasksTableController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
@@ -93,7 +97,27 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'LanguageSwitcher'], func
         return view('dashboard.dashboard-social');
     });
 });
-
+//Electronic Contracts 
+Route::group(['prefix' => 'ElectronicContracts', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', [ElectronicContractsController::class, 'index'])->name('ElectronicContracts');
+    Route::get('/show/{id}', [ElectronicContractsController::class, 'show'])->name('ElectronicContracts.show');
+    Route::get('/create', [ElectronicContractsController::class, 'create'])->name('ElectronicContracts.create');
+    Route::post('/store', [ElectronicContractsController::class, 'store'])->name('ElectronicContracts.store');
+});
+//task table
+Route::group(['prefix' => 'TaskTable', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', [TasksTableController::class, 'index'])->name('TaskTable');
+    Route::get('/all', [TasksTableController::class, '_get_user_events'])->name('TaskTable.all');
+    Route::post('/add-event', [TasksTableController::class, '_addEvent'])->name('TaskTable.add');
+    Route::post('/update-event/{id}', [TasksTableController::class, '_updateEvent'])->name('TaskTable.update');
+});
+//Send message
+Route::group(['prefix' => 'Send-message', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/all-user', [SendMessageController::class, 'index'])->name('send-message');
+    Route::get('/specific', [SendMessageController::class, 'specificMessage'])->name('send-message-specific');
+    Route::post('/Send-specific', [SendMessageController::class, 'SendSpecific'])->name('Send-specific');
+    Route::post('/Send-all', [SendMessageController::class, 'SendMessage'])->name('Send-all');
+});
 Route::post('delete-item', 'App\Http\Controllers\Controller@_deleteItem')->name('delete-item');
 Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-item');
 Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
@@ -114,7 +138,12 @@ Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], functio
 });
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+    Route::get('/all', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+    Route::get('/settings', 'App\Http\Controllers\Dashboard\eBillsController@_InvoiceSettings')->name('eBills.settings');
+    Route::post('update-your-invoice-logo', 'App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceLogo')->name('update-your-invoice-logo');
+    Route::post('update-your-invoice-signature','App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceSignature')->name('update-your-Signature');
+    Route::get('/show/{id}','App\Http\Controllers\Dashboard\eBillsController@show')->name('eBills.show');
+
 });
 //wallet route
 Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], function () {
@@ -132,6 +161,8 @@ Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], functio
 Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/{filter?}', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
     Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\DisputesController@show')->name('Disputes.show');
+    Route::post('/close-dispute/{id}', 'App\Http\Controllers\Dashboard\DisputesController@close_dispute')->name('Disputes.close');
+    Route::post('/addComent/{id}', 'App\Http\Controllers\Dashboard\DisputesController@addComent')->name('Disputes.addComent');
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
@@ -147,18 +178,17 @@ Route::post('delete-featured-image', [OptionController::class, '_deleteFeaturedI
 Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('get-list-item');
 
 
-    Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
-        Route::resource('ads', 'AdsController');
-        Route::get('/getType/{type}/{id?}','AdsController@getType')->name('getType');
-        Route::get('/deleteFile/{id}','AdsController@deleteFile')->name('deleteFile');
-
-    });
-    Route::group(['prefix' => 'project'], function () {
-        Route::resource('project', 'ProjectTypeController');
-    });
-    Route::group(['prefix' => 'material'], function () {
-        Route::resource('material', 'MaterialTypeController');
-    });
+Route::group(['prefix' => 'ads', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
+    Route::resource('ads', 'AdsController');
+    Route::get('/getType/{type}/{id?}', 'AdsController@getType')->name('getType');
+    Route::get('/deleteFile/{id}', 'AdsController@deleteFile')->name('deleteFile');
+});
+Route::group(['prefix' => 'project'], function () {
+    Route::resource('project', 'ProjectTypeController');
+});
+Route::group(['prefix' => 'material'], function () {
+    Route::resource('material', 'MaterialTypeController');
+});
 
 
 

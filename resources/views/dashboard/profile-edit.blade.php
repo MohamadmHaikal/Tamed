@@ -97,14 +97,39 @@
                                                             {{ __('backend.Upload Picture') }}</p>
                                                     </div>
 
-                                                    <div class=" mt-10 md-0 mt-4">
-                                                        <div class="form">
-
+                                                    <div class="row mt-10 md-0 mt-4">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fullName">{{ __('backend.name') }}</label>
                                                                 <input type="text" class="form-control mb-4 "
                                                                     placeholder="{{ __('backend.name') }}" name="name"
                                                                     value="{{ $user->name }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="CRecord">{{ __('backend.Commercial record') }}</label>
+                                                                <input type="text" class="form-control mb-4 "
+                                                                    placeholder="{{ __('backend.Commercial record') }}" name="CRecord"
+                                                                    value="{{ $user->CRecord }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row md-0 ">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="special number">{{ __('backend.special number') }}</label>
+                                                                <input type="text" class="form-control mb-4 "
+                                                                    placeholder="{{ __('backend.special number') }}" name="specialNumber"
+                                                                    value="{{ $user->specialNumber }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="Tax Number">{{ __('backend.Tax Number') }}</label>
+                                                                <input type="text" class="form-control mb-4 "
+                                                                    placeholder="{{ __('backend.Tax Number') }}" name="TaxNumber"
+                                                                    value="{{ $user->TaxNumber }}">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,7 +1,7 @@
 <?php
 $enable_multi_language = get_option('multi_language', 'on');
 $enable_dark_mode = get_option('dark_mode', 'on');
-$current_theme=$_COOKIE['theme'];
+$current_theme = $_COOKIE['theme'];
 ?>
 <header class="header navbar navbar-expand-sm">
     <ul class="navbar-item flex-row ml-md-0 ml-auto theme-brand">
@@ -128,10 +128,10 @@ $current_theme=$_COOKIE['theme'];
         @if ($enable_dark_mode == 'on')
             <li class="nav-item dropdown fullscreen-dropdown">
                 <a class="nav-link night-light-mode" href="javascript:void(0);">
-                    @if($current_theme=='lightmode')
-                    <i class="las la-moon" id="darkModeIcon"></i>
+                    @if ($current_theme == 'lightmode')
+                        <i class="las la-moon" id="darkModeIcon"></i>
                     @else
-                    <i class="las la-sun" id="darkModeIcon"></i>
+                        <i class="las la-sun" id="darkModeIcon"></i>
                     @endif
                 </a>
             </li>
@@ -167,9 +167,11 @@ $current_theme=$_COOKIE['theme'];
             <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="las la-bell"></i>
-                <div class="blink">
-                    <div class="circle"></div>
-                </div>
+                @if (get_current_user_notification_count() != 0)
+                    <div class="blink">
+                        <div class="circle"></div>
+                    </div>
+                @endif
             </a>
             <?php
             $notification = get_current_user_header_notification();
@@ -267,7 +269,7 @@ $current_theme=$_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a>
-                            <a class="account-item" href="{{ route("profile")}}">
+                            <a class="account-item" href="{{ route('profile') }}">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
                                         <i class="las la-user font-20"></i>

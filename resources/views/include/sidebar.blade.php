@@ -97,9 +97,12 @@ $menu_dashboard = get_menu_dashboard();
                 <a class="option-link-container" href="{{ route('all-notifications') }}">
                     <div class="option-link">
                         <i class="las la-bell"></i>
-                        <div class="blink">
-                            <div class="circle"></div>
-                        </div>
+                        @if (get_current_user_notification_count() != 0)
+                            <div class="blink">
+                                <div class="circle"></div>
+                            </div>
+                        @endif
+
                     </div>
                     <div class="text-left">
                         <h6>{{ __('backend.notifications') }}</h6>

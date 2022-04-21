@@ -36,6 +36,7 @@ class DashboardController extends Controller
 
         ]);
     }
+    
     public static function formatBytes($size, $precision = 2)
     {
         if ($size > 0) {
@@ -113,6 +114,9 @@ class DashboardController extends Controller
         $name = request()->get('name');
         $phone = request()->get('phone');
         $email = request()->get('email');
+        $CRecord = request()->get('CRecord');
+        $specialNumber = request()->get('specialNumber');
+        $TaxNumber = request()->get('TaxNumber');
         $description = request()->get('description');
         $city = request()->get('city');
         $neighbor = request()->get('neighbor');
@@ -121,11 +125,14 @@ class DashboardController extends Controller
         $user->name = $name;
         $user->phone = $phone;
         $user->email = $email;
-        $user->verified=1;
+        $user->TaxNumber = $TaxNumber;
+        $user->specialNumber = $specialNumber;
+        $user->CRecord = $CRecord;
+        $user->verified = 1;
         $user->description = $description;
         $user->city_id = $city;
         $user->neighbor_id = $neighbor;
-         $user->activitie_id = $activitie_id;
+        $user->activitie_id = $activitie_id;
         $user->save();
         return $this->sendJson([
             'status' => 1,

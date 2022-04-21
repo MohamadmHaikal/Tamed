@@ -52,6 +52,9 @@ $("#updateProfile").click(function () {
     fd.append('description', $("[name='description']").val());
     fd.append('phone', $("[name='phone']").val());
     fd.append('email', $("[name='email']").val());
+    fd.append('CRecord', $("[name='CRecord']").val());
+    fd.append('specialNumber', $("[name='specialNumber']").val());
+    fd.append('TaxNumber', $("[name='TaxNumber']").val());
     fd.append('city', $("[name='city']").val());
     fd.append('neighbor', $("[name='Neighborhood']").val());
     fd.append('activitie_id', $("[name='facility_activity']").val());

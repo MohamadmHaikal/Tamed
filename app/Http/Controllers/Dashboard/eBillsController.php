@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class eBillsController extends Controller
@@ -16,7 +17,32 @@ class eBillsController extends Controller
     {
         return view('eBills.index');
     }
+    public function _updateInvoiceLogo(Request $request)
+    {
+        $filename = time() . '.' . request()->file->getClientOriginalExtension();
+        request()->file->move(public_path('image'), $filename);
+        $user = User::find(get_current_user_id());
+        $user->invoiceLogo = $filename;
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
 
+        ]);
+    }
+    public function _updateInvoiceSignature(Request $request)
+    {
+        $filename = time() . '.' . request()->file->getClientOriginalExtension();
+        request()->file->move(public_path('image'), $filename);
+        $user = User::find(get_current_user_id());
+        $user->Signature = $filename;
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
+
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +52,10 @@ class eBillsController extends Controller
     {
         //
     }
-
+    public function _InvoiceSettings()
+    {
+        return view('eBills.Invoice-Settings');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -46,7 +75,7 @@ class eBillsController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('eBills.Invoice-show');
     }
 
     /**

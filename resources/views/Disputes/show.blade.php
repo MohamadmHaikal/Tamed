@@ -5,6 +5,7 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('assets/css/loader.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
+    {!! Html::style('assets/css/apps/notes.css') !!}
 @endpush
 
 @section('content')
@@ -60,16 +61,17 @@
 
 
 
-                                    <table class="table table-sm mb-0" style="width:50%; border: 1px solid #dee2e6;">
-                                      
+                                    <table class="table table-sm mb-0"
+                                        style="width:50%; border: 1px solid #dee2e6; background-color: #f6f7f8;">
+
                                         <tbody>
                                             <tr>
-                                                <th>رقم الطلب </th>
+                                                <th> {{ __('backend.order number') }} </th>
                                                 <td>{{ $report->id }}</td>
 
                                             </tr>
                                             <tr>
-                                                <th>تاريخ الإنشاء</th>
+                                                <th>{{ __('backend.Created at') }}</th>
                                                 <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
                                             </tr>
                                             <tr>
@@ -78,8 +80,8 @@
                                             </tr>
 
                                             <tr>
-                                                <th>الحالة</th>
-                                                <td>{{ $report->status }}</td>
+                                                <th>{{ __('backend.status') }}</th>
+                                                <td>{{ __('backend.' . $report->status) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>التصنيف</th>
@@ -92,7 +94,124 @@
 
                                         </tbody>
                                     </table>
+                                    <br>
+                                    <hr class="rounded"
+                                        style=" border-top: 1px solid #bbb;  border-radius: 5px;">
+                                    <div class="meesage-list">
 
+                                        @foreach ($message as $item)
+                                            <br>
+                                            <div id="ct" class="note-container note-grid">
+                                                <div class="note-item all-notes note-personal" style="">
+                                                    <div class="note-inner-content">
+                                                        <div class="note-content">
+                                                            <p class="note-title">
+                                                                {{ get_user_by_id($item->user_id)->name }}
+                                                            </p>
+                                                            <div class="meta-time">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        {{ date('Y-m-d', strtotime($item->created_at)) }}
+                                                                    </div>
+                                                                    <div class="col-md-6 text-right"><i
+                                                                            class="las la-pen font-20"></i></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="note-description-content">
+                                                                <p class="note-description">
+                                                                    {{ $item->message }}
+                                                                </p>
+                                                            </div>
+                                                            @if ($item->image)
+                                                                <p><a class="text-primary"
+                                                                        style="text-decoration: underline;"
+                                                                        href="{{ url('image/' . $item->image) }}"
+                                                                        download><i
+                                                                            class="las la-paperclip font-20"></i>{{ __('backend.Download the attached image') }}</a>
+                                                                </p>
+                                                            @endif
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                    <br>
+                                    @if ($report->status != 'closed' && get_current_user_id() != $message[$message->count() - 1]->user_id && get_current_user_id() == $report->applicant_id)
+                                        <br>
+                                        <br>
+                                        <div id="option-dialog" style="border: 1px solid #dee2e6; width:50%; margin: auto;  padding: 10px;">
+                                            <p class="text-center">
+                                                {{ __('backend.Do you want to close this dispute?') }}</p>
+                                            <div class="row text-center">
+                                                <div class="col-md-6"><button type="button"
+                                                        class="btn  btn-success btn-rounded continue-dispute"
+                                                        data-id="{{ $report->id }}">{{ __('backend.continue') }}</button>
+                                                </div>
+                                                <div class="col-md-6"><button type="button"
+                                                        class="btn btn-danger btn-rounded close-dispute"
+                                                        data-id="{{ $report->id }}">{{ __('backend.close') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
+                                    @else
+                                        @if ($report->status != 'closed')
+                                            @if (get_current_user_id() != $message[$message->count() - 1]->user_id)
+                                                <div class="messenger-sendCard">
+
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-group">
+
+                                                                <textarea class="form-control" name="message" id="message" placeholder="{{ __('backend.Type a message..') }}"
+                                                                    rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="row" style="    margin-top: 5%;">
+                                                                <div>
+                                                                    <label for="file">
+                                                                        <a style="margin-top: 17%;" data-placement="top"
+                                                                            title="{{ __('backend.attach a picture') }}"
+                                                                            class="mr-2 pointer text-primary btn btn-outline-primary bs-tooltip">
+                                                                            <i class="las la-paperclip font-20"></i>
+
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="file" name='file' type="file"
+                                                                        style="display:none;" accept="image/*">
+                                                                </div>
+                                                                <div class="form-group">
+
+                                                                    <button
+                                                                        class="btn btn-secondary btn-lg btn btn-secondary btn-rounded send-message"
+                                                                        data-id="{{ $report->id }}"
+                                                                        style="margin-top: 7%; height: 43px; ">{{ __('frontend.sendComment') }}</button>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            @else
+                                                <p class="text-center" style="color: #bbb">
+                                                    {{ __('backend.You cannot send a new reply until the other party responds') }}
+                                                </p>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    <div class="send-form">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -121,6 +240,9 @@
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('assets/js/ie11fix/fn.fix-padStart.js') !!}
+    {!! Html::script('assets/js/myJS.js') !!}
+    {{-- {!! Html::script('assets/js/apps/notes.js') !!} --}}
 @endpush
 
 @push('custom-scripts')

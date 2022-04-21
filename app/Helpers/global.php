@@ -70,8 +70,8 @@ function get_menu_dashboard()
 {
     if (Sentinel::inRole('administrator')) {
         $menu = Config::get('config.admin_menu');
-    } elseif (Sentinel::inRole('partner')) {
-        $menu = Config::get('config.partner_menu');
+    } elseif (Sentinel::inRole('facility')) {
+        $menu = Config::get('config.facility_menu');
     } else {
         $menu = Config::get('config.customer_menu');
     }

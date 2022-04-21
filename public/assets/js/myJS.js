@@ -1,109 +1,4 @@
-<<<<<<< HEAD
-      function Create(element) {
-          let base = this;
-             $(document).on('click', '#createItem', function (ev) {
-              ev.preventDefault();
-              let form = $(this).closest("form")
-              let data = [];
-            //   $('.checkout-form', container).each(function () {
-                  data = data.concat(form.serializeArray());
-            //   });
-              data.push({
-                  name: '_token',
-                  value: $('meta[name="csrf-token"]').attr('content')
-              });
-              element.disabled = true;   
-  
-              $.post(form.attr('action'), data, function (respon) {
-                 
-                  if (typeof respon === 'object') {
 
-                      if (respon.force_redirect) {
-                          window.location.href = respon.force_redirect;
-                      } else {
-
-                          document.getElementById("alert").innerHTML = respon.message.substring(0, respon.message
-                              .length);
-
-                          $('.toast').toast('show');
-
-
-                        //   if ($('.form-message', form).length) {
-                        //       $('.form-message', form).html(respon.message);
-                        //   } else {
-                        //       base.alert(respon);
-                        //   }
-
-                          form.trigger('hh_form_action_complete', [respon]);
-
-                          if (form.hasClass('.has-reset')) {
-                              form.get(0).reset();
-                          }
-                          if (respon.redirect) {
-                              setTimeout(function () {
-                                  window.location.href = respon.redirect;
-                              }, 1000);
-                          }
-
-                          if (respon.reload) {
-                              setTimeout(function () {
-                                  window.location.reload();
-                              }, 1000);
-                          }
-                      }
-                      if (respon.need_login) {
-                          $('a[data-target="#hh-login-modal"]', 'body').trigger('click');
-                      }
-
-                      if (respon.redirect) {
-                          window.location.href = respon.redirect;
-                      }
-                      if (respon.redirect_form) {
-                          $('body').append(respon.redirect_form);
-                      }
-                      if (respon.form_id) {
-                          $(respon.form_id).find("script").each(function () {
-                              eval($(this).text());
-                          });
-                      }
-                  }
-
-              }, 'json');
-
-          });
-      }
-
-      function Delete(element) {
-         
-        let base = this;
-            $(document).on('click', '.hh-link-action', function (ev) {
-
-
-               
-            let t = $(this),
-                parent = t.closest(t.data('parent')),
-                hasLoading = t.data('page-loading');
-                 
-    
-                ev.preventDefault();
-
-                let dataConfirm = t.data('confirm');
-                if (dataConfirm == 'yes') {
-                   
-                  swal({
-                    title: t.data('confirm-title'),
-                    text: t.data('confirm-question'),
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Confirm',
-                    padding: '2em'
-                }).then(function(result) {
-                    if (result.value) {
-                        let data = JSON.parse(t.attr('data-params'));
-                        data['_token'] = $('meta[name="csrf-token"]').attr('content');
-                        $.post(t.attr('data-action'), data, function (respon) {
-           
-=======
 function Create(element) {
     let base = this;
     $(document).on('click', '#createItem', function (ev) {
@@ -118,7 +13,6 @@ function Create(element) {
             value: $('meta[name="csrf-token"]').attr('content')
         });
         element.disabled = true;
-
 
         $.post(form.attr('action'), data, function (respon) {
 
@@ -209,7 +103,7 @@ function Delete(element) {
                     data['_token'] = $('meta[name="csrf-token"]').attr('content');
                     $.post(t.attr('data-action'), data, function (respon) {
 
->>>>>>> mohamad
+
                         if (typeof respon == 'object') {
                             document.getElementById("alert").innerHTML = respon.message.substring(0, respon.message
                                 .length);
@@ -739,4 +633,339 @@ $(".show-request").click(function () {
     });
 
 
+});
+$(".send-message").click(function () {
+    var id = $(this).data('id');
+    var fd = new FormData();
+    fd.append('message', $("[name='message']").val());
+    fd.append('file', $("[name='file']").get(0).files[0]);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: "/Disputes/addComent/" + id,
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            document.getElementById('message').value = '';
+            var image = '';
+            if (data['image']) {
+                image = '<p><a class="text-primary" style="text-decoration: underline;"href="/image/' + data['image'] + '" download><i class="las la-paperclip font-20"></i>' + window.translation.Download + '</a></p>';
+
+            }
+            $(".meesage-list").append('<br><div id="ct" class="note-container note-grid"> <div class="note-item all-notes note-personal" style=""><div class="note-inner-content"> <div class="note-content"> <p class="note-title">' + data['user_id'] + '</p><p class="meta-time"> ' + data['date'] + '</p> <div class="note-description-content"><p class="note-description">' + data['message'] + '</p> </div>' + image + '</div> </div></div> </div>');
+            document.getElementById("alert").innerHTML = data['status'].substring(0, data['status']
+                .length);
+            $('.toast').toast('show');
+            setTimeout(function () {
+                location.reload()
+            }, 1500);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$('.send-msg').click(function () {
+    var fd = new FormData();
+    if ($(this).data('type') != 'all') {
+        fd.append('phone', $("[name='phone']").val());
+    }
+    $(".send-msg").prop("disabled", true);
+
+    fd.append('message', $("[name='message']").val());
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: $(this).data('url'),
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            $(".send-msg").prop("disabled", false);
+            if (data['status'] == '1') {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+            }
+            else {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+
+            }
+            if (data['reload'] != null) {
+                setTimeout(function () {
+                    location.reload()
+                }, 1000);
+
+            }
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+});
+$('.close-dispute').click(function () {
+    var id = $(this).data('id');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: '/Disputes/close-dispute/' + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            if (data['status'] == '1') {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+            }
+            else {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+
+            }
+            if (data['reload'] != null) {
+                setTimeout(function () {
+                    location.reload()
+                }, 1000);
+
+            }
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+});
+$('.continue-dispute').click(function () {
+    var id = $(this).data('id');
+    document.getElementById('option-dialog').remove();
+    $(".send-form").append('<div class="messenger-sendCard"><div class="row"><div class="col-md-8"><div class="form-group">  <textarea class="form-control" name="message" id="message" placeholder="' + window.translation.Typemessage + '"  rows="3"></textarea> </div> </div><div class="col-md-4"><div class="row" style="    margin-top: 5%;"><div><label for="file"><a style="margin-top: 17%;" data-placement="top"title="' + window.translation.attach + '" class="mr-2 pointer text-primary btn btn-outline-primary bs-tooltip"> <i class="las la-paperclip font-20"></i></a></label><input id="file" name="file" type="file" style="display:none;" accept="image/*"></div><div class="form-group"> <button class="btn btn-secondary btn-lg btn btn-secondary btn-rounded send-message" data-id="' + id + '"style="margin-top: 7%; height: 43px; ">' + window.translation.sendComment + '</button></div></div></div></div></div>');
+    $(".send-message").click(function () {
+        var id = $(this).data('id');
+        var fd = new FormData();
+        fd.append('message', $("[name='message']").val());
+        fd.append('file', $("[name='file']").get(0).files[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/Disputes/addComent/" + id,
+            data: fd,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                document.getElementById('message').value = '';
+                var image = '';
+                if (data['image']) {
+                    image = '<p><a class="text-primary" style="text-decoration: underline;"href="/image/' + data['image'] + '" download><i class="las la-paperclip font-20"></i>' + window.translation.Download + '</a></p>';
+
+                }
+                $(".meesage-list").append('<br><div id="ct" class="note-container note-grid"> <div class="note-item all-notes note-personal" style=""><div class="note-inner-content"> <div class="note-content"> <p class="note-title">' + data['user_id'] + '</p><p class="meta-time"> ' + data['date'] + '</p> <div class="note-description-content"><p class="note-description">' + data['message'] + '</p> </div>' + image + '</div> </div></div> </div>');
+                document.getElementById("alert").innerHTML = data['status'].substring(0, data['status']
+                    .length);
+                $('.toast').toast('show');
+                setTimeout(function () {
+                    location.reload()
+                }, 1500);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+
+
+    });
+
+});
+$(".show-contract").click(function () {
+    var id = $(this).data('id');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/ElectronicContracts/show/" + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+
+            const element = document.getElementById("ShowContract");
+            console.log(data);
+            if (element != null) { element.remove(); }
+            $("body").append(' <div class="modal fade bd-example-modal-lg" id="ShowContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-lg" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Contractdetails + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body">' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.ContractID + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['contract_number'] + '"disabled> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.typeCompany + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['type'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.CommercialRecord + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['CRecord'] + '"disabled> </div></div></div>' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.company_name + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['company_name'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.City + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['City'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.renewable + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['renewable'] + '" disabled=""> </div></div></div>' +
+                '<div class="row"> <div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.BriefDescription + '</label><textarea type="text" name="project_name"  class="form-control mb-4" row="2" disabled>' + data['Brief_description'] + '</textarea></div></div></div>' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.amount + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['amount'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.fbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['first_batch'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.sbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['second_batch'] + '" disabled=""> </div></div></div>' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.tbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['third_batch'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.finalBatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['final_batch'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.Datecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['contract_date'] + '" disabled=""> </div></div></div>' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.sDatecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['date_start'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.eDatecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['date_end'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.Attachedcontract + '</label><p><a title="' + window.translation.Attachedcontract + '"class="mr-2 pointer text-primary" href="/image/' + data['Contract_file'] + '" download><i class="las la-paperclip font-20"></i> <span class="font-17">' + window.translation.downloadcontact + '</span></a></p></div></div></div>' +
+                ' </div></div></div></div></div>');
+            $('#ShowContract').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$(".Invoices").click(function () {
+    var id = $(this).data('id');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/ElectronicContracts/show/" + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+
+            const element = document.getElementById("ShowContract");
+            console.log(data);
+            if (element != null) { element.remove(); }
+            $("body").append(' <div class="modal fade bd-example-modal-xl" id="ShowContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-xl" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Invoices + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body">' +
+               '  <table id="basic-dt" class="table table-hover" style="width:100%"> <thead> <tr><th>id</th><th>name of company</th><th>project name</th> <th>CompanyCompetence</th> <th class="no-content">Invoice details</th>   </tr> </thead>   <tbody> <tr>      <td>1</td>     <td>test</td>   <td>test</td> <td>test</td> <td>  <div class="dropdown custom-dropdown"> <a class="dropdown-toggle  text-primary" href="#" role="button"   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ __("backend.Invoice details") }}</a></div></td></tr></tbody></table>'+
+                ' </div></div></div></div></div>');
+                $('#basic-dt').DataTable({
+                    "language": {
+                        "paginate": {
+                            "previous": "<i class='las la-angle-left'></i>",
+                            "next": "<i class='las la-angle-right'></i>"
+                        }
+                    },
+                    "lengthMenu": [5, 10, 15, 20],
+                    "pageLength": 5
+                });
+            $('#ShowContract').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+
+document.querySelector('#invoice-logo').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+        var file = $('#invoice-logo').val();
+
+        var fd = new FormData();
+        fd.append('file', $('#invoice-logo').get(0).files[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/eBills/update-your-invoice-logo",
+            data: fd,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                if (data['status'] == '1') {
+                    document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                        .length);
+                    $('.toast').toast('show');
+                }
+                if (data['reload']) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                }
+
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+
+
+    }
+});
+document.querySelector('#invoice-signature').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+        var file = $('#invoice-signature').val();
+
+        var fd = new FormData();
+        fd.append('file', $('#invoice-signature').get(0).files[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/eBills/update-your-invoice-signature",
+            data: fd,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                if (data['status'] == '1') {
+                    document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                        .length);
+                    $('.toast').toast('show');
+                }
+                if (data['reload']) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                }
+
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+
+
+    }
 });

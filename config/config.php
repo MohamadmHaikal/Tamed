@@ -186,9 +186,33 @@ return [
         ],
         [
             'type' => 'item',
+            'label' => awe_lang('electronic contracts'),
+            'icon' => 'la-file-contract',
+            'route_name' => 'ElectronicContracts',
+        ],
+        [
+            'type' => 'parent',
             'label' => awe_lang('eBills'),
             'icon' => 'la-receipt',
             'route_name' => 'eBills',
+            'id' => 'eBills',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('eBills'),
+                    'route_name' => 'eBills',
+                    'active_class' => 'eBills/all',
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Invoice Settings'),
+                    'route_name' => 'eBills.settings',
+                    'active_class' => 'eBills/settings'
+
+                ],
+            ]
         ],
         [
             'type' => 'parent',
@@ -223,9 +247,40 @@ return [
         ],
         [
             'type' => 'item',
+            'label' => awe_lang('Tasks table'),
+            'icon' => 'la-calendar',
+            'route_name' => 'TaskTable',
+            'active_class' => 'TaskTable'
+        ],
+        [
+            'type' => 'item',
             'label' => awe_lang('FileManger'),
             'icon' => 'la-file',
             'route_name' => 'FileManger',
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('Custom Messages'),
+            'icon' => 'la-envelope',
+            'id' => 'Custom Messages',
+            'route_name' => 'Send-message',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('all users'),
+                    'route_name' => 'send-message',
+                    'active_class' => 'Send-message/all-user'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('specific user'),
+                    'route_name' => 'send-message-specific',
+                    'active_class' => 'Send-message/specific'
+
+                ],
+            ]
         ],
         [
             'type' => 'item',
@@ -250,7 +305,7 @@ return [
             'route_name' => 'settings',
         ],
     ],
-    'partner_menu' => [],
+    'facility_menu' => [],
     'customer_menu' => [
         [
             'type' => 'item',
@@ -287,7 +342,7 @@ return [
                     'active_class' => 'wallet/AccountStatement'
 
                 ],
-              
+
                 [
                     'type' => 'item',
                     'label' => awe_lang('Refund request'),

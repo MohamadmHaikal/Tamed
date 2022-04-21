@@ -86,9 +86,7 @@
                                                     <td>test</td>
                                                     <td>
                                                         <div class="dropdown custom-dropdown">
-                                                            <a class="dropdown-toggle  text-primary" href="#" role="button"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
+                                                            <a href="{{route('eBills.show',[1])}}">
                                                                 {{ __('backend.Invoice details') }}
                                                             </a>
                                                         </div>

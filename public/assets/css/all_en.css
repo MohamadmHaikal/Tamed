@@ -13832,6 +13832,42 @@ h6 {
     /* color: #2f44b2;
     background: transparent; */
 }
+.waiting {
+
+    color: #e2a03f;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #e2a03f;
+    width: 85%;
+
+}
+
+.retrieved {
+
+    color: #009688;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #009688;
+    width: 85%;
+}
+.Processing {
+
+    color: #2196f3;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #2196f3;
+    width: 85%;
+}
+
+
+.canceled {
+
+    color: #607d8b;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #607d8b;
+    width: 85%;
+}
 
 p {
     margin-top: 0;

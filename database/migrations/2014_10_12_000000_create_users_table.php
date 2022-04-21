@@ -27,7 +27,12 @@ class CreateUsersTable extends Migration
             $table->integer('seenCount');
             $table->string('logo');
             $table->text('activityArray');
-           $table->rememberToken();
+            $table->string('invoiceLogo');
+            $table->string('Signature');
+            $table->string('TaxNumber');
+            $table->string('specialNumber');
+            $table->string('CRecord');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

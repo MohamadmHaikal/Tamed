@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\DisputesMessage;
 use App\Models\Report;
 use Illuminate\Http\Request;
 
@@ -69,9 +70,38 @@ class DisputesController extends Controller
     public function show($id)
     {
         $report = Report::find($id);
-        return view('Disputes.show', compact('report'));
+        $message = DisputesMessage::where('reports_id', '=', $id)->get();
+        return view('Disputes.show', compact('report', 'message'));
     }
+    public function close_dispute($id)
+    {
+        $report = Report::find($id);
+        $report->status = 'closed';
+        $report->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.Complaint closed successfully'), 'type' => 'success'])->render(),
+            'reload' => true,
+        ]);
+    }
+    public function addComent(Request $request, $id)
+    {
+        $message = new DisputesMessage;
+        $message->user_id = get_current_user_id();
+        $message->message = $request->message;
+        $message->reports_id = $id;
 
+        if (request()->file()) {
+            $filename = time() . '.' . request()->file->getClientOriginalExtension();
+            request()->file->move(public_path('image'), $filename);
+            $message->image = $filename;
+        }
+        $message->save();
+        $message->date = date('Y-m-d', strtotime($message->created_at));
+        $message->user_id = get_user_by_id($message->user_id)->name;
+        $message['status'] = view('Common.alert', ['message' => __('backend.message added successfully'), 'type' => 'success'])->render();
+        return $message;
+    }
     /**
      * Show the form for editing the specified resource.
      *

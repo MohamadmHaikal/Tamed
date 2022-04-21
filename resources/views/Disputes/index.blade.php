@@ -90,15 +90,28 @@
                                                         <td>{{ $report->id }}</td>
                                                         <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
                                                         <td>{{ get_user_by_id($report->against_id)->name }}</td>
-                                                        <td>{{ $report->status }}</td>
+                                                        <td>{{ __('backend.' . $report->status) }}</td>
                                                         <td>
                                                             <div class="dropdown custom-dropdown">
-                                                                <a class="dropdown-toggle  text-primary"
-                                                                    href="{{ route('Disputes.show', [$report->id]) }}"
-                                                                    role="button">
-                                                                    {{ __('backend.Show') }}
+                                                                <a class="dropdown-toggle font-20 text-primary" href="#"
+                                                                    role="button" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="las la-cog"></i>
                                                                 </a>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuLink1"
+                                                                    style="will-change: transform;">
+                                                                    <a class="dropdown-item "
+                                                                        href="{{ route('Disputes.show', [$report->id]) }}">{{ __('backend.Show') }}</a>
+                                                                    @if (is_admin() && $report->status != 'closed')
+                                                                        <a class="dropdown-item close-dispute"
+                                                                            data-id="{{ $report->id }}"
+                                                                            href="javascript:void(0);">{{ __('backend.close') }}</a>
+                                                                    @endif
+
+                                                                </div>
                                                             </div>
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -122,6 +135,7 @@
 
 @push('plugin-scripts')
     {!! Html::script('assets/js/loader.js') !!}
+    {!! Html::script('assets/js/myJS.js') !!}
     {!! Html::script('plugins/table/datatable/datatables.js') !!}
     <!--  The following JS library files are loaded to use Copy CSV Excel Print Options-->
     {!! Html::script('plugins/table/datatable/button-ext/dataTables.buttons.min.js') !!}

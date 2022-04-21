@@ -11490,7 +11490,7 @@ h6 {
 
 }
 
-.completed {
+.retrieved {
 
     color: #009688;
     text-align: center;
@@ -11498,7 +11498,14 @@ h6 {
     border: 1px solid #009688;
     width: 85%;
 }
+.Processing {
 
+    color: #2196f3;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #2196f3;
+    width: 85%;
+}
 
 
 .canceled {
@@ -15593,14 +15600,14 @@ code {
 }
 
 .navbar .notification-dropdown .nav-link .blink .circle {
-    background: #ffffff;
+    background: #a06060;
     width: 7px;
     height: 7px;
     border-radius: 50%;
 }
 
 .navbar .notification-dropdown .nav-link .blink .circle::before {
-    background-color: #ffffff;
+    background-color: #f81414;
     content: "";
     display: table;
     border-radius: 50%;
@@ -16182,14 +16189,14 @@ code {
 }
 
 .fixed-profile .profile-option-container .option-link .blink .circle {
-    background: #ffffff;
+    background: #a06060;
     width: 7px;
     height: 7px;
     border-radius: 50%;
 }
 
 .fixed-profile .profile-option-container .option-link .blink .circle::before {
-    background-color: #ffffff;
+    background-color: #f81414;
     content: "";
     display: table;
     border-radius: 50%;
