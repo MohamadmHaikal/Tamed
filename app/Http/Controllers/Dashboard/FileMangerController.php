@@ -15,9 +15,23 @@ class FileMangerController extends Controller
      */
     public function index()
     {
+        $files = null;
+        $array = [];
+        if (is_admin()) {
+            $files = File::orderBy('id', 'DESC')->get();
+        } else {
+            $files = File::orderBy('id', 'DESC')->get();
 
-        $files = File::orderBy('id', 'DESC')->get();
-        return View("apps.file-manager", compact('files'));
+            foreach ($files as $file) {
+                if (unserialize($file->info)['owner'] == get_current_user_id()) {
+                    array_push($array, $file->id);
+                }
+            }
+
+            $files = File::whereIn('id', $array)->orderBy('id', 'DESC')->get();
+        }
+
+        return view("dashboard.file-manger", compact('files'));
     }
 
     /**
@@ -49,8 +63,8 @@ class FileMangerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->fileUpload($request->file('file'),'File', 0 );
-      
+        $this->fileUpload($request->file('file'), 'File', 0);
+
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
@@ -100,7 +114,7 @@ class FileMangerController extends Controller
      */
     public function destroy($id)
     {
-        $file=File::find($id);
+        $file = File::find($id);
         $file->delete();
         return $this->sendJson([
             'status' => 1,

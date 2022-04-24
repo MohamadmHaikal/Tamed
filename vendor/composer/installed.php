@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '72a7914fe107b6617f2c6b130e18c4ca4ce720ed',
+    'reference' => '050df05bb238e549067391630565460c681cf1a9',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -19,6 +19,15 @@
       array (
       ),
       'reference' => '73e5b88775c64ccc0b84fb60836b30dc9d92ac4a',
+    ),
+    'bacon/bacon-qr-code' => 
+    array (
+      'pretty_version' => '2.0.7',
+      'version' => '2.0.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd70c840f68657ce49094b8d91f9ee0cc07fbf66c',
     ),
     'barryvdh/laravel-ide-helper' => 
     array (
@@ -134,6 +143,15 @@
       array (
         0 => '*',
       ),
+    ),
+    'dasprid/enum' => 
+    array (
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
     ),
     'davedevelopment/hamcrest-php' => 
     array (
@@ -589,7 +607,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '72a7914fe107b6617f2c6b130e18c4ca4ce720ed',
+      'reference' => '050df05bb238e549067391630565460c681cf1a9',
     ),
     'laravel/sail' => 
     array (
@@ -1221,6 +1239,15 @@
       array (
       ),
       'reference' => '9f3452c93ff423469c0d56450431562ca423dcee',
+    ),
+    'simplesoftwareio/simple-qrcode' => 
+    array (
+      'pretty_version' => '4.2.0',
+      'version' => '4.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '916db7948ca6772d54bb617259c768c9cdc8d537',
     ),
     'swiftmailer/swiftmailer' => 
     array (

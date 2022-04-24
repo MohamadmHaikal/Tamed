@@ -136,7 +136,7 @@ return [
         [
             'type' => 'parent',
             'label' => awe_lang('ads'),
-            'icon' => 'la-file',
+            'icon' => 'la-newspaper',
             'id' => 'ads',
             'route_name' => 'ads',
             'child' =>
@@ -305,14 +305,84 @@ return [
             'route_name' => 'settings',
         ],
     ],
-    'facility_menu' => [],
-    'customer_menu' => [
+    'facility_menu' => [
         [
             'type' => 'item',
             'label' => awe_lang('MyAccount'),
             'icon' => 'la-user',
             'route_name' => 'profile',
 
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('ads'),
+            'icon' => 'la-newspaper',
+            'id' => 'ads',
+            'route_name' => 'ads',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Add Ads'),
+                    'route_name' => 'ads.create',
+                    'active_class' => 'ads/ads/create'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('All Ads'),
+                    'route_name' => 'ads.index',
+                    'active_class' => 'ads/ads'
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('Quotations'),
+            'icon' => 'la-copy',
+            'route_name' => 'Quotes',
+            'id' => 'Quotes',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes issued'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes received'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FileManger'),
+            'icon' => 'la-file',
+            'route_name' => 'FileManger',
+        ],
+       
+        [
+            'type' => 'item',
+            'label' => awe_lang('Tasks table'),
+            'icon' => 'la-calendar',
+            'route_name' => 'TaskTable',
+            'active_class' => 'TaskTable'
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('electronic contracts'),
+            'icon' => 'la-file-contract',
+            'route_name' => 'ElectronicContracts',
         ],
         [
             'type' => 'item',
@@ -359,6 +429,94 @@ return [
             'icon' => 'la-gavel',
             'route_name' => "Disputes",
 
+        ]
+    ],
+    'customer_menu' => [
+        [
+            'type' => 'item',
+            'label' => awe_lang('MyAccount'),
+            'icon' => 'la-user',
+            'route_name' => 'profile',
+
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('Quotations'),
+            'icon' => 'la-copy',
+            'route_name' => 'Quotes',
+            'id' => 'Quotes',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes issued'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Quotes received'),
+                    'route_name' => 'Quotes',
+                    'active_class' => 'Quotes/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FileManger'),
+            'icon' => 'la-file',
+            'route_name' => 'FileManger',
+        ],
+       
+        [
+            'type' => 'item',
+            'label' => awe_lang('Tasks table'),
+            'icon' => 'la-calendar',
+            'route_name' => 'TaskTable',
+            'active_class' => 'TaskTable'
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('eBills'),
+            'icon' => 'la-receipt',
+            'route_name' => 'eBills',
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('wallet'),
+            'icon' => 'la-wallet',
+            'id' => 'wallet',
+            'route_name' => 'wallet',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Rcharge the balance'),
+                    'route_name' => 'RchargeAccount',
+                    'active_class' => 'wallet/RchargeAccount'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Account statement'),
+                    'route_name' => 'AccountStatement',
+                    'active_class' => 'wallet/AccountStatement'
+
+                ],
+
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Refund request'),
+                    'route_name' => 'all-Refund',
+                    'active_class' => 'wallet/all-Refund'
+
+                ],
+
+            ],
         ],
         [
             'type' => 'item',
@@ -366,7 +524,8 @@ return [
             'icon' => 'la-gavel',
             'route_name' => "Disputes",
 
-        ],
+        ]
+       
     ],
 
     'theme_options' => [

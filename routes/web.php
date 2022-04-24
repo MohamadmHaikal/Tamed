@@ -103,6 +103,7 @@ Route::group(['prefix' => 'ElectronicContracts', 'middleware' => 'LanguageSwitch
     Route::get('/show/{id}', [ElectronicContractsController::class, 'show'])->name('ElectronicContracts.show');
     Route::get('/create', [ElectronicContractsController::class, 'create'])->name('ElectronicContracts.create');
     Route::post('/store', [ElectronicContractsController::class, 'store'])->name('ElectronicContracts.store');
+    Route::get('/invoice/{id}', [ElectronicContractsController::class, '_getInvoice'])->name('ElectronicContracts.invoice');
 });
 //task table
 Route::group(['prefix' => 'TaskTable', 'middleware' => 'LanguageSwitcher'], function () {
@@ -143,6 +144,8 @@ Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], functio
     Route::post('update-your-invoice-logo', 'App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceLogo')->name('update-your-invoice-logo');
     Route::post('update-your-invoice-signature','App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceSignature')->name('update-your-Signature');
     Route::get('/show/{id}','App\Http\Controllers\Dashboard\eBillsController@show')->name('eBills.show');
+    Route::get('/create/{id?}','App\Http\Controllers\Dashboard\eBillsController@create')->name('eBills.create');
+    Route::post('/store/{id?}','App\Http\Controllers\Dashboard\eBillsController@store')->name('eBills.store');
 
 });
 //wallet route

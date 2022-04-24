@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\invoice;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,8 @@ class eBillsController extends Controller
      */
     public function index()
     {
-        return view('eBills.index');
+        $invoices = invoice::where('user_id', '=', get_current_user_id())->get();
+        return view('eBills.index', compact('invoices'));
     }
     public function _updateInvoiceLogo(Request $request)
     {
@@ -50,7 +53,7 @@ class eBillsController extends Controller
      */
     public function create()
     {
-        //
+        return view('eBills.create');
     }
     public function _InvoiceSettings()
     {
@@ -64,7 +67,52 @@ class eBillsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $invoice = invoice::create([
+            'invoice_date' => $request->Invoice_date,
+            'supply_date' => $request->date_supply,
+            'customer_name' => $request->customer_name,
+            'address' => $request->address,
+            'TaxNumber' => $request->Tax_Number,
+            'responsible' => $request->responsible,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'Bank_name' => $request->Bank_name,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+            'IBAN' => $request->Number_statement,
+            'user_id' => get_current_user_id(),
+            'contracts_id' => $request->route('id') != null ? $request->route('id') : null,
+        ]);
+        $card = $request->product_name;
+        for ($i = 1; $i <= count($card); $i++) {
+            if (!empty($card[$i])) {
+                $Taxable_amount = null;
+                if ($request->Discount_type[$i] == 1) {
+                    $Taxable_amount = ($request->Quantity[$i]) * ($request->Price[$i]) - $request->Discount[$i];
+                } else if ($request->Discount_type[$i] == 2) {
+                    $Taxable_amount = (($request->Quantity[$i]) * ($request->Price[$i])) - ((($request->Discount[$i]) / 100) * (($request->Quantity[$i]) * ($request->Price[$i])));
+                }
+                $tax_amount = ((($request->Tax[$i]) / 100) * ($Taxable_amount));
+                $total = $Taxable_amount + $tax_amount;
+                Products::create([
+                    'name' => $request->product_name[$i],
+                    'quantity' => $request->Quantity[$i],
+                    'value' => $request->Price[$i],
+                    'discount' => $request->Discount[$i],
+                    'discount_type' => $request->Discount_type[$i],
+                    'Taxable_amount' => $Taxable_amount,
+                    'tax_rate' => $request->Tax[$i],
+                    'tax_amount' => $tax_amount,
+                    'invoices_id' => $invoice->id,
+                    'total' => $total,
+                ]);
+            }
+        }
+        if ($request->route('id') != null) {
+            return redirect()->route('ElectronicContracts');
+        }
+        return redirect()->route('eBills');
     }
 
     /**
@@ -75,7 +123,21 @@ class eBillsController extends Controller
      */
     public function show($id)
     {
-        return view('eBills.Invoice-show');
+        $invoice = invoice::find($id);
+        $products = Products::where('invoices_id', '=', $id)->get();
+        $Ttotal = null;
+        $discount = null;
+        $Taxable_amount = null;
+        $tax_amount = null;
+        $total = null;
+        foreach ($products as $product) {
+            $discount += (($product->value) * ($product->quantity)) - $product->Taxable_amount;
+            $Taxable_amount += $product->Taxable_amount;
+            $tax_amount += $product->tax_amount;
+            $total += $product->total;
+        }
+        $Ttotal = ['tax_amount' => $tax_amount, 'Taxable_amount' => $Taxable_amount, 'discount' => $discount, 'total' => $total];
+        return view('eBills.Invoice-show', compact('invoice', 'products', 'Ttotal'));
     }
 
     /**

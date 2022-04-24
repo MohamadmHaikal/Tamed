@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\ElectronicContracts;
+use App\Models\invoice;
 use App\Models\UserType;
 use Illuminate\Http\Request;
 
@@ -89,7 +90,10 @@ class ElectronicContractsController extends Controller
     {
         //
     }
-
+    public function _getInvoice($id)
+    {
+        return invoice::where('contracts_id', '=', $id)->get();
+    }
     /**
      * Update the specified resource in storage.
      *

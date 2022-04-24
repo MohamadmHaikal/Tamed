@@ -71,6 +71,22 @@
         Attachedcontract: "{{ __('backend.Attached contract file') }}",
         downloadcontact: "{{ __('backend.Download the attached contract file') }}",
         Invoices: "{{ __('backend.Invoices') }}",
+        product: "{{ __('backend.product or service') }}",
+        Fixed: "{{ __('backend.Fixed value') }}",
+        Tax: "{{ __('backend.Tax') }}",
+        percent: "{{ __('backend.percent') }}",
+        DiscountType: "{{ __('backend.Discount type') }}",
+        Price: "{{ __('backend.Price') }}",
+        Quantity: "{{ __('backend.Quantity') }}",
+        nameService: "{{ __('backend.name of Service') }}",
+        Discount: "{{ __('backend.Discount') }}",
+        invoiceNumber: "{{ __('backend.invoice number') }}",
+        customerName: "{{ __('backend.customer name') }}",
+        responsible: "{{ __('backend.responsible') }}",
+        InvoiceDate: "{{ __('backend.Invoice date') }}",
+        InvoiceDetails: "{{ __('backend.Invoice details') }}",
+        addInvoice: "{{ __('backend.add invoice') }}",
+        close: "{{ __('backend.close') }}",
     };
 </script>
 <!-- Stack array for including inline js or scripts -->

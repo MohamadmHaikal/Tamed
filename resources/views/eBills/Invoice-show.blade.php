@@ -6,13 +6,13 @@
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
     {!! Html::style('assets/css/ui-elements/buttons.css') !!}
     {!! Html::style('assets/css/apps/invoice.css') !!}
-    
 @endpush
 
 @section('content')
-<?php
-  $user = get_current_user_data();
-?>
+    <?php
+    $author = get_user_by_id($invoice->user_id);
+    
+    ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
@@ -25,7 +25,8 @@
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
 
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{ __('backend.Invoice details') }}</a>
+                                <li class="breadcrumb-item"><a
+                                        href="javascript:void(0);">{{ __('backend.Invoice details') }}</a>
                                 </li>
 
                             </ol>
@@ -58,180 +59,306 @@
 
                                         </div>
                                         <div class="col-md-6">
-                                            <button
-                                            class="btn btn-primary action-print" style="margin-right: 80%;">{{ __('Print') }}</button>
+                                            <button class="btn btn-primary " onClick="printdiv('invoice-body');"
+                                                style="margin-right: 80%;">{{ __('backend.print') }}</button>
                                         </div>
                                     </div>
-                                    <div class="invoice-container">
+
+                                    <div class="invoice-container" id="invoice-body">
                                         <div class="invoice-inbox" style="height:auto;">
-                                            
-                                            
+
+
                                             <div id="ct" class="" style="display: flex; ">
 
-                                                <div class="invoice" >
-                                                    <div class="content-section  animated animatedFadeInUp fadeInUp" style="height:auto;">
-                                                        <div class="row inv--head-section">
+                                                <div class="invoice">
+                                                    <div class="content-section  animated animatedFadeInUp fadeInUp"
+                                                        style="height:auto;">
+                                                        <div class="row inv--head-section" style="    margin-bottom: 15px;">
+
+                                                            <div class="col-sm-6 col-12">
+                                                                <h6 class="in-heading mb-3">{{ $author->name }}</h6>
+                                                                <h6 class="in-heading mb-3">العنوان:
+                                                                    {{ get_location_by_id($author->neighbor_id) }}</h6>
+                                                                <h6 class="in-heading">الرقم الضريبي :
+                                                                    {{ $author->TaxNumber }}
+                                                                </h6>
+                                                                <h6 class="in-heading">الرقم المميز:
+                                                                    {{ $author->specialNumber }}</h6>
+                                                                <h6 class="in-heading mb-3">رقم السجل التجاري:
+                                                                    {{ $author->CRecord }}
+                                                                </h6>
+                                                                <h6 class="in-heading">البريد الالكتروني :
+                                                                    {{ $author->email }}</h6>
+                                                                <h6 class="in-heading">رقم الجول :
+                                                                    {{ $author->phone }}
+                                                                </h6>
+                                                            </div>
                                                             <div class="col-sm-6 col-12 align-self-center text-sm-right">
-                                                                <div class="company-info">
-                                                                    <img src="{{ url("/image/$user->invoiceLogo") }}" style="width: 20%;" />
+                                                                <div class="">
+                                                                    <img src="{{ url("/image/$author->invoiceLogo") }}"
+                                                                        style="    width: 35%;
+                                                                                                                                    margin-left: 16%;
+                                                                                                                                " />
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-6 col-12">
-                                                                <h3 class="in-heading">{{ __('Tax Invoice') }}</h3>
+                                                        </div>
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                فاتورة رقم: {{ $invoice->id }}</div>
+                                                            <div class="col-sm-3"
+                                                                style="border: 2px solid #dae1e7 ; margin-left: 5px;">
+                                                                التاريخ:
+                                                                {{ date('Y-m-d', strtotime($invoice->created_at)) }}
+                                                            </div>
+                                                            <div class="col-sm-5 mr-1"
+                                                                style="border: 2px solid #dae1e7;    margin-left: 3px;">
+                                                                تاريخ التوريد : {{ $invoice->supply_date }}</div>
+                                                        </div>
+
+                                                        <div class="row mt-2">
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                اسم العميل</div>
+                                                            <div class="col-sm-6"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->customer_name }}
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                العنوان </div>
+                                                            <div class="col-sm-4"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->address }}
+                                                            </div>
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                الرقم الضريبي</div>
+                                                            <div class="col-sm-3"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->TaxNumber }}
                                                             </div>
                                                         </div>
-                                                        <div class="row inv--detail-section">
-                                                            <div class="col-sm-7 align-self-center">
-                                                                <p class="inv-to">{{ __('To') }}</p>
+                                                        <div class="row mt-2">
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 8px;">
+                                                                المسئول </div>
+                                                            <div class="col-sm-9"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->responsible }}
                                                             </div>
-                                                            <div
-                                                                class="col-sm-5 align-self-center  text-sm-right order-sm-0 order-1">
-                                                                <p class="inv-detail-title">{{ __('Invoice Details') }}
-                                                                </p>
+
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                رقم الجوال </div>
+                                                            <div class="col-sm-4"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->phone }}
                                                             </div>
-                                                            <div class="col-sm-7 align-self-center">
-                                                                <p class="inv-customer-name">{{ __('Hethwoy Inc.') }}</p>
-                                                                <p class="inv-street-addr">
-                                                                    {{ __('91 Jamast Street, California, 245874') }}</p>
-                                                                <p class="inv-email-address">{{ __('hethwoy@mail.com') }}
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-sm-5 align-self-center  text-sm-right order-2">
-                                                                <p class="inv-list-number"><span
-                                                                        class="inv-title">{{ __('Invoice Id :') }}
-                                                                    </span> <span
-                                                                        class="inv-number">{{ __('K5UI89OP78') }}</span>
-                                                                </p>
-                                                                <p class="inv-created-date"><span
-                                                                        class="inv-title">{{ __('Date :') }} </span>
-                                                                    <span
-                                                                        class="inv-date">{{ __('11 April 2020') }}</span>
-                                                                </p>
+                                                            <div class="col-sm-2 pt-1 pb-1"
+                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                الايميل </div>
+                                                            <div class="col-sm-3"
+                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                {{ $invoice->email }}
                                                             </div>
                                                         </div>
-                                                        <div class="row inv--product-table-section">
-                                                            <div class="col-12">
+                                                        <div class="row inv--product-table-section" style="margin-top: 10px;
+                                                                                                    margin-bottom: 0px;">
+                                                            <div class="col-12" style="padding-right: 0px;">
                                                                 <div class="table-responsive">
                                                                     <table class="table">
                                                                         <thead class="">
                                                                             <tr>
-                                                                                <th scope="col">{{ __('S.No') }}</th>
-                                                                                <th scope="col">{{ __('Items') }}</th>
-                                                                                <th class="text-right" scope="col">
-                                                                                    {{ __('Qty') }}</th>
-                                                                                <th class="text-right" scope="col">
-                                                                                    {{ __('Unit Price') }}</th>
-                                                                                <th class="text-right" scope="col">
-                                                                                    {{ __('Amount') }}</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    {{ __('#') }}</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">المنتج او
+                                                                                    الخدمة</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    الكمية</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    القيمة</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    الخصم</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    المبلغ الخاضع لضريبة القيمة المضافة</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    نسبة ضريبة القيمة المضافة</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    مبلغ ضريبة القيمة المضافة</th>
+                                                                                <th class="text-center" scope="col"
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    الأجمالي شامل ضريبة القيمة المضافة</th>
+
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
+                                                                            <?php
+                                                                            $i = 1;
+                                                                            ?>
                                                                             <tr>
-                                                                                <td>1</td>
-                                                                                <td>{{ __('Printer') }}</td>
-                                                                                <td class="text-right">100</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$300') }}</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$30000') }}</td>
+                                                                                @foreach ($products as $product)
+                                                                                    <td>{{ $i++ }}</td>
+                                                                                    <td>{{ $product->name }}</td>
+                                                                                    <td class="text-left">
+                                                                                        {{ $product->quantity }}</td>
+                                                                                    <td class="text-left">
+                                                                                        {{ number_format($product->value, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td class="text-left">
+                                                                                        {{ number_format($product->discount, 2, '.', ',') }}{{ $product->discount_type == 1 ? __('backend.Rial') : '%' }}
+                                                                                    </td>
+                                                                                    <td class="text-left">
+                                                                                        {{ number_format($product->Taxable_amount, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td class="text-left">
+                                                                                        %{{ number_format($product->tax_rate, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td class="text-left">
+                                                                                        {{ number_format($product->tax_amount, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td class="text-left">
+                                                                                        {{ number_format($product->total, 2, '.', ',') }}
+                                                                                    </td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td>2</td>
-                                                                                <td>{{ __('Mobile') }}</td>
-                                                                                <td class="text-right">10</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$50') }}</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$500') }}</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>3</td>
-                                                                                <td>{{ __('Monitor') }}</td>
-                                                                                <td class="text-right">30</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$700') }}</td>
-                                                                                <td class="text-right">
-                                                                                    {{ __('$21000') }}</td>
-                                                                            </tr>
+                                                                            @endforeach
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row mt-4">
-                                                            <div class="col-sm-5 col-12 order-sm-0 order-1">
-                                                                <div class="inv--payment-info">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-12 col-12">
-                                                                            <h6 class=" inv-title">
-                                                                                {{ __('Bank Information:') }}</h6>
-                                                                        </div>
-                                                                        <div class="col-sm-12 col-12">
-                                                                            <p class=" inv-subtitle">
-                                                                                <span>{{ __('Bank Name:') }}</span>
-                                                                                {{ __('Digital Bank of Commerce') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-12 col-12">
-                                                                            <p class=" inv-subtitle">
-                                                                                <span>{{ __('Account Number:') }}</span>
-                                                                                {{ __('874574584512') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-12 col-12">
-                                                                            <p class=" inv-subtitle">
-                                                                                <span>{{ __('Payment Mode:') }}</span>
-                                                                                {{ __('Cheque') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-12 col-12">
-                                                                            <p class=" inv-subtitle">
-                                                                                <span>{{ __('Transaction Id:') }}</span>
-                                                                                {{ __('8HD5248ADSY') }}
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
+                                                        <div class="row inv--product-table-section" style="margin-top: 10px;
+                                                                                    margin-bottom: 0px;">
+                                                            <div class="col-12" style="padding-right: 0px;">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding-left: 128px;">الأجمالي
+                                                                                </td>
+                                                                                <td>اجمالي الخصم</td>
+                                                                                <td class="text-left">الاجمالي الخاضع
+                                                                                    لضريبة القيمة المضافة</td>
+                                                                                <td class="text-left">
+                                                                                    اجمالي ضريبة القيمةالمضافة</td>
+                                                                                <td class="text-left">
+                                                                                    الاجمالي الشامل لضريبة القيمة المضافة
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding-left: 128px;"></td>
+                                                                                <td> {{ number_format($Ttotal['discount'], 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td class="text-left">
+                                                                                    {{ number_format($Ttotal['Taxable_amount'], 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td class="text-left">
+                                                                                    {{ number_format($Ttotal['tax_amount'], 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td class="text-left">
+                                                                                    {{ number_format($Ttotal['total'], 2, '.', ',') }}
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-7 col-12 order-sm-1 order-0">
-                                                                <div class="inv--total-amounts text-sm-right">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8 col-7">
-                                                                            <p class="">
-                                                                                {{ __('Sub Total:') }} </p>
-                                                                        </div>
-                                                                        <div class="col-sm-4 col-5">
-                                                                            <p class="">{{ __('$51500') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-8 col-7">
-                                                                            <p class="">
-                                                                                {{ __('Tax Amount:') }} </p>
-                                                                        </div>
-                                                                        <div class="col-sm-4 col-5">
-                                                                            <p class="">{{ __('$200') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-8 col-7">
-                                                                            <p class=" discount-rate">
-                                                                                {{ __('Discount :') }} <span
-                                                                                    class="discount-percentage">5%</span>
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-4 col-5">
-                                                                            <p class="">{{ __('$500') }}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-sm-8 col-7 grand-total-title">
-                                                                            <h4 class="">
-                                                                                {{ __('Grand Total :') }} </h4>
-                                                                        </div>
-                                                                        <div class="col-sm-4 col-5 grand-total-amount">
-                                                                            <h4 class="">
-                                                                                {{ __('$51200') }}
-                                                                            </h4>
-                                                                        </div>
+                                                        </div>
+
+                                                        <div class="inv--payment-info" style="margin-bottom:-40px; ">
+                                                            <div class="">
+                                                                <div class="col-sm-12 col-12">
+                                                                    <h6 class=" inv-title">
+                                                                        {{ __('تفاصيل الحساب البنكي') }}</h6>
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-sm-2 pt-1 pb-1"
+                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                        اسم البنك </div>
+                                                                    <div class="col-sm-9"
+                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                        {{ $invoice->Bank_name }}
                                                                     </div>
+
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-sm-2 pt-1 pb-1"
+                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                        اسم الحساب </div>
+                                                                    <div class="col-sm-9"
+                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                        {{ $invoice->account_name }}
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-sm-2 pt-1 pb-1"
+                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                        رقم الحساب</div>
+                                                                    <div class="col-sm-9"
+                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                        {{ $invoice->account_number }}
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row mt-1">
+                                                                    <div class="col-sm-2 pt-1 pb-1"
+                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                        رقم البيان </div>
+                                                                    <div class="col-sm-9"
+                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                        {{ $invoice->IBAN }}
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="row inv--product-table-section">
+                                                            <div class="col-12 " style="padding-right: 0px;">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <thead class="table">
+
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php
+                                                                                $data = serialize(array("Red", "Green", "Blue"));
+                                                                                ?>
+                                                                            <tr>
+                                                                                <td
+                                                                                    style="width: 50%;
+                                                                                                                                                        text-align: center;">
+                                                                                    {!! QrCode::size(150)->generate($data) !!}
+                                                                                </td>
+
+                                                                                <td class="text-center"
+                                                                                    style="width: 50%;"><img
+                                                                                        src="{{ url("/image/$author->Signature") }}">
+                                                                                </td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,7 +366,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-12 col-12">
                                                                     <p class="">
-                                                                        {{ __('Email: info@mail.com | Contact: +1 5475-8244 | Website: www.website.com') }}
+                                                                        {{ "Email: $author->email | Contact: $author->phone " }}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -265,7 +392,6 @@
 
 @push('plugin-scripts')
     {!! Html::script('assets/js/loader.js') !!}
-    {!! Html::script('assets/js/apps/invoice.js') !!}
 @endpush
 
 
@@ -273,4 +399,16 @@
 @endpush
 
 @push('custom-scripts')
+    <script language="javascript">
+        function printdiv(printpage) {
+            var headstr = "<html><head><title></title></head><body>";
+            var footstr = "</body>";
+            var newstr = document.all.item(printpage).innerHTML;
+            var oldstr = document.body.innerHTML;
+            document.body.innerHTML = headstr + newstr + footstr;
+            window.print();
+            document.body.innerHTML = oldstr;
+            return false;
+        }
+    </script>
 @endpush

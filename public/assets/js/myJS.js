@@ -857,29 +857,39 @@ $(".Invoices").click(function () {
     });
     $.ajax({
         type: 'GET',
-        url: "/ElectronicContracts/show/" + id,
+        url: "/ElectronicContracts/invoice/" + id,
         cache: false,
         contentType: false,
         processData: false,
         success: (data) => {
+            var tableBody = '';
+            for (let index = 0; index < data.length; index++) {
+                tableBody += '<tr><td>' + data[index]['id'] + '</td><td>' + data[index]['customer_name'] + '</td><td>' + data[index]['responsible'] + '</td> <td>' + data[index]['invoice_date'] + '</td> <td>  <div class="dropdown custom-dropdown"> <a class="dropdown-toggle  text-primary" href="/eBills/show/' + data[index]['id'] + '">' + window.translation.InvoiceDetails + '</a></div></td></tr>'
 
-            const element = document.getElementById("ShowContract");
+            }
+            const element = document.getElementById("ShowInvoice");
             console.log(data);
             if (element != null) { element.remove(); }
-            $("body").append(' <div class="modal fade bd-example-modal-xl" id="ShowContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-xl" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Invoices + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body">' +
-               '  <table id="basic-dt" class="table table-hover" style="width:100%"> <thead> <tr><th>id</th><th>name of company</th><th>project name</th> <th>CompanyCompetence</th> <th class="no-content">Invoice details</th>   </tr> </thead>   <tbody> <tr>      <td>1</td>     <td>test</td>   <td>test</td> <td>test</td> <td>  <div class="dropdown custom-dropdown"> <a class="dropdown-toggle  text-primary" href="#" role="button"   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ __("backend.Invoice details") }}</a></div></td></tr></tbody></table>'+
-                ' </div></div></div></div></div>');
-                $('#basic-dt').DataTable({
-                    "language": {
-                        "paginate": {
-                            "previous": "<i class='las la-angle-left'></i>",
-                            "next": "<i class='las la-angle-right'></i>"
-                        }
-                    },
-                    "lengthMenu": [5, 10, 15, 20],
-                    "pageLength": 5
-                });
-            $('#ShowContract').modal('show');
+            $("body").append(' <div class="modal fade bd-example-modal-xl" id="ShowInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-xl" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Invoices + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body">' +
+                '  <table id="basic-dt" class="table table-hover" style="width:100%">' +
+                ' <thead> <tr><th>' + window.translation.invoiceNumber + '</th><th>' + window.translation.customerName + '</th><th>' + window.translation.responsible + '</th> <th>' + window.translation.InvoiceDate + '</th> <th class="no-content">' + window.translation.InvoiceDetails + '</th>   </tr>' +
+                ' </thead><tbody> ' +
+                tableBody +
+                '</tbody></table>' +
+                ' </div>' +
+                '<div class="modal-footer text-center" style="display: initial;"> <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>'+window.translation.close+'</button> <a href="/eBills/create/'+ id+'"><button type="button" class="btn btn-info"><i class="las la-plus"></i> '+window.translation.addInvoice+'</button></a></div>' +
+                '</div></div></div></div>');
+            $('#basic-dt').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+            $('#ShowInvoice').modal('show');
         },
         error: function (data) {
             console.log(data);
@@ -888,7 +898,15 @@ $(".Invoices").click(function () {
 
 
 });
-
+$('#add_product').click(function () {
+    var id = $('#add_product').data("id") + 1;
+    $('#add_product').data('id', $('#add_product').data("id") + 1);
+    $("#product_card").append('<div class="widget-content widget-content-area br-6 mt-3" id="card' + id + '"><div class="row"><div class="col-md-6"><h4 class="table-header">' + window.translation.product + '</h4></div><div class="col-md-6"><button type="button" class="btn btn-danger font-12" id="remove_product" data-id="' + id + '" style="    margin-right: 60%;"><i class="las la-minus"></i></button></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.nameService + '</label><input type="text" name="product_name[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Quantity + '</label><input type="text" name="Quantity[' + id + ']" class="form-control mb-4"> </div> </div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Price + '</label><input type="text" name="Price[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Discount + '</label><input type="text" name="Discount[' + id + ']" class="form-control mb-4" value="0"> </div></div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.DiscountType + '</label><select name="Discount_type[' + id + ']" class="form-control mb-4"> <option value="1">' + window.translation.Fixed + '</option><option value="2">' + window.translation.percent + '</option></select> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Tax + '</label><input type="text" name="Tax[' + id + ']" class="form-control mb-4"> </div></div></div></div>');
+    $('#remove_product').click(function () {
+        var id = $(this).data("id");
+        document.getElementById('card' + id).remove();
+    });
+});
 document.querySelector('#invoice-logo').addEventListener('change', function () {
     if (this.files && this.files[0]) {
         var file = $('#invoice-logo').val();

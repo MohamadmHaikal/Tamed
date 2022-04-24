@@ -72,8 +72,7 @@
                                                 ?>
 
                                                     <a class="nav-link nav-settings mb-2 {{ $class }}"
-                                                        href="{{ route('users.all', [$section['id']]) }}"
-                                                       >
+                                                        href="{{ route('users.all', [$section['id']]) }}">
                                                         {{ __($section['name']) }}
                                                     </a>
                                                     <?php } ?>

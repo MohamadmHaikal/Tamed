@@ -20,8 +20,7 @@
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
 
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a
-                                        href="javascript:void(0);">{{ __('backend.eBills') }}</a>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{ __('backend.eBills') }}</a>
                                 </li>
 
                             </ol>
@@ -53,46 +52,53 @@
                                             <h4 class="table-header">{{ __('backend.eBills') }}</h4>
 
                                         </div>
+
                                     </div>
                                     <div class="table-responsive mb-4">
                                         <div class="widget-content widget-content-area text-center">
                                             <div class="button-list">
+                                                <a href="{{route('eBills')}}">
+                                                    <button type="button"
+                                                        class="btn btn-primary btn-rounded">{{ __('backend.all Invoices') }}</button></a>
+
                                                 <button type="button"
-                                                    class="btn btn-primary btn-rounded">{{ __('backend.Invoices issued') }}</button>
-                                                
+                                                    class="btn btn-info btn-rounded">{{ __('backend.Invoices issued') }}</button>
+
                                                 <button type="button"
                                                     class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
-                                                    <button type="button"
-                                                    class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
-
+                                                <a href="{{ route('eBills.create') }}"><button type="button"
+                                                        class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
+                                                </a>
                                             </div>
                                         </div>
                                         <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>{{ __('backend.id') }}</th>
-                                                    <th>{{ __('backend.name of company') }}</th>
-                                                    <th>{{ __('backend.project name') }}</th>
-                                                    <th>{{ __('backend.CompanyCompetence') }}</th>
-                                                    <th class="no-content">{{ __('backend.Invoice details') }}</th>
+                                                    <th>{{ __('backend.invoice number') }}</th>
+                                                    <th>{{ __('backend.customer name') }}</th>
+                                                    <th>{{ __('backend.responsible') }}</th>
+                                                    <th>{{ __('backend.Invoice date') }}</th>
+                                                    <th class="no-content text-center" style="padding-right:0px;">
+                                                        {{ __('backend.Invoice details') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td>
-                                                        <div class="dropdown custom-dropdown">
-                                                            <a href="{{route('eBills.show',[1])}}">
-                                                                {{ __('backend.Invoice details') }}
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
+                                                @foreach ($invoices as $invoice)
+                                                    <tr>
+                                                        <td>{{ $invoice->id }}</td>
+                                                        <td>{{ $invoice->customer_name }}</td>
+                                                        <td>{{ $invoice->responsible }}</td>
+                                                        <td>{{ date('Y-m-d', strtotime($invoice->invoice_date)) }}</td>
+                                                        <td class="text-center">
+                                                            <div class="dropdown custom-dropdown">
+                                                                <a class="text-primary"
+                                                                    href="{{ route('eBills.show', [$invoice->id]) }}">
+                                                                    {{ __('backend.Invoice details') }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -210,12 +216,12 @@
                             extend: 'copy',
                             className: 'btn btn-primary'
                         },
-                      
+
                         {
                             extend: 'excel',
                             className: 'btn btn-primary'
                         },
-                        
+
                         {
                             extend: 'print',
                             className: 'btn btn-primary'
