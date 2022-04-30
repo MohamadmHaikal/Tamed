@@ -185,10 +185,30 @@ return [
             ],
         ],
         [
-            'type' => 'item',
+            'type' => 'parent',
             'label' => awe_lang('electronic contracts'),
             'icon' => 'la-file-contract',
             'route_name' => 'ElectronicContracts',
+            'id' => 'contracts',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('issued contracts'),
+                    'route_name' => 'ElectronicContracts',
+                    'active_class' => 'ElectronicContracts/all/issued',
+                    'parameter' => ['source' => 'issued'],
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('received contracts'),
+                    'route_name' => 'ElectronicContracts',
+                    'active_class' => 'ElectronicContracts/all/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+            ]
         ],
         [
             'type' => 'parent',
@@ -207,11 +227,19 @@ return [
                 ],
                 [
                     'type' => 'item',
+                    'label' => awe_lang('bank accounts'),
+                    'route_name' => 'bank',
+                    'active_class' => 'bank/all'
+
+                ],
+                [
+                    'type' => 'item',
                     'label' => awe_lang('Invoice Settings'),
                     'route_name' => 'eBills.settings',
                     'active_class' => 'eBills/settings'
 
                 ],
+
             ]
         ],
         [
@@ -370,7 +398,7 @@ return [
             'icon' => 'la-file',
             'route_name' => 'FileManger',
         ],
-       
+
         [
             'type' => 'item',
             'label' => awe_lang('Tasks table'),
@@ -379,16 +407,62 @@ return [
             'active_class' => 'TaskTable'
         ],
         [
-            'type' => 'item',
+            'type' => 'parent',
             'label' => awe_lang('electronic contracts'),
             'icon' => 'la-file-contract',
             'route_name' => 'ElectronicContracts',
+            'id' => 'contracts',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('issued contracts'),
+                    'route_name' => 'ElectronicContracts',
+                    'active_class' => 'ElectronicContracts/all/issued',
+                    'parameter' => ['source' => 'issued'],
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('received contracts'),
+                    'route_name' => 'ElectronicContracts',
+                    'active_class' => 'ElectronicContracts/all/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+            ]
         ],
         [
-            'type' => 'item',
+            'type' => 'parent',
             'label' => awe_lang('eBills'),
             'icon' => 'la-receipt',
             'route_name' => 'eBills',
+            'id' => 'eBills',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('eBills'),
+                    'route_name' => 'eBills',
+                    'active_class' => 'eBills/all',
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('bank accounts'),
+                    'route_name' => 'bank',
+                    'active_class' => 'bank/all'
+
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('Invoice Settings'),
+                    'route_name' => 'eBills.settings',
+                    'active_class' => 'eBills/settings'
+
+                ],
+
+            ]
         ],
         [
             'type' => 'parent',
@@ -471,7 +545,7 @@ return [
             'icon' => 'la-file',
             'route_name' => 'FileManger',
         ],
-       
+
         [
             'type' => 'item',
             'label' => awe_lang('Tasks table'),
@@ -525,7 +599,7 @@ return [
             'route_name' => "Disputes",
 
         ]
-       
+
     ],
 
     'theme_options' => [

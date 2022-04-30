@@ -48,7 +48,9 @@ html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
 }
-
+.countdown-subs {
+    text-align: left; margin-left:8%;
+}
 article,
 aside,
 figcaption,

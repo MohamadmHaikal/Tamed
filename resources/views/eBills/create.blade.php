@@ -5,6 +5,7 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
     {!! Html::style('assets/css/ui-elements/buttons.css') !!}
+    {!! Html::style('assets/css/forms/checkbox-theme.css') !!}
 @endpush
 
 @section('content')
@@ -40,9 +41,10 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="container p-0">
-                        
-                        <form action="{{ request('id')!=null ? route('eBills.store', [request('id')]) : route('eBills.store') }}"
-                            method="POST">
+
+                        <form
+                            action="{{ request('id') != null ? route('eBills.store', [request('id')]) : route('eBills.store') }}"
+                            method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row layout-top-spacing date-table-container">
                                 <!-- Datatable go to last page -->
@@ -64,12 +66,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Invoice date') }}</label><input
-                                                        type="date" name="Invoice_date" class="form-control mb-4"> </div>
+                                                        type="date" name="Invoice_date" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Invoice date required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.date of supply') }}</label><input
-                                                        type="date" name="date_supply" class="form-control mb-4"> </div>
+                                                        type="date" name="date_supply" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Delivery date required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr class="rounded" style=" border-top: 2.5px solid #e5eaff; ">
@@ -78,12 +90,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.customer name') }}</label><input
-                                                        type="text" name="customer_name" class="form-control mb-4"> </div>
+                                                        type="text" name="customer_name" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Customer name is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.address') }}</label><input
-                                                        type="text" name="address" class="form-control mb-4"> </div>
+                                                        type="text" name="address" class="form-control"
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Address is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -91,12 +113,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Tax Number') }}</label><input
-                                                        type="text" name="Tax_Number" class="form-control mb-4"> </div>
+                                                        type="text" name="Tax_Number" class="form-control"
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Tax number is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.responsible') }}</label><input
-                                                        type="text" name="responsible" class="form-control mb-4"> </div>
+                                                        type="text" name="responsible" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Responsible Name Required') }}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -104,12 +136,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.phone') }}</label><input type="text"
-                                                        name="phone" class="form-control mb-4"> </div>
+                                                        name="phone" class="form-control"
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Mobile number is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.email') }}</label><input type="text"
-                                                        name="email" class="form-control mb-4"> </div>
+                                                        name="email" class="form-control"
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Email is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
 
 
@@ -117,32 +159,35 @@
                                         <hr class="rounded" style=" border-top: 2.5px solid #e5eaff;">
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.Bank name') }}</label><input
-                                                        type="text" name="Bank_name" class="form-control mb-4"> </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.account name') }}</label><input
-                                                        type="text" name="account_name" class="form-control mb-4"> </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.account number') }}</label><input
-                                                        type="text" name="account_number" class="form-control mb-4"> </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.Number of statement') }}</label><input
-                                                        type="text" name="Number_statement" class="form-control mb-4">
+                                                        for="degree2">{{ __('backend.Bank name') }}</label>
+                                                    <br>
+                                                    {{-- <select name="Banks[]" class="form-control" aria-describedby="inputGroupPrepend" required  multiple>
+                                                       @foreach ($banks as $bank)
+                                                       <option value="{{$bank->id}}">{{$bank->bank_name}}</option>
+                                                       @endforeach
+                                                    </select> --}}
+                                                    <?php
+                                                    $i = 0;
+                                                    ?>
+                                                    <div class="  checkbox-inline checkbox-group required">
+                                                        @foreach ($banks as $bank)
+                                                            <?php
+                                                            $i++;
+                                                            ?>
+                                                            <label class="checkbox" style="margin-right:0;">
+                                                                <input type="checkbox" name="bank[{{ $i }}]"
+                                                                    value="{{ $bank->id }}">
+                                                                <span></span>{{ $bank->bank_name }}</label>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
 
+
                                         </div>
+
                                         <button type="submit" class="btn btn-info btn-rounded "
                                             style="    margin-right: 80%;">{{ __('backend.add') }}</button>
                                     </div>
@@ -167,26 +212,47 @@
                                             <div class="col-md-12">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.name of Service') }}</label><input
-                                                        type="text" name="product_name[1]" class="form-control mb-4"> </div>
+                                                        type="text" name="product_name[1]" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Service name is required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Quantity') }}</label><input
-                                                        type="text" name="Quantity[1]" class="form-control mb-4"> </div>
+                                                        type="text" name="Quantity[1]" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Quantity required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Price') }}</label><input type="text"
-                                                        name="Price[1]" class="form-control mb-4"> </div>
+                                                        name="Price[1]" class="form-control "
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.price required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Discount') }}</label><input
-                                                        type="text" name="Discount[1]" class="form-control mb-4" value="0"> </div>
+                                                        type="text" name="Discount[1]" class="form-control " value="0"
+                                                        aria-describedby="inputGroupPrepend" required>
+
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.Discount required') }}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
@@ -194,14 +260,22 @@
                                                         name="Discount_type[1]" class="form-control mb-4">
                                                         <option value="1">{{ __('backend.Fixed value') }}</option>
                                                         <option value="2">{{ __('backend.percent') }}</option>
-                                                    </select> </div>
+                                                    </select>
+
+
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Tax') }}</label><input type="text"
-                                                        name="Tax[1]" class="form-control mb-4"> </div>
+                                                        name="Tax[1]" class="form-control" value="15"
+                                                        aria-describedby="inputGroupPrepend" required>
+                                                    <div class="invalid-feedback">
+                                                        {{ __('backend.tax required') }}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -241,4 +315,53 @@
 @endpush
 
 @push('custom-scripts')
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            if ($('[name="Contract_file"]').val() != null) {
+
+                                document.getElementById("alert").innerHTML =
+                                    '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
+                                    window.translation.systemMessages +
+                                    '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
+                                    window.translation.AttachedRequired + '</div></div></div>';
+                                $('.toast').toast('show');
+                            } else {
+                                document.getElementById("alert").innerHTML =
+                                    '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
+                                    window.translation.systemMessages +
+                                    '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
+                                    window.translation.AllRequired + '</div></div></div>';
+                                $('.toast').toast('show');
+                            }
+                        }
+                        if ($('div.checkbox-group.required :checkbox:checked').length == 0) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            document.getElementById("alert").innerHTML =
+                                '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
+                                window.translation.systemMessages +
+                                '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
+                                window.translation.Atleast + '</div></div></div>';
+                            $('.toast').toast('show');
+                        }
+
+                        form.classList.add('was-validated')
+
+                    }, false)
+                })
+        })()
+    </script>
 @endpush

@@ -75,52 +75,71 @@
                                                         style="height:auto;">
                                                         <div class="row inv--head-section" style="    margin-bottom: 15px;">
 
-                                                            <div class="col-sm-6 col-12">
+                                                            <div class="col-sm-4 col-12">
                                                                 <h6 class="in-heading mb-3">{{ $author->name }}</h6>
-                                                                <h6 class="in-heading mb-3">العنوان:
+                                                                <h6 class="in-heading mb-3">{{ __('backend.address') }} :
                                                                     {{ get_location_by_id($author->neighbor_id) }}</h6>
-                                                                <h6 class="in-heading">الرقم الضريبي :
+                                                                <h6 class="in-heading">{{ __('backend.Tax Number') }}
+                                                                    :
                                                                     {{ $author->TaxNumber }}
                                                                 </h6>
-                                                                <h6 class="in-heading">الرقم المميز:
+                                                                <h6 class="in-heading">
+                                                                    {{ __('backend.special number') }} :
                                                                     {{ $author->specialNumber }}</h6>
-                                                                <h6 class="in-heading mb-3">رقم السجل التجاري:
+                                                                <h6 class="in-heading mb-3">
+                                                                    {{ __('backend.Commercial Registration No') }} :
                                                                     {{ $author->CRecord }}
                                                                 </h6>
-                                                                <h6 class="in-heading">البريد الالكتروني :
+                                                                <h6 class="in-heading">{{ __('backend.email') }} :
                                                                     {{ $author->email }}</h6>
-                                                                <h6 class="in-heading">رقم الجول :
+                                                                <h6 class="in-heading">{{ __('backend.phone') }} :
                                                                     {{ $author->phone }}
                                                                 </h6>
                                                             </div>
-                                                            <div class="col-sm-6 col-12 align-self-center text-sm-right">
+                                                            <?php
+                                                            function einv_generate_tlv_qr_code($array_tag = [])
+                                                            {
+                                                                $index = 1;
+                                                                $tlv_string = null;
+                                                                foreach ($array_tag as $tag_val) {
+                                                                    $tlv_string .= pack('H*', sprintf('%02X', (string) "$index")) . pack('H*', sprintf('%02X', strlen((string) "$tag_val"))) . (string) "$tag_val";
+                                                                    $index++;
+                                                                }
+                                                                return base64_encode($tlv_string);
+                                                            }
+                                                            $qrContent = einv_generate_tlv_qr_code([$author->name, $author->TaxNumber, $invoice->created_at, $Ttotal['total'], $Ttotal['tax_amount']]);
+                                                            
+                                                            ?>
+                                                            <div class="col-sm-4 col-12 align-self-center text-sm-center">
+                                                                {!! QrCode::size(150)->generate($qrContent) !!}
+                                                            </div>
+                                                            <div class="col-sm-4 col-12 align-self-center text-sm-right">
                                                                 <div class="">
                                                                     <img src="{{ url("/image/$author->invoiceLogo") }}"
-                                                                        style="    width: 35%;
-                                                                                                                                    margin-left: 16%;
-                                                                                                                                " />
+                                                                        style="width: 45%; margin-left: 16%;" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
 
                                                             <div class="col-sm-3"
-                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                فاتورة رقم: {{ $invoice->id }}</div>
+                                                                style="border: 2px solid #dae1e7; margin-left: 3px;">
+                                                                {{ __('backend.Bill No') }} : {{ $invoice->id }}</div>
                                                             <div class="col-sm-3"
                                                                 style="border: 2px solid #dae1e7 ; margin-left: 5px;">
-                                                                التاريخ:
+                                                                {{ __('backend.Date') }} :
                                                                 {{ date('Y-m-d', strtotime($invoice->created_at)) }}
                                                             </div>
                                                             <div class="col-sm-5 mr-1"
                                                                 style="border: 2px solid #dae1e7;    margin-left: 3px;">
-                                                                تاريخ التوريد : {{ $invoice->supply_date }}</div>
+                                                                {{ __('backend.date of supply') }} :
+                                                                {{ $invoice->supply_date }}</div>
                                                         </div>
 
                                                         <div class="row mt-2">
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                اسم العميل</div>
+                                                                {{ __('backend.customer name') }}</div>
                                                             <div class="col-sm-6"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->customer_name }}
@@ -130,14 +149,14 @@
                                                         <div class="row mt-2">
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                العنوان </div>
+                                                                {{ __('backend.address') }} </div>
                                                             <div class="col-sm-4"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->address }}
                                                             </div>
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                الرقم الضريبي</div>
+                                                                {{ __('backend.Tax Number') }}</div>
                                                             <div class="col-sm-3"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->TaxNumber }}
@@ -146,7 +165,7 @@
                                                         <div class="row mt-2">
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 8px;">
-                                                                المسئول </div>
+                                                                {{ __('backend.responsible') }} </div>
                                                             <div class="col-sm-9"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->responsible }}
@@ -156,21 +175,21 @@
                                                         <div class="row mt-2">
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                رقم الجوال </div>
+                                                                {{ __('backend.phone') }} </div>
                                                             <div class="col-sm-4"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->phone }}
                                                             </div>
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                الايميل </div>
+                                                                {{ __('backend.Email') }} </div>
                                                             <div class="col-sm-3"
                                                                 style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
                                                                 {{ $invoice->email }}
                                                             </div>
                                                         </div>
-                                                        <div class="row inv--product-table-section" style="margin-top: 10px;
-                                                                                                    margin-bottom: 0px;">
+                                                        <div class="row inv--product-table-section"
+                                                            style="margin-top: 10px; margin-bottom: 0px;">
                                                             <div class="col-12" style="padding-right: 0px;">
                                                                 <div class="table-responsive">
                                                                     <table class="table">
@@ -180,29 +199,32 @@
                                                                                     style="    padding: 0.5rem;">
                                                                                     {{ __('#') }}</th>
                                                                                 <th class="text-center" scope="col"
-                                                                                    style="    padding: 0.5rem;">المنتج او
-                                                                                    الخدمة</th>
+                                                                                    style="    padding: 0.5rem;">
+                                                                                    {{ __('backend.product or service') }}
+                                                                                </th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    الكمية</th>
+                                                                                    {{ __('backend.Quantity') }}</th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    القيمة</th>
+                                                                                    {{ __('backend.value') }}</th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    الخصم</th>
+                                                                                    {{ __('backend.Discount') }}</th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    المبلغ الخاضع لضريبة القيمة المضافة</th>
+                                                                                    {{ __('backend.Amount subject to value added tax') }}
+                                                                                </th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    نسبة ضريبة القيمة المضافة</th>
+                                                                                    {{ __('backend.VAT rate') }}</th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    مبلغ ضريبة القيمة المضافة</th>
+                                                                                    {{ __('backend.VAT amount') }}</th>
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
-                                                                                    الأجمالي شامل ضريبة القيمة المضافة</th>
+                                                                                    {{ __('backend.The total includes value added tax') }}
+                                                                                </th>
 
                                                                             </tr>
                                                                         </thead>
@@ -241,27 +263,43 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row inv--product-table-section" style="margin-top: 10px;
-                                                                                    margin-bottom: 0px;">
+                                                        <div class="row inv--product-table-section"
+                                                            style="margin-top: 10px;
+                                                                                                                margin-bottom: 0px;">
                                                             <div class="col-12" style="padding-right: 0px;">
                                                                 <div class="table-responsive">
                                                                     <table class="table">
 
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td style="padding-left: 128px;">الأجمالي
+                                                                                <td style="padding-left: 128px;">
+                                                                                    {{ __('backend.Total') }}
                                                                                 </td>
-                                                                                <td>اجمالي الخصم</td>
-                                                                                <td class="text-left">الاجمالي الخاضع
-                                                                                    لضريبة القيمة المضافة</td>
+                                                                                <td>{{ __('backend.total discount') }}
+                                                                                </td>
                                                                                 <td class="text-left">
-                                                                                    اجمالي ضريبة القيمةالمضافة</td>
+                                                                                    {{ __('backend.Total subject to value added tax') }}
+                                                                                </td>
                                                                                 <td class="text-left">
-                                                                                    الاجمالي الشامل لضريبة القيمة المضافة
+                                                                                    {{ __('backend.total value added tax') }}
+                                                                                </td>
+                                                                                <td class="text-left">
+                                                                                    {{ __('backend.The total inclusive value-added tax') }}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td style="padding-left: 128px;"></td>
+                                                                                <td class="text-center"
+                                                                                    style="padding-left: 55px;">
+                                                                                    {{-- <img
+                                                                                        src="{{ url("/image/$author->Signature") }}"
+                                                                                        style="width: 17%;
+                                                                                                    background-position: center;
+                                                                                                    position: absolute;
+                                                                                                    top: 55px;
+                                                                                                    right: 15px;
+                                                                                                    background-size: cover;
+                                                                                                    z-index: 1;"> --}}
+                                                                                </td>
                                                                                 <td> {{ number_format($Ttotal['discount'], 2, '.', ',') }}
                                                                                 </td>
                                                                                 <td class="text-left">
@@ -285,49 +323,56 @@
                                                             <div class="">
                                                                 <div class="col-sm-12 col-12">
                                                                     <h6 class=" inv-title">
-                                                                        {{ __('تفاصيل الحساب البنكي') }}</h6>
+                                                                        {{ __('backend.Bank account details') }}</h6>
                                                                 </div>
-                                                                <div class="row mt-1">
-                                                                    <div class="col-sm-2 pt-1 pb-1"
-                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                        اسم البنك </div>
-                                                                    <div class="col-sm-9"
-                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                        {{ $invoice->Bank_name }}
-                                                                    </div>
+                                                                <div class="row">
+                                                                    @foreach ($banks as $bank)
+                                                                        <div class="col-sm-6 mt-2">
+                                                                            <div class="row mt-1">
+                                                                                <div class="col-sm-3 pt-1 pb-1"
+                                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                                    {{ __('backend.Bank name') }} </div>
+                                                                                <div class="col-sm-8"
+                                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                                    {{ $bank->bank_name }}
+                                                                                </div>
 
+                                                                            </div>
+                                                                            <div class="row mt-1">
+                                                                                <div class="col-sm-3 pt-1 pb-1"
+                                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                                    {{ __('backend.account name') }}
+                                                                                </div>
+                                                                                <div class="col-sm-8"
+                                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                                    {{ $bank->account_name }}
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="row mt-1">
+                                                                                <div class="col-sm-3 pt-1 pb-1"
+                                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                                    {{ __('backend.account number') }}
+                                                                                </div>
+                                                                                <div class="col-sm-8"
+                                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                                    {{ $bank->account_number }}
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="row mt-1">
+                                                                                <div class="col-sm-3 pt-1 pb-1"
+                                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                                    {{ __('backend.IBAN') }} </div>
+                                                                                <div class="col-sm-8"
+                                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                                    {{ $bank->iban_number }}
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
-                                                                <div class="row mt-1">
-                                                                    <div class="col-sm-2 pt-1 pb-1"
-                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                        اسم الحساب </div>
-                                                                    <div class="col-sm-9"
-                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                        {{ $invoice->account_name }}
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="row mt-1">
-                                                                    <div class="col-sm-2 pt-1 pb-1"
-                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                        رقم الحساب</div>
-                                                                    <div class="col-sm-9"
-                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                        {{ $invoice->account_number }}
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="row mt-1">
-                                                                    <div class="col-sm-2 pt-1 pb-1"
-                                                                        style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                        رقم البيان </div>
-                                                                    <div class="col-sm-9"
-                                                                        style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                        {{ $invoice->IBAN }}
-                                                                    </div>
-
-                                                                </div>
-
                                                             </div>
                                                         </div>
 
@@ -341,21 +386,17 @@
 
                                                                         </thead>
                                                                         <tbody>
-                                                                            <?php
-                                                                                $data = serialize(array("Red", "Green", "Blue"));
-                                                                                ?>
+
                                                                             <tr>
-                                                                                <td
-                                                                                    style="width: 50%;
-                                                                                                                                                        text-align: center;">
-                                                                                    {!! QrCode::size(150)->generate($data) !!}
-                                                                                </td>
 
-                                                                                <td class="text-center"
-                                                                                    style="width: 50%;"><img
-                                                                                        src="{{ url("/image/$author->Signature") }}">
-                                                                                </td>
-
+                                                                                <img src="{{ url("/image/$author->Signature") }}"
+                                                                                    style="width: 17%;
+                                                                                        background-position: center;
+                                                                                        position: absolute;
+                                                                                        top: -94px;
+                                                                                        right: 746px;
+                                                                                        background-size: cover;
+                                                                                        z-index: 1;">
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>

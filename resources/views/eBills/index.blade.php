@@ -5,6 +5,7 @@
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
     {!! Html::style('assets/css/ui-elements/buttons.css') !!}
+    {!! Html::style('assets/css/basic-ui/custom_countdown.css') !!}
 @endpush
 
 @section('content')
@@ -52,23 +53,66 @@
                                             <h4 class="table-header">{{ __('backend.eBills') }}</h4>
 
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="col-lg-12 mb-12">
+                                                <div class="">
 
+                                                    <div class="widget-content" style="padding: 0px;">
+                                                        <p  class="countdown-subs" >{{__('backend.Remaining to subscribe')}}</p>
+                                                        <div id="nocolor" class="square-countdown no-color"
+                                                            style="justify-content: end;">
+                                                            <div class="days" style="margin-right: 4px"><span
+                                                                    class="count"
+                                                                    style="width: auto; height: 43px;font-size: 15px;">00</span>
+                                                                <span class="text"
+                                                                    style="margin-top:0px">{{ __('backend.Days') }}</span>
+                                                            </div>
+                                                            <div class="hours" style="margin-right: 4px"><span
+                                                                    class="count"
+                                                                    style="width: auto; height: 43px;font-size: 15px;">00</span>
+                                                                <span class="text"
+                                                                    style="margin-top:0px">{{ __('backend.Hours') }}</span>
+                                                            </div>
+                                                            <div class="min" style="margin-right: 4px"><span
+                                                                    class="count"
+                                                                    style="width: auto;height: 43px;font-size: 15px;">00</span>
+                                                                <span class="text"
+                                                                    style="margin-top:0px">{{ __('backend.Mins') }}</span>
+                                                            </div>
+                                                            <div class="sec" style="margin-right: 4px"><span
+                                                                    class="count"
+                                                                    style="width: auto; height: 43px; font-size: 15px;">00</span>
+                                                                <span class="text"
+                                                                    style="margin-top:0px">{{ __('backend.Secs') }}</span>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div class="table-responsive mb-4">
                                         <div class="widget-content widget-content-area text-center">
                                             <div class="button-list">
-                                                <a href="{{route('eBills')}}">
+                                                <a href="{{ route('eBills') }}">
                                                     <button type="button"
                                                         class="btn btn-primary btn-rounded">{{ __('backend.all Invoices') }}</button></a>
-
-                                                <button type="button"
-                                                    class="btn btn-info btn-rounded">{{ __('backend.Invoices issued') }}</button>
-
-                                                <button type="button"
-                                                    class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
+                                                <a href="{{ route('eBills', ['source' => 'issued']) }}">
+                                                    <button type="button"
+                                                        class="btn btn-info btn-rounded">{{ __('backend.Invoices issued') }}</button>
+                                                </a>
+                                                <a href="{{ route('eBills', ['source' => 'received']) }}">
+                                                    <button type="button"
+                                                        class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
+                                                </a>
                                                 <a href="{{ route('eBills.create') }}"><button type="button"
                                                         class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
                                                 </a>
+                                                <input id="date" value="{{$date}}" hidden>
                                             </div>
                                         </div>
                                         <table id="export-dt" class="table table-hover" style="width:100%">
@@ -131,10 +175,51 @@
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('plugins/countdown/jquery.countdown.min.js') !!}
 @endpush
 
 @push('custom-scripts')
     <script>
+        (function($) {
+            "use strict";
+           
+            var date = document.getElementById("date").value;
+            var countDownDate = new Date(date).getTime();
+            var countdownfunction = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("nocolor").innerHTML =
+                    '<div class="days" style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
+                    days +
+                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Days +
+                    '</span></div>' +
+                    '<div class="hours " style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
+                    hours +
+                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Hours +
+                    '</span></div>' +
+                    '<div class="min" style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
+                    minutes +
+                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Mins +
+                    '</span></div>' +
+                    '<div class="sec" style="margin-right: 4px"><span class="count"style="width: auto; height: 43px; font-size: 15px;">' +
+                    seconds +
+                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Secs +
+                    '</span></div>';
+
+
+                if (distance < 0) {
+
+                    clearInterval(countdownfunction);
+                    document.getElementById("nocolor").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+
+        })(jQuery);
+
         $('#Show').on('show.bs.modal', function(event) {
 
             var button = $(event.relatedTarget);

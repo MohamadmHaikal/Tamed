@@ -84,7 +84,8 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <p class="text-center mt-4">
+                                        {{ __('backend.To amend the commercial register and invoice numbers') }} <a href="{{route('profile')}}" target="_blank" style="color: #027496;">{{__('backend.Press here')}}</a></p>
                                 </div>
                             </div>
                         </div>

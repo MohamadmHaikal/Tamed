@@ -16,10 +16,7 @@ class invoice extends Model
         'responsible',
         'phone',
         'email',
-        'Bank_name',
-        'account_name',
-        'account_number',
-        'IBAN',
+        'Banks',
         'user_id',
         'contracts_id'
     ];

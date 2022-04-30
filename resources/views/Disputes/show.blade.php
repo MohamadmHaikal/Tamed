@@ -75,7 +75,11 @@
                                                 <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>الجهة المالية</th>
+                                                <th>{{ __('backend.title') }}</th>
+                                                <td>{{ $report->title }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{{ __('backend.financial authority') }}</th>
                                                 <td>{{ get_user_by_id($report->against_id)->name }}</td>
                                             </tr>
 
@@ -84,19 +88,18 @@
                                                 <td>{{ __('backend.' . $report->status) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>التصنيف</th>
-                                                <td>{{ $report->title }}</td>
+                                                <th>{{ __('backend.description') }}</th>
+                                                <td>{{ $report->description }}</td>
                                             </tr>
                                             <tr>
-                                                <th>الرقم المرجعي</th>
+                                                <th>{{ __('backend.reference number') }}</th>
                                                 <td>{{ $report->ref_number }}#</td>
                                             </tr>
 
                                         </tbody>
                                     </table>
                                     <br>
-                                    <hr class="rounded"
-                                        style=" border-top: 1px solid #bbb;  border-radius: 5px;">
+                                    <hr class="rounded" style=" border-top: 1px solid #bbb;  border-radius: 5px;">
                                     <div class="meesage-list">
 
                                         @foreach ($message as $item)
@@ -108,13 +111,17 @@
                                                             <p class="note-title">
                                                                 {{ get_user_by_id($item->user_id)->name }}
                                                             </p>
-                                                            <div class="meta-time">
+                                                            <div class="meta-time" style="width: 100%">
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         {{ date('Y-m-d', strtotime($item->created_at)) }}
                                                                     </div>
-                                                                    <div class="col-md-6 text-right"><i
-                                                                            class="las la-pen font-20"></i></div>
+                                                                    @if (get_current_user_id() == $item->user_id && get_current_user_id() == $message[$message->count() - 1]->user_id && $message[$message->count() - 1]->id == $item->id)
+                                                                        <div class="col-md-6 text-right"><i
+                                                                                class="las la-pen font-20 edit-message"
+                                                                                data-id="{{ $item->id }}"></i>
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <div class="note-description-content">
@@ -141,10 +148,11 @@
 
                                     </div>
                                     <br>
-                                    @if ($report->status != 'closed' && get_current_user_id() != $message[$message->count() - 1]->user_id && get_current_user_id() == $report->applicant_id)
+                                    @if ($report->status != 'closed' && $message->count() > 0 && get_current_user_id() != $message[$message->count() - 1]->user_id && get_current_user_id() == $report->applicant_id)
                                         <br>
                                         <br>
-                                        <div id="option-dialog" style="border: 1px solid #dee2e6; width:50%; margin: auto;  padding: 10px;">
+                                        <div id="option-dialog"
+                                            style="border: 1px solid #dee2e6; width:50%; margin: auto;  padding: 10px;">
                                             <p class="text-center">
                                                 {{ __('backend.Do you want to close this dispute?') }}</p>
                                             <div class="row text-center">
@@ -163,7 +171,7 @@
                                         <br>
                                     @else
                                         @if ($report->status != 'closed')
-                                            @if (get_current_user_id() != $message[$message->count() - 1]->user_id)
+                                            @if ($message->count() == 0 || get_current_user_id() != $message[$message->count() - 1]->user_id)
                                                 <div class="messenger-sendCard">
 
                                                     <div class="row">

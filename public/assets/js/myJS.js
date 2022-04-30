@@ -805,6 +805,15 @@ $('.continue-dispute').click(function () {
 });
 $(".show-contract").click(function () {
     var id = $(this).data('id');
+    var trans = [
+        window.translation.batch4,
+        window.translation.batch5,
+        window.translation.batch6,
+        window.translation.batch7,
+        window.translation.batch8,
+        window.translation.batch9,
+        window.translation.batch10,
+    ];
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -821,25 +830,72 @@ $(".show-contract").click(function () {
             const element = document.getElementById("ShowContract");
             console.log(data);
             if (element != null) { element.remove(); }
+            if (data['status'] == 'waiting' && data['is_received']) {
+                var footer = '<div class="modal-footer text-center" style="display: revert;"> <button class="btn btn-success contract-action" data-action="Accepted" ><i class="flaticon-cancel-12"></i>' + window.translation.ContractApproval + '</button><button type="button" class="btn btn-danger contract-action" data-action="rejected">' + window.translation.contractRefusal + '</button> </div>'
+
+            }
+            else {
+                var footer = '';
+            }
+            var batch = ''
+            for (let index = 3; index < data['batch'].length; index++) {
+
+                batch += '<div class="col-md-4"><div class="form-group"><label for="degree2">' + trans[index - 3] + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['batch'][index] + '" disabled=""> </div></div>';
+            }
+
             $("body").append(' <div class="modal fade bd-example-modal-lg" id="ShowContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-lg" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Contractdetails + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body">' +
                 '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.ContractID + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['contract_number'] + '"disabled> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.typeCompany + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['type'] + '" disabled=""> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.CommercialRecord + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['CRecord'] + '"disabled> </div></div></div>' +
                 '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.company_name + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['company_name'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.responsible + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['responsible'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.phone + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['phone'] + '" disabled=""> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.City + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['City'] + '" disabled=""> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.renewable + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['renewable'] + '" disabled=""> </div></div></div>' +
                 '<div class="row"> <div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.BriefDescription + '</label><textarea type="text" name="project_name"  class="form-control mb-4" row="2" disabled>' + data['Brief_description'] + '</textarea></div></div></div>' +
                 '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.amount + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['amount'] + '" disabled=""> </div></div>' +
-                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.fbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['first_batch'] + '" disabled=""> </div></div>' +
-                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.sbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['second_batch'] + '" disabled=""> </div></div></div>' +
-                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.tbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['third_batch'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.PaymentSystem + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['Payment_system'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.fbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['batch'][0] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.sbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['batch'][1] + '" disabled=""> </div></div></div>' +
+                '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.tbatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['batch'][2] + '" disabled=""> </div></div>' +
+                batch +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.finalBatch + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['final_batch'] + '" disabled=""> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.Datecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['contract_date'] + '" disabled=""> </div></div></div>' +
                 '<div class="row"> <div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.sDatecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['date_start'] + '" disabled=""> </div></div>' +
                 '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.eDatecontract + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['date_end'] + '" disabled=""> </div></div>' +
-                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.Attachedcontract + '</label><p><a title="' + window.translation.Attachedcontract + '"class="mr-2 pointer text-primary" href="/image/' + data['Contract_file'] + '" download><i class="las la-paperclip font-20"></i> <span class="font-17">' + window.translation.downloadcontact + '</span></a></p></div></div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.ContractStatus + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['status'] + '" disabled=""> </div></div>' +
+                '<div class="col-md-4"><div class="form-group"><label for="degree2">' + window.translation.Attachedcontract + '</label><p><a title="' + window.translation.Attachedcontract + '"class="mr-2 pointer text-primary" href="/image/' + data['Contract_file'] + '" download><i class="las la-paperclip font-20"></i> <span class="font-17">' + window.translation.downloadcontact + '</span></a></p>' +
+                '</div></div></div>' +
+                footer +
                 ' </div></div></div></div></div>');
             $('#ShowContract').modal('show');
+            $('.contract-action').click(function () {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: "/ElectronicContracts/changeStatus/" + $(this).data('action') + '/' + id,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        if (data['reload']) {
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+            });
         },
         error: function (data) {
             console.log(data);
@@ -877,7 +933,7 @@ $(".Invoices").click(function () {
                 tableBody +
                 '</tbody></table>' +
                 ' </div>' +
-                '<div class="modal-footer text-center" style="display: initial;"> <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>'+window.translation.close+'</button> <a href="/eBills/create/'+ id+'"><button type="button" class="btn btn-info"><i class="las la-plus"></i> '+window.translation.addInvoice+'</button></a></div>' +
+                '<div class="modal-footer text-center" style="display: initial;"> <button class="btn btn-danger" data-dismiss="modal"><i class="flaticon-cancel-12"></i>' + window.translation.close + '</button> <a href="/eBills/create/' + id + '"><button type="button" class="btn btn-info"><i class="las la-plus"></i> ' + window.translation.addInvoice + '</button></a></div>' +
                 '</div></div></div></div>');
             $('#basic-dt').DataTable({
                 "language": {
@@ -901,11 +957,331 @@ $(".Invoices").click(function () {
 $('#add_product').click(function () {
     var id = $('#add_product').data("id") + 1;
     $('#add_product').data('id', $('#add_product').data("id") + 1);
-    $("#product_card").append('<div class="widget-content widget-content-area br-6 mt-3" id="card' + id + '"><div class="row"><div class="col-md-6"><h4 class="table-header">' + window.translation.product + '</h4></div><div class="col-md-6"><button type="button" class="btn btn-danger font-12" id="remove_product" data-id="' + id + '" style="    margin-right: 60%;"><i class="las la-minus"></i></button></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.nameService + '</label><input type="text" name="product_name[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Quantity + '</label><input type="text" name="Quantity[' + id + ']" class="form-control mb-4"> </div> </div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Price + '</label><input type="text" name="Price[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Discount + '</label><input type="text" name="Discount[' + id + ']" class="form-control mb-4" value="0"> </div></div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.DiscountType + '</label><select name="Discount_type[' + id + ']" class="form-control mb-4"> <option value="1">' + window.translation.Fixed + '</option><option value="2">' + window.translation.percent + '</option></select> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Tax + '</label><input type="text" name="Tax[' + id + ']" class="form-control mb-4"> </div></div></div></div>');
-    $('#remove_product').click(function () {
-        var id = $(this).data("id");
-        document.getElementById('card' + id).remove();
+    $("#product_card").append('<div class="widget-content widget-content-area br-6 mt-3" id="card' + id + '"><div class="row"><div class="col-md-6"><h4 class="table-header">' + window.translation.product + '</h4></div><div class="col-md-6"><button type="button" onclick="remoproduct(' + id + ')" class="btn btn-danger font-12" id="remove_product" data-id="' + id + '" style="    margin-right: 60%;"><i class="las la-minus"></i></button></div></div><div class="row"><div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.nameService + '</label><input type="text" name="product_name[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Quantity + '</label><input type="text" name="Quantity[' + id + ']" class="form-control mb-4"> </div> </div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.Price + '</label><input type="text" name="Price[' + id + ']" class="form-control mb-4"> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Discount + '</label><input type="text" name="Discount[' + id + ']" class="form-control mb-4" value="0"> </div></div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window.translation.DiscountType + '</label><select name="Discount_type[' + id + ']" class="form-control mb-4"> <option value="1">' + window.translation.Fixed + '</option><option value="2">' + window.translation.percent + '</option></select> </div></div></div><div class="row"><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.Tax + '</label><input type="text" name="Tax[' + id + ']" class="form-control mb-4"> </div></div></div></div>');
+    // $('#remove_product').click(function () {
+    //     var id = $(this).data("id");
+    //     document.getElementById('card' + id).remove();
+    // });
+});
+function remoproduct(id) {
+    const element = document.getElementById('card' + id);
+    element.remove();
+
+};
+$("#create_bank").click(function () {
+
+    var fd = new FormData();
+    fd.append('bank_name', $("[name='bank_name']").val());
+    fd.append('account_name', $("[name='account_name']").val());
+    fd.append('account_number', $("[name='account_number']").val());
+    fd.append('iban_number', $("[name='iban_number']").val());
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+    $.ajax({
+        type: 'POST',
+        url: "/bank/store",
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            if (data['status'] == '1') {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+            }
+            if (data['reload']) {
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+
+            }
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+});
+$(".show-bank").click(function () {
+    var id = $(this).data('id');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/bank/show/" + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            console.log(window.translation);
+            const element = document.getElementById("bank-details");
+            console.log(data);
+            if (element != null) { element.remove(); }
+            $("body").append(' <div class="modal fade" id="bank-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.bankDetails + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body"><div class="row"> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.BankName + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['bank_name'] + '"disabled> </div></div><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.accountName + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['account_name'] + '" disabled=""> </div></div></div><div class="row"> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.accountNumber + '</label><input type="text" name="project_name"  class="form-control mb-4" value="' + data['account_number'] + '"disabled> </div></div><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.IBANumber + '</label><input type="text" name="project_name" class="form-control mb-4" value="' + data['iban_number'] + '" disabled=""> </div></div></div></div></div></div></div>');
+            $('#bank-details').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$(".edit-bank").click(function () {
+    var id = $(this).data('id');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/bank/show/" + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            console.log(window.translation);
+            const element = document.getElementById("bank-edit");
+            console.log(data);
+            if (element != null) { element.remove(); }
+            $("body").append(' <div class="modal fade" id="bank-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.bankDetails + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div><div class="modal-body"><div class="row"> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.BankName + '</label><input type="text" id="bank_name"  class="form-control mb-4" value="' + data['bank_name'] + '"> </div></div><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.accountName + '</label><input type="text" id="account_name" class="form-control mb-4" value="' + data['account_name'] + '" > </div></div></div><div class="row"> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.accountNumber + '</label><input type="text" id="account_number"  class="form-control mb-4" value="' + data['account_number'] + '"> </div></div><div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.IBANumber + '</label><input type="text" id="iban_number" class="form-control mb-4" value="' + data['iban_number'] + '" > </div></div></div></div><div class="modal-footer"><button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>' + window.translation.cancle + '</button> <button type="button" class="btn btn-primary" id="edit_bank">' + window.translation.save + '</button></div></div></div></div>');
+            $('#bank-edit').modal('show');
+
+            $("#edit_bank").click(function () {
+                console.log($("[name='bank_name']").val());
+                var fd = new FormData();
+                fd.append('bank_name', $("#bank_name").val());
+                fd.append('account_name', $("#account_name").val());
+                fd.append('account_number', $("#account_number").val());
+                fd.append('iban_number', $("#iban_number").val());
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: "/bank/update/" + id,
+                    data: fd,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        if (data['status'] == '1') {
+                            document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                                .length);
+                            $('.toast').toast('show');
+                        }
+                        if (data['reload']) {
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+
+                        }
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+
+            });
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$(".add-batch").click(function () {
+    var id = $('.add-batch').data("id") + 1;
+    var trans = [
+        window.translation.batch4,
+        window.translation.batch5,
+        window.translation.batch6,
+        window.translation.batch7,
+        window.translation.batch8,
+        window.translation.batch9,
+        window.translation.batch10,
+    ];
+
+    $('.add-batch').data('id', $('.add-batch').data("id") + 1);
+    $(".batchs").append(' <div class="row"  id="batchContainer[' + id + ']" > <div class="col-md-6"><div class="form-group"><label for="degree2">' + trans[id - 4] + '</label><input  type="text" name="batch[' + id + ']" id="batch[' + id + ']" class="form-control " > </div> </div><button  class="delete-batch" type="button" data-id="' + id + '" onclick="remo(' + id + ')" style="background: transparent; margin-top: 10px;"><i class="las la-times font-20" style="background:#e7515a; color:white;"></i></button></div>');
+
+    if (id == 10) {
+        $('.add-batch').remove();
+    }
+});
+function remo(id) {
+
+    const element = document.getElementById('batchContainer[' + id + ']');
+    element.remove();
+
+};
+$(".check").click(function () {
+    var CRecord = $('[name="CRecord"]').val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/ElectronicContracts/checkUser/" + CRecord,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            if (data['status'] == '1') {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+                $('input[name=customer]').val(data['user']['id']);
+                $('input[name=CRecord]').val(CRecord);
+                $(".check").hide();
+                $("[name='CRecord']").prop('disabled', true);
+                if ($(".company-info").html() != '') {
+                    $(".company-info").html('');
+                }
+                $(".company-info").append('<div class="row"><div class="col-md-5"><div class="form-group"><label for="degree2">' + window.translation.company_name + '</label><input type="text" value="' + data['user']['name'] + '" class="form-control mb-4" disabled> </div></div><div class="col-md-5"><div class="form-group"><label for="degree2">' + window.translation.typeCompany + '</label><input type="text" value="' + data['userType'] + '" class="form-control mb-4" disabled> </div></div> </div>');
+
+            }
+            else {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+                $('input[name=CRecord]').val('');
+
+            }
+            console.log(data);
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$(".subscribe").click(function () {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/eBills/DoSubscribe",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            if (data['status'] == '1') {
+                document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                    .length);
+                $('.toast').toast('show');
+                setTimeout(function () {
+                    window.location.replace("/eBills/all");
+                }, 1000);
+
+            }
+
+            console.log(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
+});
+$(".edit-message").click(function () {
+    var id = $(this).data('id');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: "/Disputes/message/" + id,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (data) => {
+            console.log(window.translation);
+            const element = document.getElementById("message-edit");
+            console.log(data);
+            if (element != null) { element.remove(); }
+            $("body").append(' <div class="modal fade" id="message-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document">   <div class="modal-content">   <div class="modal-header">  <h5 class="modal-title" id="exampleModalLabel">' + window.translation.Editmessage + '</h5>  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="las la-times"></i> </button> </div>' +
+                '<div class="modal-body"><div class="row"> <div class="col-md-12"><div class="form-group"><label for="degree2">' + window.translation.Message + '</label><textarea type="text" name="message_content"  class="form-control mb-4"  rows="5">' + data['message'] + '</textarea></div></div>' +
+                '</div>' +
+                '<div class="row"> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window.translation.TheAttachedPhoto + '</label> <label for="message_file"><a data-placement="top" title="' + window.translation.TheAttachedPhoto + '" class="mr-2 pointer text-primary btn btn-outline-primary bs-tooltip"> <i class="las la-paperclip font-20"></i>  ' + window.translation.TheAttachedPhoto + '</a> </label><input  id="message_file" type="file" style="display: none;" aria-describedby="inputGroupPrepend" required></div></div></div>' +
+                '<div class="modal-footer"><button class="btn btn-rounded" data-dismiss="modal"><i class="flaticon-cancel-12"></i>' + window.translation.cancle + '</button> <button type="button" class="btn btn-primary" id="edit_message">' + window.translation.save + '</button></div></div></div></div>');
+            $('#message-edit').modal('show');
+
+            $("#edit_message").click(function () {
+                var fd = new FormData();
+
+                fd.append('file', $("#message_file").get(0).files[0]);
+                fd.append('message_content', $("[name='message_content']").val());
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: "/Disputes/message/update/" + id,
+                    data: fd,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        if (data['status'] == '1') {
+                            document.getElementById("alert").innerHTML = data['message'].substring(0, data['message']
+                                .length);
+                            $('.toast').toast('show');
+                        }
+                        if (data['reload']) {
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+
+                        }
+
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+
+            });
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+
 });
 document.querySelector('#invoice-logo').addEventListener('change', function () {
     if (this.files && this.files[0]) {

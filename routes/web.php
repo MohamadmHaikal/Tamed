@@ -35,7 +35,9 @@ Route::get('/', function () {
     return view('dashboard.dashboard1');
 })->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
 Route::post('store-file', [FileController::class, 'store']);
-
+Route::get('/auth-manger', function () {
+    return view('dashboard.auth-manger');
+})->middleware('LanguageSwitcher', 'auth', 'is_verified');
 Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
 
     Route::post('check', [AuthController::class, 'checkMobileUser'])->name('check');
@@ -99,11 +101,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'LanguageSwitcher'], func
 });
 //Electronic Contracts 
 Route::group(['prefix' => 'ElectronicContracts', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/', [ElectronicContractsController::class, 'index'])->name('ElectronicContracts');
+    Route::get('/all/{source}/{filter?}', [ElectronicContractsController::class, 'index'])->name('ElectronicContracts');
     Route::get('/show/{id}', [ElectronicContractsController::class, 'show'])->name('ElectronicContracts.show');
     Route::get('/create', [ElectronicContractsController::class, 'create'])->name('ElectronicContracts.create');
     Route::post('/store', [ElectronicContractsController::class, 'store'])->name('ElectronicContracts.store');
     Route::get('/invoice/{id}', [ElectronicContractsController::class, '_getInvoice'])->name('ElectronicContracts.invoice');
+    Route::get('/checkUser/{CRecord?}', [ElectronicContractsController::class, 'checkUser'])->name('ElectronicContracts.checkUser');
+    Route::get('/changeStatus/{status}/{id}', [ElectronicContractsController::class, 'changeStatus'])->name('ElectronicContracts.changeStatus');
+    Route::get('/edit/{id}', [ElectronicContractsController::class, 'edit'])->name('ElectronicContracts.edit');
+    Route::post('/update/{id}', [ElectronicContractsController::class, 'update'])->name('ElectronicContracts.update');
 });
 //task table
 Route::group(['prefix' => 'TaskTable', 'middleware' => 'LanguageSwitcher'], function () {
@@ -139,14 +145,24 @@ Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], functio
 });
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/all', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
+    Route::get('/all/{source?}', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
     Route::get('/settings', 'App\Http\Controllers\Dashboard\eBillsController@_InvoiceSettings')->name('eBills.settings');
     Route::post('update-your-invoice-logo', 'App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceLogo')->name('update-your-invoice-logo');
-    Route::post('update-your-invoice-signature','App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceSignature')->name('update-your-Signature');
-    Route::get('/show/{id}','App\Http\Controllers\Dashboard\eBillsController@show')->name('eBills.show');
-    Route::get('/create/{id?}','App\Http\Controllers\Dashboard\eBillsController@create')->name('eBills.create');
-    Route::post('/store/{id?}','App\Http\Controllers\Dashboard\eBillsController@store')->name('eBills.store');
+    Route::post('update-your-invoice-signature', 'App\Http\Controllers\Dashboard\eBillsController@_updateInvoiceSignature')->name('update-your-Signature');
+    Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\eBillsController@show')->name('eBills.show');
+    Route::get('/create/{id?}', 'App\Http\Controllers\Dashboard\eBillsController@create')->name('eBills.create');
+    Route::post('/store/{id?}', 'App\Http\Controllers\Dashboard\eBillsController@store')->name('eBills.store');
+    Route::get('/subscribe', 'App\Http\Controllers\Dashboard\eBillsController@subscribe')->name('eBills.subscribe');
+    Route::get('/DoSubscribe', 'App\Http\Controllers\Dashboard\eBillsController@_do_subscribe')->name('eBills.subscribe.do');
 
+});
+//bank account route
+Route::group(['prefix' => 'bank', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/all', 'App\Http\Controllers\Dashboard\BankAccountsController@index')->name('bank');
+    Route::post('/store', 'App\Http\Controllers\Dashboard\BankAccountsController@store')->name('bank.store');
+    Route::get('/delete/{id}', 'App\Http\Controllers\Dashboard\BankAccountsController@destroy')->name('bank.delete');
+    Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\BankAccountsController@show')->name('bank.show');
+    Route::post('/update/{id}', 'App\Http\Controllers\Dashboard\BankAccountsController@update')->name('bank.update');
 });
 //wallet route
 Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], function () {
@@ -162,10 +178,16 @@ Route::group(['prefix' => 'wallet', 'middleware' => 'LanguageSwitcher'], functio
 });
 //Disputes route
 Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], function () {
-    Route::get('/{filter?}', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
+    Route::get('/all/{filter?}', 'App\Http\Controllers\Dashboard\DisputesController@index')->name('Disputes');
     Route::get('/show/{id}', 'App\Http\Controllers\Dashboard\DisputesController@show')->name('Disputes.show');
     Route::post('/close-dispute/{id}', 'App\Http\Controllers\Dashboard\DisputesController@close_dispute')->name('Disputes.close');
     Route::post('/addComent/{id}', 'App\Http\Controllers\Dashboard\DisputesController@addComent')->name('Disputes.addComent');
+    Route::get('/create', 'App\Http\Controllers\Dashboard\DisputesController@create')->name('Disputes.create');
+    Route::post('/store', 'App\Http\Controllers\Dashboard\DisputesController@store')->name('Disputes.store');
+    Route::get('/message/{id}', 'App\Http\Controllers\Dashboard\DisputesController@_show_message')->name('Disputes.show.message');
+    Route::post('/message/update/{id}', 'App\Http\Controllers\Dashboard\DisputesController@_update_message')->name('Disputes.update.message');
+
+
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");

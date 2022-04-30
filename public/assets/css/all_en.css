@@ -82,7 +82,10 @@ hr {
     height: 0;
     overflow: visible
 }
-
+.countdown-subs {
+    text-align: right;
+    margin-right: 8%;
+}
 h1,
 h2,
 h3,

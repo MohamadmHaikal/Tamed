@@ -27,10 +27,7 @@ class CreateInvoicesTable extends Migration
             $table->foreign('contracts_id')->references('id')->on('electronic_contracts')->onDelete('cascade');
             $table->string('phone');
             $table->string('email');
-            $table->string('Bank_name');
-            $table->string('account_name');
-            $table->string('account_number');
-            $table->string('IBAN');
+            $table->text('Banks');
             $table->timestamps();
         });
     }

@@ -8,6 +8,8 @@ use App\Models\DisputesMessage;
 use App\Models\Report;
 use Illuminate\Http\Request;
 
+use function React\Promise\reduce;
+
 class DisputesController extends Controller
 {
     /**
@@ -47,7 +49,7 @@ class DisputesController extends Controller
      */
     public function create()
     {
-        //
+        return view('Disputes.create');
     }
 
     /**
@@ -58,7 +60,16 @@ class DisputesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $report = new Report;
+        $report->title = $request->title;
+        $report->description = $request->description;
+        $report->status = 'active';
+        $report->against_id = $request->customer;
+        $report->type = $request->type;
+        $report->applicant_id = get_current_user_id();
+        $report->ref_number = time() . rand(10 * 45, 100 * 98);
+        $report->save();
+        return redirect()->route('Disputes.show', ['id' => $report->id]);
     }
 
     /**
@@ -72,6 +83,11 @@ class DisputesController extends Controller
         $report = Report::find($id);
         $message = DisputesMessage::where('reports_id', '=', $id)->get();
         return view('Disputes.show', compact('report', 'message'));
+    }
+
+    public function _show_message($id)
+    {
+        return DisputesMessage::find($id);
     }
     public function close_dispute($id)
     {
@@ -124,7 +140,22 @@ class DisputesController extends Controller
     {
         //
     }
-
+    public function _update_message(Request $request, $id)
+    {
+        $message = DisputesMessage::find($id);
+        $message->message = $request->message_content;
+        if (request()->file()) {
+            $filename = time() . '.' . request()->file->getClientOriginalExtension();
+            request()->file->move(public_path('image'), $filename);
+            $message->image = $filename;
+        }
+        $message->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.message updated successfully'), 'type' => 'success'])->render(),
+            'reload' => true,
+        ]);
+    }
     /**
      * Remove the specified resource from storage.
      *

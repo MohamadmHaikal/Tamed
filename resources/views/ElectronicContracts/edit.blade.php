@@ -24,7 +24,7 @@
 
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        href="javascript:void(0);">{{ __('backend.Create a contract') }}</a>
+                                        href="javascript:void(0);">{{ __('backend.Contract modification') }}</a>
                                 </li>
 
                             </ol>
@@ -56,13 +56,13 @@
                                 <div class="widget-content widget-content-area br-6 ">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{ __('backend.Create a contract') }}</h4>
+                                            <h4 class="table-header">{{ __('backend.Contract modification') }}</h4>
 
                                         </div>
 
                                     </div>
-                                    <form action="{{ route('ElectronicContracts.store') }}" method="POST"
-                                        class="needs-validation" novalidate enctype="multipart/form-data">
+                                    <form action="{{ route('ElectronicContracts.update', [$Contract->id]) }}"
+                                        method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                                         @csrf
                                         {{-- <div class="row">
 
@@ -89,20 +89,22 @@
 
                                                         <input type="text" class="form-control" name="CRecord"
                                                             placeholder="{{ __('backend.Commercial Registration No') }}"
+                                                            value="{{ $Contract->CRecord }}"
                                                             aria-describedby="inputGroupPrepend" required>
-                                                        <i class="las la-check-circle" aria-hidden="true" style="position: absolute;
-                                                                                                            top: 14px;
-                                                                                                            right: 95%;
-                                                                                                            color: green;
-                                                                                                        "></i>
+                                                        <i class="las la-check-circle" aria-hidden="true"
+                                                            style="position: absolute;
+                                                                                                                                top: 14px;
+                                                                                                                                right: 95%;
+                                                                                                                                color: green;
+                                                                                                                            "></i>
                                                         <div class="input-group-append">
                                                             <button class="btn btn-soft-primary check "
                                                                 type="button">{{ __('backend.check') }}</button>
                                                         </div>
-                                                        <input type="text" class="form-control" name="customer" hidden
+                                                        <input type="text" class="form-control" name="customer" value="{{ $Contract->SParty_id }}" hidden
                                                             aria-describedby="inputGroupPrepend" required>
                                                         <div class="invalid-feedback">
-                                                            {{ __('backend.Commercial Registration Required') }}
+                                                            {{ __('backend.Commercial Registration Verification Required') }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,14 +112,25 @@
 
                                         </div>
                                         <div class="company-info">
-
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group"><label for="degree2">{{__('backend.name of company')}}</label><input type="text" value="{{$Contract->Company_name}}"
+                                                            class="form-control mb-4" disabled=""> </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group"><label for="degree2">{{__('backend.company type')}}</label><input
+                                                            type="text" value="{{$Contract->userType}}" class="form-control mb-4" disabled="">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.responsible') }}</label><input
                                                         type="text" name="responsible" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
+                                                        aria-describedby="inputGroupPrepend"
+                                                        value="{{ $Contract->responsible }}" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Responsible Name Required') }}
                                                     </div>
@@ -127,7 +140,8 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.phone') }}</label><input type="text"
                                                         name="phone" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
+                                                        aria-describedby="inputGroupPrepend" value="{{ $Contract->phone }}"
+                                                        required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Mobile number is required') }}
                                                     </div>
@@ -151,6 +165,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.contract number') }}</label><input
                                                         type="text" name="contract_number" class="form-control "
+                                                        value="{{ $Contract->contract_number }}"
                                                         aria-describedby="inputGroupPrepend" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Contract number is required') }}
@@ -165,7 +180,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Brief description') }}</label>
                                                     <textarea type="text" name="Brief_description" class="form-control " row="2" aria-describedby="inputGroupPrepend"
-                                                        required></textarea>
+                                                        required> {{ $Contract->Brief_description }}</textarea>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Brief Description Required') }}
                                                     </div>
@@ -179,6 +194,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Date of contract') }}</label><input
                                                         type="date" name="contract_date" class="form-control "
+                                                        value="{{ $Contract->contract_date }}"
                                                         aria-describedby="inputGroupPrepend" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Contract date required') }}
@@ -192,6 +208,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Contract start date') }}</label><input
                                                         type="date" name="date_start" class="form-control "
+                                                        value="{{ $Contract->date_start }}"
                                                         aria-describedby="inputGroupPrepend" required>
 
                                                     <div class="invalid-feedback">
@@ -205,6 +222,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Contract end date') }}</label><input
                                                         type="date" name="date_end" class="form-control "
+                                                        value="{{ $Contract->date_end }}"
                                                         aria-describedby="inputGroupPrepend" required>
 
                                                     <div class="invalid-feedback">
@@ -219,10 +237,13 @@
                                                         for="degree2">{{ __('backend.renewable') }}</label>
                                                     <select class="form-control" name="renewable"
                                                         aria-describedby="inputGroupPrepend" required>
-
-                                                        <option value="1">{{ __('backend.yes') }}</option>
-                                                        <option value="0">{{ __('backend.no') }}</option>
-
+                                                        @if ($Contract->renewable == 1)
+                                                            <option value="yes" selected>{{ __('backend.yes') }}</option>
+                                                            <option value="no">{{ __('backend.no') }}</option>
+                                                        @else
+                                                            <option value="yes">{{ __('backend.yes') }}</option>
+                                                            <option value="no" selected>{{ __('backend.no') }}</option>
+                                                        @endif
 
                                                     </select>
                                                     <div class="invalid-feedback">
@@ -238,6 +259,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Contract amount') }}</label><input
                                                         type="text" name="amount" class="form-control "
+                                                        value="{{ $Contract->amount }}"
                                                         aria-describedby="inputGroupPrepend" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.The total amount of the contract value is required') }}
@@ -250,9 +272,18 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Payment system') }}</label><select
                                                         name="Payment_system" class="form-control mb-4">
-                                                        <option value="Fixed value">{{ __('backend.Fixed value') }}
-                                                        </option>
-                                                        <option value="percent">{{ __('backend.percent') }}</option>
+                                                        @if ($Contract->Payment_system == 'Fixed value')
+                                                            <option value="Fixed value" selected>
+                                                                {{ __('backend.Fixed value') }}
+                                                            </option>
+                                                            <option value="percent">{{ __('backend.percent') }}</option>
+                                                        @else
+                                                            <option value="Fixed value">{{ __('backend.Fixed value') }}
+                                                            </option>
+                                                            <option value="percent" selected>{{ __('backend.percent') }}
+                                                            </option>
+                                                        @endif
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -263,6 +294,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.The first batch') }}</label><input
                                                         type="text" name="batch[1]" class="form-control "
+                                                        value="{{ $Contract->batch[0] }}"
                                                         aria-describedby="inputGroupPrepend" required>
 
                                                     <div class="invalid-feedback">
@@ -277,6 +309,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.second batch') }}</label><input
                                                         type="text" name="batch[2]" class="form-control "
+                                                        value="{{ $Contract->batch[1] }}"
                                                         aria-describedby="inputGroupPrepend" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Payment required') }}
@@ -289,6 +322,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.third batch') }}</label><input
                                                         type="text" name="batch[3]" class="form-control "
+                                                        value="{{ $Contract->batch[2] }}"
                                                         aria-describedby="inputGroupPrepend" required>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Payment required') }}
@@ -300,9 +334,29 @@
                                         </div>
                                         <div class="batchs">
 
+                                            @for ($i = 3; $i < count($Contract->batch); $i++)
+                                                <?php
+                                                $j = $i + 1;
+                                                ?>
+                                                <div class="row" id="batchContainer[{{$j}}]">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group"><label
+                                                                for="degree2">{{ __("backend.batch$j") }}</label><input
+                                                                type="text" name="batch[{{ $i + 1 }}]"
+                                                                class="form-control "
+                                                                value="{{ $Contract->batch[$i] }}">
+                                                            <div class="invalid-feedback">
+                                                                {{ __('backend.Payment required') }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button  class="delete-batch" type="button" data-id="' + id + '" onclick="remo({{$j}})" style="background: transparent; margin-top: 10px;"><i class="las la-times font-20" style="background:#e7515a; color:white;"></i></button>
+
+                                                </div>
+                                            @endfor
                                         </div>
                                         <button type="button" class="btn btn-outline-primary btn-rounded mb-3 add-batch"
-                                            data-id="3"><i
+                                            data-id="{{ count($Contract->batch) }}"><i
                                                 class="las la-plus font-15"></i>{{ __('backend.Add a new batch') }}
                                         </button>
                                         <div class="row">
@@ -310,6 +364,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.final batch') }}</label><input
                                                         type="text" name="final_batch" class="form-control "
+                                                        value="{{ $Contract->final_batch }}"
                                                         aria-describedby="inputGroupPrepend" required>
 
                                                     <div class="invalid-feedback">
@@ -331,8 +386,15 @@
                                                     <select class="form-control" name="city_id"
                                                         aria-describedby="inputGroupPrepend" required>
                                                         @foreach ($cities as $city)
-                                                            <option value="{{ $city->id }}">{{ $city->name }}
-                                                            </option>
+                                                            @if ($Contract->city_id == $city->id)
+                                                                <option value="{{ $city->id }}" selected>
+                                                                    {{ $city->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $city->id }}">
+                                                                    {{ $city->name }}
+                                                                </option>
+                                                            @endif
                                                         @endforeach
 
 
@@ -346,7 +408,7 @@
                                                 <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Contract details') }}</label>
                                                     <textarea type="text" name="description" class="form-control " row="3" aria-describedby="inputGroupPrepend"
-                                                        required></textarea>
+                                                        required>{{ $Contract->description }}</textarea>
                                                     <div class="invalid-feedback">
                                                         {{ __('backend.Contract details are required') }}
                                                     </div>
@@ -367,8 +429,7 @@
                                                             </a>
                                                         </label>
                                                         <input id="file" name='Contract_file' type="file"
-                                                            style="display: none;" aria-describedby="inputGroupPrepend"
-                                                            required>
+                                                            style="display: none;" aria-describedby="inputGroupPrepend">
 
                                                     </div>
 
@@ -383,7 +444,7 @@
 
 
                                         <button type="submit" class="btn btn-primary"
-                                            style="margin-right: 85%;">{{ __('backend.Create a contract') }}</button>
+                                            style="margin-right: 85%;">{{ __('backend.save') }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -432,22 +493,21 @@
                         if (!form.checkValidity()) {
                             event.preventDefault()
                             event.stopPropagation()
-                            if ($('[name="Contract_file"]').val() != null) {
 
-                                document.getElementById("alert").innerHTML =
-                                    '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
-                                    window.translation.systemMessages +
-                                    '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
-                                    window.translation.AttachedRequired + '</div></div></div>';
-                                $('.toast').toast('show');
-                            } else {
-                                document.getElementById("alert").innerHTML =
-                                    '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
-                                    window.translation.systemMessages +
-                                    '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
-                                    window.translation.AllRequired + '</div></div></div>';
-                                $('.toast').toast('show');
-                            }
+                            document.getElementById("alert").innerHTML =
+                                '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-danger fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-danger"> <strong class="mr-auto" id="mr-auto">' +
+                                window.translation.systemMessages +
+                                '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
+                                window.translation.AllRequired + '</div></div></div>';
+                            $('.toast').toast('show');
+
+                        } else {
+                            document.getElementById("alert").innerHTML =
+                                '<div style="position:fixed; bottom: 15px; right: 0;z-index: 9999; margin-left: 20px; margin-right: 20px;"> <div class="toast toast-success fade hide" role="alert" data-delay="2000" aria-live="assertive"  aria-atomic="true"><div class="toast-header-success"> <strong class="mr-auto" id="mr-auto">' +
+                                window.translation.systemMessages +
+                                '</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div> <div class="toast-body" id="toast-body">' +
+                                window.translation.ContactUpdatedSuccessfully + '</div></div></div>';
+                            $('.toast').toast('show');
                         }
 
                         form.classList.add('was-validated')

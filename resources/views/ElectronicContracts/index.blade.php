@@ -50,12 +50,13 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{ __('backend.electronic contracts') }}</h4>
+                                            <h4 class="table-header">{{ __('backend.electronic contracts') }}
+                                                {{ __('backend.' . $source) }}</h4>
 
                                         </div>
-                     
+
                                         <div class="col-md-6">
-                                            <a href="{{route('ElectronicContracts.create')}}">
+                                            <a href="{{ route('ElectronicContracts.create') }}">
                                                 <button type="button" class="btn btn-primary mb-2 mr-2 add "
                                                     data-toggle="modal"
                                                     data-target="#CreateUser">{{ __('backend.Create a contract') }}</button>
@@ -63,7 +64,28 @@
                                         </div>
                                     </div>
                                     <div class="table-responsive mb-4">
-
+                                        <div class="widget-content widget-content-area text-center">
+                                            <div class="button-list">
+                                                <a href="{{ route('ElectronicContracts', ['source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-primary btn-rounded">{{ __('backend.All contracts') }}</button></a>
+                                                <a
+                                                    href="{{ route('ElectronicContracts', ['filter' => 'Accepted', 'source' => $source]) }}"><button
+                                                        type="button"
+                                                        class="btn btn-success btn-rounded">{{ __('backend.Accepted Contracts') }}</button>
+                                                </a>
+                                                <a
+                                                    href="{{ route('ElectronicContracts', ['filter' => 'waiting', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-warning btn-rounded">{{ __('backend.waiting for signature') }}</button>
+                                                </a>
+                                                <a
+                                                    href="{{ route('ElectronicContracts', ['filter' => 'rejected', 'source' => $source]) }}">
+                                                    <button type="button"
+                                                        class="btn btn-danger btn-rounded">{{ __('backend.Rejected Contracts') }}</button>
+                                                </a>
+                                            </div>
+                                        </div>
                                         <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -72,6 +94,7 @@
                                                     <th>{{ __('backend.company type') }}</th>
                                                     <th>{{ __('backend.the amount') }}</th>
                                                     <th>{{ __('backend.Date of contract') }}</th>
+                                                    <th>{{ __('backend.status') }}</th>
                                                     <th>{{ __('backend.Invoices') }}</th>
                                                     <th class="no-content">{{ __('backend.Contract details') }}</th>
                                                 </tr>
@@ -81,32 +104,58 @@
                                                 @foreach ($Contracts as $item)
                                                     <tr>
                                                         <td>{{ $item->id }}</td>
-                                                        <td>{{ $item->company_name }}</td>
-                                                        <td>{{ $item->UserType->name }}</td>
+                                                        <td>{{ get_user_by_id($item->SParty_id)->name }}</td>
+                                                        <td>{{ get_facility_type(get_user_by_id($item->SParty_id)->activitie_id)->name }}
+                                                        </td>
                                                         <td>{{ $item->amount }}</td>
-                                                        <td>{{  date('Y-m-d', strtotime($item->contract_date)) }}</td>
+                                                        <td>{{ date('Y-m-d', strtotime($item->contract_date)) }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="Invoices" data-id="{{$item->id }}">
+                                                            <p class="{{ $item->status }}">
+                                                                {{ __('backend.' . $item->status) }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="Invoices"
+                                                                data-id="{{ $item->id }}">
                                                                 <button type="button" class="btn btn-soft-info btn-rounded"
                                                                     data-toggle="modal"
                                                                     data-target="#CreateUser">{{ __('backend.Invoices') }}</button>
                                                             </a>
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
-                                                                <a class="dropdown-toggle  text-primary show-contract" href="#"
+                                                                <a class="dropdown-toggle font-20 text-primary" href="#"
                                                                     role="button" data-toggle="dropdown"
-                                                                    data-id="{{$item->id}}"
                                                                     aria-haspopup="true" aria-expanded="false">
-                                                                    {{ __('backend.Contract details') }}
+                                                                    <i class="las la-cog"></i>
                                                                 </a>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuLink1"
+                                                                    style="will-change: transform;">
+                                                                    <a class="dropdown-item  text-primary show-contract"
+                                                                        href="javascript:void(0);" role="button"
+                                                                        data-toggle="dropdown"
+                                                                        data-id="{{ $item->id }}" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        {{ __('backend.Contract details') }}
+                                                                    </a>
+                                                                    @if (get_current_user_id() == $item->user_id)
+                                                                        <a class="dropdown-item  text-primary"
+                                                                            href="{{ route('ElectronicContracts.edit', [$item->id]) }}">
+                                                                            {{ __('backend.Edit') }}
+                                                                        </a>
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </td>
+
+
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
+                                    <p class="text-center">{{__('backend.disputes note')}} <a href="{{route('Disputes')}}" style="color:#027496;"> {{__('backend.Dispute Section')}} </a></p>
+
                                 </div>
                             </div>
                         </div>
@@ -141,7 +190,6 @@
 
 @push('custom-scripts')
     <script>
-       
         $(document).ready(function() {
             $('#basic-dt').DataTable({
                 "language": {

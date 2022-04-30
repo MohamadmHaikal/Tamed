@@ -17,6 +17,7 @@ class CreateReportsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description');
+            $table->string('type');
             $table->bigInteger('applicant_id')->unsigned();
             $table->foreign('applicant_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('against_id')->unsigned();

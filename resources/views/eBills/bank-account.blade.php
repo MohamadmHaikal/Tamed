@@ -3,8 +3,11 @@
 @push('plugin-styles')
     {!! Html::style('plugins/table/datatable/datatables.css') !!}
     {!! Html::style('plugins/table/datatable/dt-global_style.css') !!}
-    {!! Html::style('assets/css/loader.css') !!}
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
+    {!! Html::style('assets/css/ui-elements/buttons.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert2.min.css') !!}
+    {!! Html::style('plugins/sweetalerts/sweetalert.css') !!}
+    {!! Html::style('assets/css/basic-ui/custom_sweetalert.css') !!}
 @endpush
 
 @section('content')
@@ -20,13 +23,11 @@
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
 
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">{{ __('backend.Disputes') }}</a>
+                                <li class="breadcrumb-item"><a
+                                        href="javascript:void(0);">{{ __('backend.bank accounts') }}</a>
                                 </li>
 
                             </ol>
-
-
-
                         </nav>
 
                     </div>
@@ -37,7 +38,6 @@
     </div>
     <!--  Navbar Ends / Breadcrumb Area  -->
     <!-- Main Body Starts -->
-
     <div class="layout-px-spacing">
         <div class="layout-top-spacing mb-2">
             <div class="col-md-12">
@@ -50,59 +50,40 @@
 
 
                                 <div class="widget-content widget-content-area br-6">
+
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4 class="table-header">{{ __('backend.Disputes') }}</h4>
+                                            <h4 class="table-header">{{ __('backend.bank accounts') }}</h4>
 
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="{{ route('Disputes.create') }}">
-                                                <button type="button" class="btn btn-primary mb-2 mr-2 add "
-                                                    data-toggle="modal"
-                                                    data-target="#CreateUser">{{ __('backend.add new') }}</button>
-                                            </a>
-                                        </div>
+                                            <button type="button" class="btn btn-primary mb-2 mr-2 add " data-toggle="modal"
+                                                data-target="#CreateBank">{{ __('backend.add') }}</button>
 
+                                        </div>
                                     </div>
-
                                     <div class="table-responsive mb-4">
-                                        <div class="widget-content widget-content-area text-center">
-                                            <div class="button-list">
-                                                <a href="{{ route('Disputes') }}">
-                                                    <button type="button"
-                                                        class="btn btn-outline-primary btn-rounded">{{ __('backend.All orders') }}</button>
-                                                </a>
-                                                <a href="{{ route('Disputes', ['active']) }}">
-                                                    <button type="button"
-                                                        class="btn btn-outline-success btn-rounded">{{ __('backend.My active requests') }}</button>
-                                                </a>
-                                                <a href="{{ route('Disputes', ['closed']) }}">
-                                                    <button type="button"
-                                                        class="btn btn-outline-dark btn-rounded">{{ __('backend.My requests are closed') }}</button>
-                                                </a>
 
-                                            </div>
-                                        </div>
-                                        <table id="last-page-dt" class="table table-hover" style="width:100%">
+                                        <table id="export-dt" class="table table-hover" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>{{ __('backend.order number') }}</th>
-                                                    <th>{{ __('backend.Dispute type') }}</th>
-                                                    <th>{{ __('backend.the side') }}</th>
-                                                    <th>{{ __('backend.status') }}</th>
-                                                    <th>{{ __('backend.Created at') }}</th>
-                                                    <th class="no-content"> </th>
+                                                    <th>{{ __('backend.id') }}</th>
+                                                    <th>{{ __('backend.Bank name') }}</th>
+                                                    <th>{{ __('backend.account name') }}</th>
+                                                    <th>{{ __('backend.account number') }}</th>
+                                                    <th class="no-content text-center" style="padding-right:0px;">
+                                                        {{ __('backend.action') }}</th>
                                                 </tr>
+                                            </thead>
                                             <tbody>
-                                                @foreach ($reports as $report)
+                                                @foreach ($banks as $bank)
                                                     <tr>
-                                                        <td>{{ $report->id }}</td>
-                                                        <td>{{ __('backend.' . $report->type) }}</td>
-                                                        <td>{{ get_user_by_id($report->against_id)->name }}</td>
-                                                        <td>{{ __('backend.' . $report->status) }}</td>
-                                                        <td>{{ date('Y-m-d', strtotime($report->created_at)) }}</td>
+                                                        <td>{{ $bank->id }}</td>
+                                                        <td>{{ $bank->bank_name }}</td>
+                                                        <td>{{ $bank->account_name }}</td>
+                                                        <td>{{ $bank->account_number }}</td>
 
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="dropdown custom-dropdown">
                                                                 <a class="dropdown-toggle font-20 text-primary" href="#"
                                                                     role="button" data-toggle="dropdown"
@@ -112,24 +93,22 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuLink1"
                                                                     style="will-change: transform;">
-                                                                    <a class="dropdown-item "
-                                                                        href="{{ route('Disputes.show', [$report->id]) }}">{{ __('backend.Show') }}</a>
-                                                                    @if (is_admin() && $report->status != 'closed')
-                                                                        <a class="dropdown-item close-dispute"
-                                                                            data-id="{{ $report->id }}"
-                                                                            href="javascript:void(0);">{{ __('backend.close') }}</a>
-                                                                    @endif
-
+                                                                    <a class="dropdown-item show-bank"
+                                                                        data-id="{{ $bank->id }}"
+                                                                        href="javascript:void(0);">{{ __('backend.Show') }}</a>
+                                                                    <a class="dropdown-item edit-bank"
+                                                                        data-id="{{ $bank->id }}"
+                                                                        href="javascript:void(0);">{{ __('backend.Edit') }}</a>
+                                                                    <a class="dropdown-item confirmDelete"
+                                                                        data-id="{{ $bank->id }}"
+                                                                        data-action="/bank/delete/"
+                                                                        href="javascript:void(0);"
+                                                                        style="color: red">{{ __('backend.Delete') }}</a>
                                                                 </div>
                                                             </div>
-
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                                </thead>
-
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -141,12 +120,56 @@
             </div>
         </div>
     </div>
+
     <!-- Main Body Ends -->
+    <div class="modal fade" id="CreateBank" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('backend.Add a bank account') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="las la-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.Bank name') }}</label><input
+                                    type="text" name="bank_name" class="form-control mb-4"> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"><label
+                                    for="degree2">{{ __('backend.account name') }}</label><input type="text"
+                                    name="account_name" class="form-control mb-4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label
+                                    for="degree2">{{ __('backend.account number') }}</label><input type="text"
+                                    name="account_number" class="form-control mb-4"> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"><label for="degree2">{{ __('backend.IBAN') }}</label><input
+                                    type="text" name="iban_number" class="form-control mb-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>
+                        {{ __('backend.close') }}</button>
+                    <button type="button" class="btn btn-primary" id="create_bank">{{ __('backend.add') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('plugin-scripts')
     {!! Html::script('assets/js/loader.js') !!}
-    {!! Html::script('assets/js/myJS.js') !!}
     {!! Html::script('plugins/table/datatable/datatables.js') !!}
     <!--  The following JS library files are loaded to use Copy CSV Excel Print Options-->
     {!! Html::script('plugins/table/datatable/button-ext/dataTables.buttons.min.js') !!}
@@ -156,12 +179,16 @@
     <!-- The following JS library files are loaded to use PDF Options-->
     {!! Html::script('plugins/table/datatable/button-ext/pdfmake.min.js') !!}
     {!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!}
+    {!! Html::script('plugins/sweetalerts/promise-polyfill.js') !!}
+    {!! Html::script('plugins/sweetalerts/sweetalert2.min.js') !!}
+    {!! Html::script('assets/js/basicui/sweet_alerts.js') !!}
 @endpush
 
 
 @push('custom-scripts')
     {!! Html::script('plugins/notification/snackbar/snackbar.min.js') !!}
     {!! Html::script('assets/js/basicui/notifications.js') !!}
+    {!! Html::script('assets/js/myJS.js') !!}
 @endpush
 
 @push('custom-scripts')
@@ -198,7 +225,7 @@
                     }
                 },
                 "lengthMenu": [3, 6, 9, 12],
-                "pageLength": 3
+                "pageLength": 9
             });
             $.fn.dataTable.ext.search.push(
                 function(settings, data, dataIndex) {
@@ -234,18 +261,12 @@
                             extend: 'copy',
                             className: 'btn btn-primary'
                         },
-                        {
-                            extend: 'csv',
-                            className: 'btn btn-primary'
-                        },
+
                         {
                             extend: 'excel',
                             className: 'btn btn-primary'
                         },
-                        {
-                            extend: 'pdf',
-                            className: 'btn btn-primary'
-                        },
+
                         {
                             extend: 'print',
                             className: 'btn btn-primary'

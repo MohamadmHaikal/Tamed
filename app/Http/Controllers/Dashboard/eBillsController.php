@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankAccounts;
 use App\Models\invoice;
 use App\Models\Products;
+use App\Models\subscription;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class eBillsController extends Controller
@@ -15,10 +18,24 @@ class eBillsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($source = '')
     {
-        $invoices = invoice::where('user_id', '=', get_current_user_id())->get();
-        return view('eBills.index', compact('invoices'));
+        $invoices = null;
+        if ($source == "received") {
+            $invoices = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)->get();
+        } else if ($source == "issued") {
+            $invoices = invoice::where('user_id', '=', get_current_user_id())->get();
+        } else {
+            $invoices = invoice::where('user_id', '=', get_current_user_id())->orWhere('TaxNumber', '=', get_current_user_data()->TaxNumber)->get();
+        }
+        $date = subscription::where('user_id', '=', get_current_user_id())->first();
+        if ($date != null) {
+            $date = $date->end_date;
+        }
+        if ($date == null || strtotime("now") > strtotime($date)) {
+            return view('eBills.Invoice-dashboard', compact('invoices', 'date'));
+        }
+        return view('eBills.index', compact('invoices', 'date'));
     }
     public function _updateInvoiceLogo(Request $request)
     {
@@ -30,6 +47,25 @@ class eBillsController extends Controller
         return $this->sendJson([
             'status' => 1,
             'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
+
+        ]);
+    }
+    public function _do_subscribe()
+    {
+        $dateNow = new DateTime('now');
+        $dateNow->modify('+3 month');
+        $subs = subscription::where('user_id', '=', get_current_user_id())->first();
+        $subscription = new subscription;
+        $subscription->start_date = new DateTime('now');
+        $subscription->end_date = $dateNow;
+        $subscription->user_id = get_current_user_id();
+        if ($subs != null) {
+            $subs->delete();
+        }
+        $subscription->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.Subscribed successfully'), 'type' => 'success'])->render(),
 
         ]);
     }
@@ -53,7 +89,12 @@ class eBillsController extends Controller
      */
     public function create()
     {
-        return view('eBills.create');
+        $banks = BankAccounts::where('user_id', '=', get_current_user_id())->get();
+        return view('eBills.create', compact('banks'));
+    }
+    public function subscribe()
+    {
+        return view('eBills.subscribe');
     }
     public function _InvoiceSettings()
     {
@@ -67,7 +108,6 @@ class eBillsController extends Controller
      */
     public function store(Request $request)
     {
-
         $invoice = invoice::create([
             'invoice_date' => $request->Invoice_date,
             'supply_date' => $request->date_supply,
@@ -77,10 +117,7 @@ class eBillsController extends Controller
             'responsible' => $request->responsible,
             'phone' => $request->phone,
             'email' => $request->email,
-            'Bank_name' => $request->Bank_name,
-            'account_name' => $request->account_name,
-            'account_number' => $request->account_number,
-            'IBAN' => $request->Number_statement,
+            'Banks' => serialize($request->bank),
             'user_id' => get_current_user_id(),
             'contracts_id' => $request->route('id') != null ? $request->route('id') : null,
         ]);
@@ -137,7 +174,8 @@ class eBillsController extends Controller
             $total += $product->total;
         }
         $Ttotal = ['tax_amount' => $tax_amount, 'Taxable_amount' => $Taxable_amount, 'discount' => $discount, 'total' => $total];
-        return view('eBills.Invoice-show', compact('invoice', 'products', 'Ttotal'));
+        $banks = BankAccounts::whereIn('id', unserialize($invoice->Banks))->get();
+        return view('eBills.Invoice-show', compact('invoice', 'products', 'Ttotal', 'banks'));
     }
 
     /**
