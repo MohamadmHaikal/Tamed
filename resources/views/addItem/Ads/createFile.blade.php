@@ -5,9 +5,9 @@
                 <h2 class="fs-title mb-4">{{__('Image Upload')}}:
                 </h2>
             </div>
-            <div class="col-5">
+            {{-- <div class="col-5">
                 <h2 class="steps">{{__('Forms')}}Step 3 - 4</h2>
-            </div>
+            </div> --}}
         </div>
         <div id="ImgContent" class="row fileContent">
         </div>
@@ -99,10 +99,11 @@
         </div>
 
     </div>
-    <input type="button" name="previous"
-        class="previous action-button-previous btn btn-outline-primary"
-        value="{{__('Forms')}}Previous" />
-    <input type="button" name="next" 
+
+    {{-- <input type="button" name="next" 
 
         class="next action-button btn btn-primary"
         value="{{__('Forms')}}Next" id="createItem"/>
+        <input type="button" name="previous"
+        class="previous action-button-previous btn btn-outline-primary"
+        value="{{__('Forms')}}Previous" /> --}}

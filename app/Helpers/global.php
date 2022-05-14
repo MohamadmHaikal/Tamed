@@ -33,18 +33,40 @@ function getActivityItem()
 
     return  $activityItem;
 }
+
 function getArrayType()
 {
+    $ArrayType= App\Models\Section::all();
 
-    $ArrayType=[
-       'Project',
-       'deals',
-       'Material',
-       'equipment',
-       'job'
-    ];
+    // $ArrayType=[
+    //    (object) [
+    //         'name' => 'Project',
+    //         'image' => 'icons8-crane-64.png',
+    //     ],
+    //    (object) [
+    //         'name' => 'deals',
+    //         'image' => 'icons8-deal-32.png',
+    //     ],
+    //    (object) [
+    //         'name' => 'Material',
+    //         'image' => 'icons8-factory-50.png',
+    //     ],
+    //     (object) [
+    //         'name' => 'raw materials',
+    //         'image' => 'icons8-builder-64.png',
+    //     ],
+    //    (object) [
+    //         'name' => 'equipment',
+    //         'image' => 'icons8-foundation-drilling-rig-100.png',
+    //     ],
+    //    (object) [
+    //         'name' => 'job',
+    //         'image' => 'icons8-builder-64.png',
+    //     ]
 
-    return  $ArrayType;
+    // ];
+
+    return  (object) $ArrayType;
 }
 
 function getAdsCover($id,$model)
@@ -702,6 +724,7 @@ function get_users_type_by_id($id)
 }
 function get_facility_type($id)
 {
+  
     $activity = Activitie::find($id);
     return UserType::find($activity->type_id);
 }
@@ -1648,6 +1671,7 @@ function init_style()
     }
     .submenu .submenu-info ul.submenu-list li.active {
         background-color: {$main_color} !important;
+        border-radius: 10px;
     }
     .fixed-profile .profile-option-container .option-link-container:hover .option-link {
         background: {$main_color};
@@ -1807,6 +1831,7 @@ function init_style()
         }
         .submenu .submenu-info ul.submenu-list li.active {
             background-color: {$dark_color} !important;
+            border-radius: 10px;
         }
         .sidebar-submenu span.sidebar-submenu-close {
             background: {$dark_color};

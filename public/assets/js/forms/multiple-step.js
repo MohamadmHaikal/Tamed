@@ -7,6 +7,49 @@
             multiple_form_one_previous_fs; //fieldsets
         var multiple_form_one_opacity;
         $(".multiple-form-one .next").on('click', function(){
+
+
+            var form = $("#msform");
+		form.validate({
+			rules: {
+				title: "required",
+				activitie_id: "required",
+				activitie_Add_id: "required",
+				city: "required",
+				neighborhood: "required",
+				description: "required",
+                
+                // phone:
+                // {
+				// 	required: true,
+				// 	minlength: 6,
+				// },
+			
+			},
+			messages: {
+                // title:    "title is required",
+                // activitie_id:    "activitie is required",
+                // activitie_Add_id: "Additional activitie is required",
+                // city:    "city is required",
+                // neighborhood:    "neighborhood is required",
+                // description:    "description is required",
+
+				// title: {
+				// 	required: "title is required",
+				// },
+			
+			},
+            errorPlacement: function(error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                  $(placement).append(error)
+                } else {
+                  error.insertAfter(element);
+                }
+              }
+        });
+       
+        if(form.valid() == true){
             multiple_form_one_current_fs = $(this).parent();
             multiple_form_one_next_fs = $(this).parent().next();
             //Add Class Active
@@ -26,7 +69,10 @@
                 },
                 duration: 600
             });
+
+        }
         });
+
         $(".multiple-form-one .previous").on('click', function(){
             multiple_form_one_current_fs = $(this).parent();
             multiple_form_one_previous_fs = $(this).parent().prev();

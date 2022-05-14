@@ -33,12 +33,15 @@ class Controller extends BaseController
         return $folder;
     }
 
-    public function indexItem($model)
+    public function indexItem($model, $id = null)
     { 
-        
         $modelName = 'App\\Models\\' .$model;
         $modelNew = new $modelName();
-        $Item = $modelNew->all();
+        if ($id != null) {
+            $Item = $modelNew->where($modelNew->column,$id)->get();
+            
+        }else{ $Item = $modelNew->all();}
+       
         return view('addItem.Item.index',  compact('Item' ,'model')); 
     }
 
@@ -48,23 +51,42 @@ class Controller extends BaseController
         $model = new $modelName();
         $arrayItem = $model->where('id',$request->ID)->delete();
 
-       return $this->sendJson([
-            'status' => 0,
-            'reload' => true,
+        if ($arrayItem) {
+            $this->sendJson([
+                'status' => 1,
+                'message' =>view('Common.alert', ['message' => __('backend.successfully'), 'type' => 'success'])->render(),
+                'reload' => true
+            ], true);
+        }
+
+        $this->sendJson([
+            'status' => 0,            
             'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
+
         ], true);
+
+
     }
 
     public function _addItem(Request $request)
     {
+        
         $modelName = 'App\\Models\\' .$request->model;
         $model = new $modelName();
         $arrayItem = $model->create($request->all());
 
-       return $this->sendJson([
-            'status' => 0,
-            'reload' => true,
-            'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
+        if ($arrayItem) {
+            $this->sendJson([
+                'status' => 1,
+                'message' =>view('Common.alert', ['message' => __('backend.create successfully'), 'type' => 'success'])->render(),
+                'reload' => true
+            ], true);
+        }
+
+        $this->sendJson([
+            'status' => 0,            
+            'message' => view('Common.alert', ['message' => __('backend.fields is required'), 'type' => 'danger'])->render(),
+
         ], true);
     }
 
@@ -91,10 +113,18 @@ class Controller extends BaseController
         $model = new $modelName();
         $input = $request->all();
         $arrayItem = $model->findOrFail($request->id)->fill($input)->save();
-        return $this->sendJson([
-            'status' => 0,
-            'reload' => true,
-            'message' => view('Common.alert', ['message' => __('backend.All fields is required'), 'type' => 'danger'])->render(),
+        if ($arrayItem) {
+            $this->sendJson([
+                'status' => 1,
+                'message' =>view('Common.alert', ['message' => __('backend.update successfully'), 'type' => 'success'])->render(),
+                'reload' => true
+            ], true);
+        }
+
+        $this->sendJson([
+            'status' => 0,            
+            'message' => view('Common.alert', ['message' => __('backend.fields is required'), 'type' => 'danger'])->render(),
+
         ], true);
     }
 

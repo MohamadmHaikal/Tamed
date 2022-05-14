@@ -264,12 +264,12 @@
   background-color: #ebedf3;
 }
 .switch-outer-container .switch.switch-outline.switch-primary input:checked ~ span:before {
-  border: 2px solid #2f44b2;
+  border: 2px solid #8dbf42;
   background-color: transparent;
 }
 .switch-outer-container .switch.switch-outline.switch-primary input:checked ~ span:after {
   color: #ffffff;
-  background-color: #2f44b2;
+  background-color: #8dbf42;
 }
 .switch-outer-container .switch.switch-secondary:not(.switch-outline) input:empty ~ span:before {
   background-color: #e4e6ef;

@@ -13,6 +13,8 @@ class AdditionalActivitie extends Model
 
     protected $table = 'additional_activities';
     protected $primaryKey = 'id';
+    public $column = 'activitie_id';
+
 
     protected $fillable = [
         'name',
@@ -25,7 +27,7 @@ class AdditionalActivitie extends Model
 
     public function getColumn($id ='')
     {
-        $userType = Activitie::all();
+        $Activitie = Activitie::all();
         if ($id != "") {
         
             $ValueColumn=AdditionalActivitie::where('id',$id)->first();
@@ -36,7 +38,7 @@ class AdditionalActivitie extends Model
                     (object)   ['columnName' => 'activitie_id',
                     'columnType' => 'select',
                     'ValueColumn' =>$ValueColumn->relation->name,
-                    'options' => $userType
+                    'options' => $Activitie
                     ] ,
             
             ];
@@ -47,10 +49,15 @@ class AdditionalActivitie extends Model
                          'columnType' => 'text'] ,
                 (object)   ['columnName' => 'activitie_id',
                 'columnType' => 'select',
-                'options' => $userType
+                'options' => $Activitie
                 ] ,
         
         ]; }
+    }
+
+    public function showRelation()
+    {
+        return 'Service';
     }
 
     public function getTitleColumn()
@@ -58,7 +65,7 @@ class AdditionalActivitie extends Model
         return [
             'id',  
                  'name',
-                'Activitie' 
+                'Activities' 
                 ];
     }
 
