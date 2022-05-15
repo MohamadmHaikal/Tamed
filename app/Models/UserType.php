@@ -33,8 +33,9 @@ class UserType extends Model
         }else{
             return [
                 (object)  [ 'columnName' => 'name',
-                         'columnType' => 'text'
-            ]   ]; }
+                         'columnType' => 'text']  ,
+                        
+         ]; }
     }
     public function activities(){
         return $this->hasMany('App\Models\Activitie' , 'type_id');
@@ -43,8 +44,9 @@ class UserType extends Model
     public function getTitleColumn()
     {
         return [
-            'id',  
-                 'name'
+                 'id',  
+                 'nameuserType',
+                 'buton'
                 ];
     }
 }

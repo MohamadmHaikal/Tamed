@@ -158,7 +158,7 @@ Route::post('add-item', 'App\Http\Controllers\Controller@_addItem')->name('add-i
 Route::post('get-item', 'App\Http\Controllers\Controller@_getItem')->name('get-item');
 Route::post('update-item', 'App\Http\Controllers\Controller@_updateItem')->name('update-item');
 
-Route::get('Item/{model}', 'App\Http\Controllers\Controller@indexItem')->name('Item');
+Route::get('Item/{model}/{id?}', 'App\Http\Controllers\Controller@indexItem')->name('Item');
 // Route::get('/showcustomer/{id}','admin\SupplierController@showcustomer')->name('showcustomer');
 
 //File Manger route
@@ -237,17 +237,19 @@ Route::post('delete-featured-image', [OptionController::class, '_deleteFeaturedI
 Route::post('get-list-item', [OptionController::class, '_getListItem'])->name('get-list-item');
 
 
-Route::group(['prefix' => 'ads', 'middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function () {
-    Route::resource('ads', 'AdsController');
-    Route::get('/getType/{type}/{id?}', 'AdsController@getType')->name('getType');
-    Route::get('/deleteFile/{id}', 'AdsController@deleteFile')->name('deleteFile');
-});
-Route::group(['prefix' => 'project'], function () {
-    Route::resource('project', 'ProjectTypeController');
-});
-Route::group(['prefix' => 'material'], function () {
-    Route::resource('material', 'MaterialTypeController');
-});
+    Route::group(['prefix' => 'ads','middleware' => 'LanguageSwitcher', 'namespace' => 'App\Http\Controllers\Dashboard'], function (){
+        Route::resource('ads', 'AdsController');
+        Route::get('/getType/{type}/{id?}','AdsController@getType')->name('getType');
+        Route::get('/getAddActivity/{activity}','AdsController@getAddActivity')->name('getAddActivity');
+        Route::get('/deleteFile/{id}','AdsController@deleteFile')->name('deleteFile');
+
+    });
+    Route::group(['prefix' => 'project'], function () {
+        Route::resource('project', 'ProjectTypeController');
+    });
+    Route::group(['prefix' => 'material'], function () {
+        Route::resource('material', 'MaterialTypeController');
+    });
 
 
 

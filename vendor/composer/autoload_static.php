@@ -744,6 +744,7 @@ class ComposerStaticInitdef00ff10eb0d3f73b21b47c404ee35a
         'App\\Models\\Quote' => __DIR__ . '/../..' . '/app/Models/Quote.php',
         'App\\Models\\RefundRequests' => __DIR__ . '/../..' . '/app/Models/RefundRequests.php',
         'App\\Models\\Report' => __DIR__ . '/../..' . '/app/Models/Report.php',
+        'App\\Models\\Section' => __DIR__ . '/../..' . '/app/Models/Section.php',
         'App\\Models\\Service' => __DIR__ . '/../..' . '/app/Models/Service.php',
         'App\\Models\\TasksTable' => __DIR__ . '/../..' . '/app/Models/TasksTable.php',
         'App\\Models\\TypeAds' => __DIR__ . '/../..' . '/app/Models/TypeAds.php',

@@ -117,7 +117,7 @@
 }
 .multiple-form-one #progressbar li.active:before,
 .multiple-form-one #progressbar li.active:after {
-    background: #2262c6;
+    background: #8dbf42;
 }
 .multiple-form-one .radio-group {
     position: relative;
@@ -166,7 +166,7 @@
 .multiple-form-two .form-card {
     text-align: left;
     background: white;
-    border: 1px solid #00000014;
+    /* border: 1px solid #00000014; */
     border-radius: 10px;
     padding: 25px 30px 30px 30px;
     box-sizing: border-box;
@@ -189,9 +189,20 @@
     text-align: right;
 }
 .multiple-form-two .fieldlabels {
-    color: gray;
-    text-align: left
+    color: #2f44b2;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
+    position: absolute;
+    left: 14px;
+    top: -9px;
+    background: #ffffff;
+    padding: 0px 7px;
+    z-index: 1;
+    right: 14px;
+    left: unset;
 }
+
 .multiple-form-two #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
@@ -341,3 +352,6 @@
 /* Tablet Media Query */
 @media (min-width: 600px) and (max-width: 1068px) {
 }
+
+
+

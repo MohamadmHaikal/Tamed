@@ -22,8 +22,8 @@
 				<h2 class="demo-text">A demo of jQuery / Bootstrap based editor</h2>
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-12 nopadding">
-							<textarea id="demo-editor-bootstrap" dir="rtl"> 
+						<div class="col-lg-6 nopadding">
+							<textarea id="demo-editor-bootstrap" dir="rtl"> </textarea>
 						</div>
 					</div>
 				</div>

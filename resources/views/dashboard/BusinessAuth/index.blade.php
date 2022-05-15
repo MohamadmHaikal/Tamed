@@ -346,7 +346,7 @@
                                                                             <button class="btn btn-success btn-rounded"
                                                                                 id="AddFacility" style="position: absolute;
                                                                                         left: 1%;
-                                                                                        bottom: 0px;">
+                                                                                        bottom: -15px;">
                                                                                 {{ __('backend.add') }}</button>
 
                                                                         </div>

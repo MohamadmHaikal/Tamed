@@ -1,5 +1,6 @@
 
-<form id="form-Item" action="{{route($action)  }}" method="POST" enctype="multipart/form-data"
+<form id="form-Item" action="{{route($action)  }}" method="POST" 
+enctype="multipart/form-data"
 class="form form-action">
 
 <div id="Create" class="modal animated zoomInUp custo-zoomInUp" role="dialog">
@@ -22,12 +23,13 @@ class="form form-action">
                     </div>
                 </div>
                 <div class="widget-content widget-content-area" id="widget-content-area">
-
+                
                     @foreach ($arrayItem as $key => $item)
+                
                     @if ($item->columnType == 'select')
                     <select class="form-control form-control-sm" name="{{ $item->columnName }}">
                         @foreach ($item->options as $option)
-                            <option value="{{ $option->id }}">{{ $option->name }}</option>
+                            <option value="{{ isset($option->id) ? $option->id : $option->name }}">{{ $option->name }}</option>
                         @endforeach
                     </select>
                    @else

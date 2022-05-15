@@ -80,6 +80,7 @@ return array(
     'App\\Models\\Quote' => $baseDir . '/app/Models/Quote.php',
     'App\\Models\\RefundRequests' => $baseDir . '/app/Models/RefundRequests.php',
     'App\\Models\\Report' => $baseDir . '/app/Models/Report.php',
+    'App\\Models\\Section' => $baseDir . '/app/Models/Section.php',
     'App\\Models\\Service' => $baseDir . '/app/Models/Service.php',
     'App\\Models\\TasksTable' => $baseDir . '/app/Models/TasksTable.php',
     'App\\Models\\TypeAds' => $baseDir . '/app/Models/TypeAds.php',

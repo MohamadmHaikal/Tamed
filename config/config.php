@@ -41,21 +41,21 @@ return [
             'route_name' => 'Item',
             'child' => [
 
-                [
-                    'type' => 'item',
-                    'label' => awe_lang('MaterialType'),
-                    'route_name' => 'Item',
-                    'parameter' => 'MaterialType',
-                    'active_class' => 'Item/MaterialType'
+                // [
+                //     'type' => 'item',
+                //     'label' => awe_lang('MaterialType'),
+                //     'route_name' => 'Item',
+                //     'parameter' => 'MaterialType',
+                //     'active_class' => 'Item/MaterialType'
 
-                ],
-                [
-                    'type' => 'item',
-                    'label' => awe_lang('ProjectType'),
-                    'route_name' => 'Item',
-                    'parameter' => 'ProjectType',
-                    'active_class' => 'Item/ProjectType'
-                ],
+                // ],
+                // [
+                //     'type' => 'item',
+                //     'label' => awe_lang('ProjectType'),
+                //     'route_name' => 'Item',
+                //     'parameter' => 'ProjectType',
+                //     'active_class' => 'Item/ProjectType'
+                // ],
                 [
                     'type' => 'item',
                     'label' => awe_lang('TypeEmployment'),
@@ -65,25 +65,32 @@ return [
                 ],
                 [
                     'type' => 'item',
-                    'label' => awe_lang('Activities'),
+                    'label' => awe_lang('Section'),
                     'route_name' => 'Item',
-                    'parameter' => 'Activitie',
-                    'active_class' => 'Item/Activitie'
+                    'parameter' => 'Section',
+                    'active_class' => 'Item/Section'
                 ],
-                [
-                    'type' => 'item',
-                    'label' => awe_lang('Additional Activitie'),
-                    'route_name' => 'Item',
-                    'parameter' => 'AdditionalActivitie',
-                    'active_class' => 'Item/AdditionalActivitie'
-                ],
-                [
-                    'type' => 'item',
-                    'label' => awe_lang('Service'),
-                    'route_name' => 'Item',
-                    'parameter' => 'Service',
-                    'active_class' => 'Item/Service'
-                ],
+                // [
+                //     'type' => 'item',
+                //     'label' => awe_lang('Activities'),
+                //     'route_name' => 'Item',
+                //     'parameter' => 'Activitie',
+                //     'active_class' => 'Item/Activitie'
+                // ],
+                // [
+                //     'type' => 'item',
+                //     'label' => awe_lang('Additional Activitie'),
+                //     'route_name' => 'Item',
+                //     'parameter' => 'AdditionalActivitie',
+                //     'active_class' => 'Item/AdditionalActivitie'
+                // ],
+                // [
+                //     'type' => 'item',
+                //     'label' => awe_lang('Service'),
+                //     'route_name' => 'Item',
+                //     'parameter' => 'Service',
+                //     'active_class' => 'Item/Service'
+                // ],
                 [
                     'type' => 'item',
                     'label' => awe_lang('UserType'),
