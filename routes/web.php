@@ -19,8 +19,11 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\ActivitiesController;
 use App\Http\Controllers\Dashboard\AdditionalActivitieController;
+use App\Http\Controllers\Dashboard\AuthMangerController;
+use App\Http\Controllers\Dashboard\CustomersController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ElectronicContractsController;
+use App\Http\Controllers\Dashboard\FinancialAnalysisController;
 use App\Http\Controllers\Dashboard\NeighborhoodController;
 use App\Http\Controllers\Dashboard\SendMessageController;
 use App\Http\Controllers\Dashboard\ServicesController;
@@ -28,27 +31,40 @@ use App\Http\Controllers\Dashboard\TasksTableController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
-
-Route::get('/', function () {
-    SendAdsNotification(28, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
-
-    return view('dashboard.dashboard1');
-})->middleware('LanguageSwitcher', 'auth', 'is_verified')->name('dashboard');
+ // SendAdsNotification(28, 'test new', "<a href='/'>new Ads</a>", 'ads notification');
+Route::get('/dashboard', [DashboardController::class,'index'])->middleware('LanguageSwitcher', 'auth:customer')->name('dashboard');
 Route::post('store-file', [FileController::class, 'store']);
-Route::get('/auth-manger', function () {
-    return view('dashboard.auth-manger');
-})->middleware('LanguageSwitcher', 'auth', 'is_verified');
-Route::group(['prefix' => 'auth', 'middleware' => ['is_login', 'LanguageSwitcher']], function () {
 
-    Route::post('check', [AuthController::class, 'checkMobileUser'])->name('check');
+Route::get('login', [AuthController::class, 'Login'])->name('login.switch');
 
-    Route::get('login', [AuthController::class, '_getLogin'])->name('login');
-
-    Route::post('postLogin', [AuthController::class, '_postLogin'])->name('post.login');
+Route::group(['prefix' => 'Business', 'middleware' => ['LanguageSwitcher']], function () {
+    Route::post('checkCardToReset', [AuthMangerController::class, 'checkCardToReset'])->name('Business.checkCardToReset');
+    Route::get('reset-password', [AuthMangerController::class, '_getResetPassword'])->name('Business.ResetPassword')->middleware('is_login:manger');
+    Route::post('reset-password', [AuthMangerController::class, '_getPostResetPassword'])->name('Business.PostResetPassword')->middleware('is_login:manger');
+    Route::post('checkCode', [AuthMangerController::class, 'CheckCode'])->name('Business.check');
+    Route::post('check', [AuthMangerController::class, 'checkMobileUser'])->name('Business.check');
+    Route::get('login', [AuthMangerController::class, '_getLogin'])->name('Business.login')->middleware('is_login:manger');
+    Route::get('signUp', [AuthMangerController::class, '_getSignUp'])->name('Business.signup')->middleware('is_login:manger');
+    Route::post('signUp', [AuthMangerController::class, '_getPostSignUp'])->name('Business.signup.post')->middleware('is_login:manger');
+    Route::get('/', [AuthMangerController::class, 'index'])->name('Business.index')->middleware('LanguageSwitcher', 'auth:manger');
+    Route::post('facil_login', [AuthMangerController::class, 'facil_login'])->name('facil_login');
+    Route::post('login', [AuthMangerController::class, 'login'])->name('Business.login');
+    Route::post('/logout', [AuthMangerController::class, 'logout'])->name('Business.logout');
+    Route::post('/add-facility', [AuthMangerController::class, '_add_facility'])->name('Business.add-facility');
 });
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('register', [AuthController::class, '_getRegister'])->name('get.register');
+
+Route::group(['prefix' => 'auth', 'middleware' => ['is_login:customer', 'LanguageSwitcher']], function () {
+    Route::get('signUp', [AuthController::class, '_getSignUp'])->name('auth.signup')->middleware('is_login:customer');
+    Route::post('signUp', [AuthController::class, '_getPostSignUp'])->name('auth.signup.post')->middleware('is_login:customer');
+    Route::post('check', [AuthController::class, 'checkMobileUser'])->name('auth.check');
+    Route::post('checkCode', [AuthController::class, 'CheckCode'])->name('auth.checkCode');
+    Route::get('login', [AuthController::class, '_getLogin'])->name('auth.login');
+    Route::post('login', [AuthController::class, '_postLogin'])->name('auth.post.login');
+    Route::post('checkCardToReset', [AuthController::class, 'checkCardToReset'])->name('auth.checkCardToReset');
+    Route::get('reset-password', [AuthController::class, '_getResetPassword'])->name('auth.ResetPassword')->middleware('is_login:customer');
+    Route::post('reset-password', [AuthController::class, '_getPostResetPassword'])->name('auth.PostResetPassword')->middleware('is_login:customer');
 });
+
 
 Route::group(['prefix' => 'auth'], function () {
     Route::get('logout', [AuthController::class, '_getLogout'])->name('get.logout');
@@ -72,6 +88,7 @@ Route::post('add-your-project', [DashboardController::class, '_addYourProject'])
 Route::get('delete-your-project/{id}', [DashboardController::class, '_deleteYourProject'])->name('delete-your-project');
 Route::get('show/project/{id}', [DashboardController::class, '_showProject'])->name('show-project');
 Route::post('edit/project/{id}', [DashboardController::class, '_editProject'])->name('edit-project');
+Route::post('/profile/UploadFiles', [DashboardController::class, '_uploadFile'])->name('upload-files');
 Route::group(['prefix' => 'users', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all/{filter?}', [UserController::class, 'index'])->name('users.all');
     Route::get('delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
@@ -99,6 +116,17 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'LanguageSwitcher'], func
         return view('dashboard.dashboard-social');
     });
 });
+
+//Financial Analysis
+Route::group(['prefix' => 'FinancialAnalysis', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/{date?}', [FinancialAnalysisController::class, 'index'])->name('FinancialAnalysis');
+});
+
+//Facility Customers
+Route::group(['prefix' => 'FacilityCustomers', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/', [CustomersController::class, 'index'])->name('FacilityCustomers');
+});
+
 //Electronic Contracts 
 Route::group(['prefix' => 'ElectronicContracts', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all/{source}/{filter?}', [ElectronicContractsController::class, 'index'])->name('ElectronicContracts');
@@ -143,6 +171,12 @@ Route::group(['prefix' => 'FileManger', 'middleware' => 'LanguageSwitcher'], fun
 Route::group(['prefix' => 'Quotes', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/{source}/{filter?}', 'App\Http\Controllers\Dashboard\QuotesController@index')->name('Quotes');
 });
+
+//Deals Auctions route
+Route::group(['prefix' => 'DealsAuctions', 'middleware' => 'LanguageSwitcher'], function () {
+    Route::get('/{source}/{filter?}', 'App\Http\Controllers\Dashboard\DealsAuctionsController@index')->name('DealsAuctions');
+});
+
 //eBills route
 Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], function () {
     Route::get('/all/{source?}', 'App\Http\Controllers\Dashboard\eBillsController@index')->name('eBills');
@@ -154,6 +188,8 @@ Route::group(['prefix' => 'eBills', 'middleware' => 'LanguageSwitcher'], functio
     Route::post('/store/{id?}', 'App\Http\Controllers\Dashboard\eBillsController@store')->name('eBills.store');
     Route::get('/subscribe', 'App\Http\Controllers\Dashboard\eBillsController@subscribe')->name('eBills.subscribe');
     Route::get('/DoSubscribe', 'App\Http\Controllers\Dashboard\eBillsController@_do_subscribe')->name('eBills.subscribe.do');
+    Route::get('/search', 'App\Http\Controllers\Dashboard\eBillsController@_search')->name('eBills.search');
+    Route::get('/status/{status}/{id}', 'App\Http\Controllers\Dashboard\eBillsController@_changeStatus')->name('eBills.status');
 
 });
 //bank account route
@@ -186,8 +222,6 @@ Route::group(['prefix' => 'Disputes', 'middleware' => 'LanguageSwitcher'], funct
     Route::post('/store', 'App\Http\Controllers\Dashboard\DisputesController@store')->name('Disputes.store');
     Route::get('/message/{id}', 'App\Http\Controllers\Dashboard\DisputesController@_show_message')->name('Disputes.show.message');
     Route::post('/message/update/{id}', 'App\Http\Controllers\Dashboard\DisputesController@_update_message')->name('Disputes.update.message');
-
-
 });
 // Options route
 Route::get('settings', [OptionController::class, '_getSetting'])->name('settings')->middleware("LanguageSwitcher");
@@ -735,3 +769,7 @@ Route::get('/lan/{lang}', [LanguageController::class, 'change'])->name("Language
 Route::any('/{page?}', function () {
     return View::make('error-404');
 })->where('page', '.*');
+Route::get('/SOON', function () {
+return redirect()->back();
+
+})->name('SOON');

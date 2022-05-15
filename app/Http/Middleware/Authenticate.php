@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 use Closure;
@@ -11,12 +12,20 @@ use Illuminate\Support\Facades\Redirect;
 
 class Authenticate
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $type = '')
     {
-        if (\Cartalyst\Sentinel\Laravel\Facades\Sentinel::check()) {
-            return $next($request);
+        if ($type != 'manger') {
+            if (\Cartalyst\Sentinel\Laravel\Facades\Sentinel::check()) {
+                return $next($request);
+            } else {
+                return Redirect::route('login.switch')->withErrors('Please log in!');
+            }
         } else {
-            return Redirect::route('login')->withErrors('Please log in!');
+            if (Auth::guard('mangers')->user()) {
+                return $next($request);
+            } else {
+                return Redirect::route('login.switch');
+            }
         }
     }
 }

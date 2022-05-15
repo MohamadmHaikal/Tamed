@@ -15,8 +15,8 @@
     $user = get_current_user_data();
     $projects = get_current_user_projects();
     $cities = get_cities();
-    $userType=get_users_type();
-    $curentType=get_facility_type($user->activitie_id);
+    $userType = get_users_type();
+    $curentType = get_facility_type($user->activitie_id);
     ?>
     <!--  Navbar Starts / Breadcrumb Area  -->
     <div class="sub-header-container">
@@ -68,14 +68,24 @@
                                                         data-toggle="pill" href="#v-border-pills-contact" role="tab"
                                                         aria-controls="v-border-pills-contact" aria-selected="false"><i
                                                             class="las la-phone"></i> {{ __('backend.Contact') }}</a>
-                                                    <a class="nav-link  text-center" id="v-border-pills-work-tab"
-                                                        data-toggle="pill" href="#v-border-pills-work" role="tab"
-                                                        aria-controls="v-border-pills-work" aria-selected="false"><i
-                                                            class="las la-suitcase"></i> {{ __('backend.projects') }}</a>
-                                                    <a class="nav-link  text-center" id="v-border-pills-profile-tab"
+                                                    @if (!is_customer())
+                                                        <a class="nav-link  text-center" id="v-border-pills-work-tab"
+                                                            data-toggle="pill" href="#v-border-pills-work" role="tab"
+                                                            aria-controls="v-border-pills-work" aria-selected="false"><i
+                                                                class="las la-suitcase"></i>
+                                                            {{ __('backend.projects') }}</a>
+                                                        {{-- <a class="nav-link  text-center" id="v-border-pills-profile-tab"
                                                         data-toggle="pill" href="#v-border-pills-profile" role="tab"
                                                         aria-controls="v-border-pills-profile" aria-selected="false"><i
-                                                            class="las la-file"></i> {{ __('backend.profile') }}</a>
+                                                            class="las la-file"></i> {{ __('backend.profile') }}</a> --}}
+
+
+                                                        <a class="nav-link  text-center" id="v-border-pills-files-tab"
+                                                            data-toggle="pill" href="#v-border-pills-files" role="tab"
+                                                            aria-controls="v-border-pills-files" aria-selected="false"><i
+                                                                class="las la-file-invoice"></i>
+                                                            {{ __('backend.Facility files') }}</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="mt-3">
@@ -106,71 +116,86 @@
                                                                     value="{{ $user->name }}">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="CRecord">{{ __('backend.Commercial record') }}</label>
-                                                                <input type="text" class="form-control mb-4 "
-                                                                    placeholder="{{ __('backend.Commercial record') }}" name="CRecord"
-                                                                    value="{{ $user->CRecord }}">
+                                                        @if (!is_customer())
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="CRecord">{{ __('backend.Commercial record') }}</label>
+                                                                    <input type="text" class="form-control mb-4 "
+                                                                        placeholder="{{ __('backend.Commercial record') }}"
+                                                                        name="CRecord" value="{{ $user->CRecord }}">
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                     </div>
-                                                    <div class="row md-0 ">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="special number">{{ __('backend.special number') }}</label>
-                                                                <input type="text" class="form-control mb-4 "
-                                                                    placeholder="{{ __('backend.special number') }}" name="specialNumber"
-                                                                    value="{{ $user->specialNumber }}">
+                                                    @if (!is_customer())
+                                                        <div class="row md-0 ">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="special number">{{ __('backend.special number') }}</label>
+                                                                    <input type="text" class="form-control mb-4 "
+                                                                        placeholder="{{ __('backend.special number') }}"
+                                                                        name="specialNumber"
+                                                                        value="{{ $user->specialNumber }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="Tax Number">{{ __('backend.Tax Number') }}</label>
+                                                                    <input type="text" class="form-control mb-4 "
+                                                                        placeholder="{{ __('backend.Tax Number') }}"
+                                                                        name="TaxNumber" value="{{ $user->TaxNumber }}">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="Tax Number">{{ __('backend.Tax Number') }}</label>
-                                                                <input type="text" class="form-control mb-4 "
-                                                                    placeholder="{{ __('backend.Tax Number') }}" name="TaxNumber"
-                                                                    value="{{ $user->TaxNumber }}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label
-                                                                    for="country">{{ __('backend.facility type') }}</label>
-                                                                <select class="form-control" name="facility_type" id="facility_type"  data-now="{{ $curentType->id }}"
-                                                                    data-current="{{ $user->activitie_id }}">
-                                                                    @foreach ($userType as $type )
-                                                                    @if ($curentType->id==$type->id)
-                                                                    <option value="{{$type->id}}" selected>{{ $type->name }}
-                                                                    </option>
-                                                                    @else
-                                                                     <option value="{{$type->id}}">{{ $type->name }}
-                                                                    </option>
-                                                                    @endif
-                                                                   
-                                                                    @endforeach
-                                                                  
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label
-                                                                    for="country">{{ __('backend.facility activity') }}</label>
-                                                                <select class="form-control" name="facility_activity" id="facility_activity">
+                                                    @endif
+                                                    @if (!is_customer())
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="country">{{ __('backend.facility type') }}</label>
+                                                                    <select class="form-control" name="facility_type"
+                                                                        id="facility_type"
+                                                                        data-now="{{ $curentType->id }}"
+                                                                        data-current="{{ $user->activitie_id }}">
+                                                                        @foreach ($userType as $type)
+                                                                            @if ($curentType->id == $type->id)
+                                                                                <option value="{{ $type->id }}"
+                                                                                    selected>
+                                                                                    {{ $type->name }}
+                                                                                </option>
+                                                                            @else
+                                                                                <option value="{{ $type->id }}">
+                                                                                    {{ $type->name }}
+                                                                                </option>
+                                                                            @endif
+                                                                        @endforeach
 
-                                                                   
-                                                                </select>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row col-md-12">
-                                                            <?php
-                                                                $i=0
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="country">{{ __('backend.facility activity') }}</label>
+                                                                    <select class="form-control" name="facility_activity"
+                                                                        id="facility_activity">
+
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row col-md-12">
+                                                                <?php
+                                                                $i = 0;
                                                                 
                                                                 ?>
-                                                                <div class="form-group" style="padding-right: inherit;" id="subActivity">
-                                                                    {{-- @for ($i=0; $i<30;$i++)
+                                                                <div class="form-group" style="padding-right: inherit;"
+                                                                    id="subActivity">
+                                                                    {{-- @for ($i = 0; $i < 30; $i++)
                                                                         
                                                                    
                                                                     <!-- Visible button -->
@@ -181,11 +206,11 @@
                                                                         value="0">
                                                                         @endfor --}}
                                                                 </div>
-                                                               
-                                                           
-                                                        </div>
-                                                    </div>
 
+
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="tab-pane fade" id="v-border-pills-about" role="tabpanel"
                                                     aria-labelledby="v-border-pills-about-tab">
@@ -467,7 +492,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="work-section text-center">
-                                                                <label for="profile" class="custom-file-upload mb-0">
+                                                                <label for="f-file" class="custom-file-upload mb-0">
                                                                     <a title="Attach a file"
                                                                         class="mr-2 pointer text-primary btn btn-outline-primary">
                                                                         <i class="las la-paperclip font-20"></i>
@@ -479,6 +504,301 @@
                                                                     accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                                                                     style="display:none;">
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-border-pills-files" role="tabpanel"
+                                                    aria-labelledby="v-border-pills-files-tab">
+                                                    <div class="row text-center">
+                                                        <div class="col-md-6 mt-2">
+                                                            <p>{{__('backend.Commercial record')}} <span class="text-danger"
+                                                                    title="{{__('backend.compulsory file')}}">*</span></p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="Commercialshow">
+                                                                        @if (getfileByName('Commercial') != null)
+                                                                            <a href="/image/{{ getfileByName('Commercial')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('Commercial')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('Commercial')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+
+                                                                    </div>
+
+                                                                    <label for="Commercial"
+                                                                        style=" {{ getfileByName('Commercial') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 CommercialLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+
+                                                                    <input id="Commercial" class="f-file"
+                                                                        name='Commercial' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6 mt-2 mb-5">
+                                                            <p>{{__('backend.value-added certificate')}} <span class="text-danger"
+                                                                    title="{{__('backend.compulsory file')}}">*</span></p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="TaxCertificateshow">
+                                                                        @if (getfileByName('TaxCertificate') != null)
+                                                                            <a href="/image/{{ getfileByName('TaxCertificate')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('TaxCertificate')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('TaxCertificate')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+
+                                                                    </div>
+                                                                    <label for="Tax"
+                                                                        style=" {{ getfileByName('TaxCertificate') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 TaxCertificateLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="Tax" class="f-file"
+                                                                        name='TaxCertificate' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.Saudization certificate')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="Saudizationshow">
+                                                                        @if (getfileByName('Saudization') != null)
+                                                                            <a href="/image/{{ getfileByName('Saudization')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('Saudization')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('Saudization')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                    <label for="Saudization"
+                                                                        style=" {{ getfileByName('Saudization') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 SaudizationLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="Saudization" class="f-file"
+                                                                        name='Saudization' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.Chamber of Commerce certificate')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="ChamberCommerceshow">
+                                                                        @if (getfileByName('ChamberCommerce') != null)
+                                                                            <a href="/image/{{ getfileByName('ChamberCommerce')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('ChamberCommerce')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('ChamberCommerce')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                    <label for="ChamberCommerce"
+                                                                        style=" {{ getfileByName('ChamberCommerce') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 ChamberCommerceLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="ChamberCommerce" class="f-file"
+                                                                        name='ChamberCommerce' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.Social insurance certificate')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="insurancesshow">
+                                                                        @if (getfileByName('insurances') != null)
+                                                                            <a href="/image/{{ getfileByName('insurances')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('insurances')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('insurances')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+
+                                                                    </div>
+                                                                    <label for="insurances"
+                                                                        style=" {{ getfileByName('insurances') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 insurancesLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="insurances" class="f-file"
+                                                                        name='insurances' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.Establishment Certificate')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="Enterpriseshow">
+                                                                        @if (getfileByName('Enterprise') != null)
+                                                                            <a href="/image/{{ getfileByName('Enterprise')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('Enterprise')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('Enterprise')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                    <label for="Enterprise"
+                                                                        style=" {{ getfileByName('Enterprise') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 EnterpriseLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="Enterprise" class="f-file"
+                                                                        name='Enterprise' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.rating certificate')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="classificationshow">
+                                                                        @if (getfileByName('classification') != null)
+                                                                            <a href="/image/{{ getfileByName('classification')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('classification')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('classification')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                    <label for="classification"
+                                                                        style=" {{ getfileByName('classification') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 classificationLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="classification" class="f-file"
+                                                                        name='classification' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6 mt-5 mb-5">
+                                                            <p>{{__('backend.Establishment Profile')}}</p>
+                                                            <hr class="rounded"
+                                                                style=" border-top: 2.5px solid #e5eaff;     width: 85%;">
+
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div id="profileFileshow">
+                                                                        @if (getfileByName('profileFile') != null)
+                                                                            <a href="/image/{{ getfileByName('profileFile')->file }}"
+                                                                                download>
+                                                                                {{ getfileByName('profileFile')->name }}
+                                                                            </a> <a href="javascript:void(0);"
+                                                                                class="remove"
+                                                                                name="{{ getfileByName('profileFile')->model }}"><i
+                                                                                    class="las la-trash text-danger font-15"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                    <label for="profileFile"
+                                                                        style=" {{ getfileByName('profileFile') != null ? 'display: none;' : '' }}"
+                                                                        class="custom-file-upload mb-0 profileFileLable">
+                                                                        <a title="Attach a file" class="btn btn-primary">
+
+                                                                            <span
+                                                                                class="font-17">{{ __('backend.upload a file') }}</span>
+                                                                        </a>
+                                                                    </label>
+                                                                    <input id="profileFile" class="f-file"
+                                                                        name='profileFile' type="file"
+                                                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                                        style="display:none;">
+                                                                </div>
+
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -499,8 +819,10 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th>{{ __('backend.id') }}</th>
-                                                                            <th>{{ __('backend.project name') }}</th>
-                                                                            <th>{{ __('backend.Starting From') }}</th>
+                                                                            <th>{{ __('backend.project name') }}
+                                                                            </th>
+                                                                            <th>{{ __('backend.Starting From') }}
+                                                                            </th>
                                                                             <th>{{ __('backend.Ending In') }}</th>
                                                                             <th class="no-content"></th>
                                                                         </tr>
@@ -545,6 +867,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -555,20 +878,72 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Main Body Ends -->
-@endsection
+        <!-- Main Body Ends -->
+    @endsection
 
-@push('plugin-scripts')
-    {!! Html::script('assets/js/loader.js') !!}
-    {!! Html::script('plugins/dropify/dropify.min.js') !!}
-    {!! Html::script('assets/js/pages/profile_edit.js') !!}
-    {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
-    {!! Html::script('plugins/flatpickr/custom-flatpickr.js') !!}
-@endpush
+    @push('plugin-scripts')
+        {!! Html::script('assets/js/loader.js') !!}
+        {!! Html::script('plugins/dropify/dropify.min.js') !!}
+        {!! Html::script('assets/js/pages/profile_edit.js') !!}
+        {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
+        {!! Html::script('plugins/flatpickr/custom-flatpickr.js') !!}
+    @endpush
 
-@push('custom-scripts')
-    <script>
-      
-    </script>
-@endpush
+    @push('custom-scripts')
+        <script>
+            $(".f-file").on('change', function() {
+
+                if (this.files && this.files[0]) {
+
+                    var fd = new FormData();
+                    fd.append('file', this.files[0]);
+                    fd.append('type', this.name);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "/profile/UploadFiles",
+                        data: fd,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            if (data['status'] == '1') {
+                                document.getElementById("alert").innerHTML = data['message'].substring(0,
+                                    data['message']
+                                    .length);
+                                $('.toast').toast('show');
+                            }
+                            $('.' + this.name + 'Lable').hide();
+                            $('#' + this.name + 'show').append('<a href="/image/' + data['file']['file'] +
+                                '" download>' + data[
+                                    'file']['name'] +
+                                ' </a> <a href="javascript:void(0);" class="remove" name="' + this
+                                .name + '"><i class="las la-trash text-danger font-15"></i></a>');
+                            $(".remove").on('click', function() {
+
+                                $('#' + this.name + 'show').html('');
+                                $('.' + this.name + 'Lable').show();
+
+                            });
+
+
+                        },
+                        error: function(data) {
+                            console.log(data);
+                        }
+                    });
+
+
+                }
+            });
+            $(".remove").on('click', function() {
+                $('#' + this.name + 'show').html('');
+                $('.' + this.name + 'Lable').show();
+
+            });
+        </script>
+    @endpush

@@ -25,7 +25,9 @@ $favicon_url = get_attachment_url($favicon);
 <script>
 window.translate={
 auth:'{{__("backend.We have sent a message to")}}',
-
+continue: "{{ __('backend.continue') }}",
+systemMessages: "{{ __('backend.system messages') }}",
+successfully: "{{ __('backend....Logged in successfully. Redirecting') }}",
 };
 
 </script>

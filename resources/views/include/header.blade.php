@@ -2,6 +2,7 @@
 $enable_multi_language = get_option('multi_language', 'on');
 $enable_dark_mode = get_option('dark_mode', 'on');
 $current_theme = $_COOKIE['theme'];
+
 ?>
 <header class="header navbar navbar-expand-sm">
     <ul class="navbar-item flex-row ml-md-0 ml-auto theme-brand">
@@ -269,6 +270,7 @@ $current_theme = $_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a>
+                           
                             <a class="account-item" href="{{ route('profile') }}">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
@@ -289,6 +291,19 @@ $current_theme = $_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a> --}}
+                            @if (!is_customer())
+                          
+                            <a class="account-item " href="{{ route('Business.index') }}">
+                                <div class="media align-center">
+                                    <div class="icon-wrap">
+                                        <i class="las la-cog font-20"></i>
+                                    </div>
+                                    <div class="media-content ml-3">
+                                        <h6 class="font-13 mb-0 strong">{{ __('backend.Facilities Manager') }}</h6>
+                                    </div>
+                                </div>
+                            </a>
+                            @endif
                             <a class="account-item " href="/">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
@@ -299,6 +314,7 @@ $current_theme = $_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a>
+
                             {{-- <a class="account-item" href="{{ url('/authentications/style3/locked') }}">
                                 <div class="media align-center">
                                     <div class="icon-wrap">
@@ -309,6 +325,12 @@ $current_theme = $_COOKIE['theme'];
                                     </div>
                                 </div>
                             </a> --}}
+                            {{-- <form action="{{ route('admin.login') }}" method="POST">
+                                @csrf
+                                <input type="text" name="phone" value="0581333357" hidden>
+                                <input type="text" name="password" value="12345678">
+                                <button type="submit">login</button>
+                            </form> --}}
                             <hr class="account-divider">
                             <a class="account-item" href="{{ route('get.logout') }}">
                                 <div class="media align-center">

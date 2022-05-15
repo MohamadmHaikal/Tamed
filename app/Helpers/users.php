@@ -3,6 +3,7 @@
 use App\Models\ChMessage;
 use App\Models\Neighborhood;
 use App\Models\Notification;
+use App\Models\User;
 use App\Models\UserProjects;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Mockery\Exception;
@@ -51,7 +52,15 @@ function is_user_logged_in()
     $userdata = get_current_user_data();
     return !empty($userdata) ? true : false;
 }
+function get_current_manger_faci()
+{
+    $facilities = [];
+    if (Auth::guard('mangers')->user()->facilities != null) {
+        $facilities = unserialize(Auth::guard('mangers')->user()->facilities);
+    }
 
+    return User::whereIn('id', $facilities)->get();
+}
 
 
 function get_current_user_id()
@@ -91,6 +100,14 @@ function get_current_user_notification_count()
 {
     return Notification::where('user_to', '=', get_current_user_id())->where('seen', '=', 0)->count();
 }
+function get_faci_notification_count($id)
+{
+    return Notification::where('user_to', '=', $id)->where('seen', '=', 0)->count();
+}
+function get_faci_message_count($id)
+{
+    return ChMessage::where('to_id', '=', $id)->where('seen', '=', 0)->count();
+}
 function is_admin($user_id = '')
 {
     if (!$user_id) {
@@ -116,7 +133,19 @@ function is_partner($user_id = '')
     }
     return false;
 }
+function is_Facility($user_id = '')
+{
+    if (!$user_id) {
+        $user_id = get_current_user_id();
+    }
+    $user_data = get_user_by_id($user_id);
 
+    if ($user_data) {
+      
+        return $user_data->inRole('facility') ? true : false;
+    }
+    return false;
+}
 function is_customer($user_id = '')
 {
     if (!$user_id) {

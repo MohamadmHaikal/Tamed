@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('description');
             $table->string('email')->unique();
             $table->string('v-code')->nullable();
+            $table->string('IdCard')->nullable();
             $table->string('password');
             $table->float('evaluation');
             $table->integer('projectCount');
@@ -31,7 +32,8 @@ class CreateUsersTable extends Migration
             $table->string('Signature');
             $table->string('TaxNumber');
             $table->string('specialNumber');
-            $table->string('CRecord');
+            $table->string('CRecord'); 
+            $table->integer('views');
             $table->rememberToken();
             $table->timestamps();
         });

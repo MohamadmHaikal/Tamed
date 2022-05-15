@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customers;
 use App\Models\File;
 use App\Models\User;
 use App\Models\UserProjects;
@@ -18,6 +19,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $customerNumber = Customers::where('facility_id', '=', get_current_user_id())->count();
+
+        return view('dashboard.dashboard',compact('customerNumber'));
     }
     public function _getProfile()
     {
@@ -36,7 +40,7 @@ class DashboardController extends Controller
 
         ]);
     }
-    
+
     public static function formatBytes($size, $precision = 2)
     {
         if ($size > 0) {
@@ -66,6 +70,20 @@ class DashboardController extends Controller
         $file->save();
         return $this->sendJson([
             'status' => 1,
+            'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
+
+        ]);
+    }
+    public function _uploadFile(Request $request)
+    {
+        $file = File::where('model', '=', $request->type)->where('FK', '=', get_current_user_id())->first();
+        if ($file != null) {
+            $file->delete();
+        }
+        $this->fileUpload(request()->file, $request->type, get_current_user_id());
+        return $this->sendJson([
+            'status' => 1,
+            'file' => getfileByName($request->type),
             'message' => view('Common.alert', ['message' => __('backend.File Uploaded successfully'), 'type' => 'success'])->render(),
 
         ]);

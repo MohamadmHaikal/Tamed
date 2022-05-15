@@ -2,6 +2,9 @@
 
 use App\Models\Activitie;
 use App\Models\City;
+use App\Models\File;
+use App\Models\invoice;
+use App\Models\Products;
 use App\Models\UserType;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\Config;
@@ -36,20 +39,20 @@ function getActivityItem()
 function getArrayType()
 {
 
-    $ArrayType=[
-       'Project',
-       'deals',
-       'Material',
-       'equipment',
-       'job'
+    $ArrayType = [
+        'Project',
+        'deals',
+        'Material',
+        'equipment',
+        'job'
     ];
 
     return  $ArrayType;
 }
 
-function getAdsCover($id,$model)
+function getAdsCover($id, $model)
 {
-    $image= App\Models\File::where('FK',$id)->where('model',$model)->first() ;
+    $image = App\Models\File::where('FK', $id)->where('model', $model)->first();
     return $image;
 }
 
@@ -77,7 +80,93 @@ function get_menu_dashboard()
     }
     return $menu;
 }
+function pad($num, $size)
+{
+    $num = strval($num);
+    while (strlen($num) < $size) {
+        $num = "0" . $num;
+    }
 
+    return $num;
+}
+function Received($date = '')
+{
+    $TIinvoices = null;
+    $TIinvoices2 = null;
+    if ($date == '') {
+        $TIinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'sales bill')
+            ->get()->pluck('id')->toArray();
+        $TIinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)
+            ->where('type', '=', 'Purchases bill')->get()->pluck('id')->toArray();
+    } else {
+        $TIinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'sales bill')
+            ->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+        $TIinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)
+            ->where('type', '=', 'Purchases bill')->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+    }
+    $total = 0.0;
+    $products = Products::whereIn('invoices_id', array_merge($TIinvoices2, $TIinvoices))->get();
+    foreach ($products as $product) {
+
+        $total += $product->Taxable_amount;
+    }
+    return $total;
+}
+function Paid($date = '')
+{
+    $TRinvoices = null;
+    $TRinvoices2 = null;
+    if ($date == '') {
+        $TRinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'Purchases bill')
+            ->get()->pluck('id')->toArray();
+        $TRinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)
+            ->where('type', '=', 'sales bill')->get()->pluck('id')->toArray();
+    } else {
+        $TRinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'Purchases bill')
+            ->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+        $TRinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)
+            ->where('type', '=', 'sales bill')->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+    }
+    $total = 0.0;
+    $products = Products::whereIn('invoices_id', array_merge($TRinvoices2, $TRinvoices))->get();
+
+    foreach ($products as $product) {
+
+        $total += $product->Taxable_amount;
+    }
+    return $total;
+}
+function UnPaid($date = '')
+{
+    $TRinvoices = null;
+    $TRinvoices2 = null;
+    if ($date == '') {
+        $TRinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'Purchases bill')->where('status', '=', 'un paid')
+            ->get()->pluck('id')->toArray();
+        $TRinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)->where('status', '=', 'un paid')
+            ->where('type', '=', 'sales bill')->get()->pluck('id')->toArray();
+    } else {
+        $TRinvoices = invoice::where('user_id', '=', get_current_user_id())->where('type', '=', 'Purchases bill')->where('status', '=', 'un paid')
+            ->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+        $TRinvoices2 = invoice::where('TaxNumber', '=', get_current_user_data()->TaxNumber)->where('status', '=', 'un paid')
+            ->whereBetween('invoice_date', [$date[0], $date[1]])->where('type', '=', 'sales bill')->whereBetween('invoice_date', [$date[0], $date[1]])->get()->pluck('id')->toArray();
+    }
+
+
+    $total = 0.0;
+    $products = Products::whereIn('invoices_id', array_merge($TRinvoices2, $TRinvoices))->get();
+
+    foreach ($products as $product) {
+
+        $total += $product->Taxable_amount;
+    }
+    return $total;
+}
+function getfileByName($name = '')
+{
+
+    return  File::where('model', '=', $name)->where('FK', '=', get_current_user_id())->first();
+}
 function updateEnv($key = 'APP_KEY', $key_value = '')
 {
     $path = base_path('.env');
@@ -694,7 +783,7 @@ function get_users_type()
 }
 function get_activity_id_by_user_type($id)
 {
-    return Activitie::where('type_id','=',$id)->get();
+    return Activitie::where('type_id', '=', $id)->get();
 }
 function get_users_type_by_id($id)
 {
@@ -707,7 +796,7 @@ function get_facility_type($id)
 }
 function get_facility_activity($id)
 {
-   
+
     return  Activitie::find($id);
 }
 function page_title($is_dashboard = false)

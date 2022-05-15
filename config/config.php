@@ -186,6 +186,32 @@ return [
         ],
         [
             'type' => 'parent',
+            'label' => awe_lang('DealsAndAuctions'),
+            'icon' => 'la-handshake',
+            'route_name' => 'DealsAuctions',
+            'id' => 'DealsAuctions',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('IssuedealsAuctions'),
+                    'route_name' => 'DealsAuctions',
+                    'active_class' => 'DealsAuctions/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('IncomingDealsAuctions'),
+                    'route_name' => 'DealsAuctions',
+                    'active_class' => 'DealsAuctions/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'parent',
             'label' => awe_lang('electronic contracts'),
             'icon' => 'la-file-contract',
             'route_name' => 'ElectronicContracts',
@@ -242,6 +268,33 @@ return [
 
             ]
         ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FinancialAnalysis'),
+            'icon' => 'la-chart-bar',
+            'route_name' => 'FinancialAnalysis',
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('CustomerList'),
+            'icon' => 'la-user-friends',
+            'route_name' => 'FacilityCustomers',
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FinanceRequest'),
+            'icon' => 'la-file-invoice-dollar',
+            'route_name' => 'SOON',
+            'soon' => true,
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('intermediaryRequest'),
+            'icon' => 'la-user-tie',
+            'route_name' => 'SOON',
+            'soon' => true,
+        ],
+       
         [
             'type' => 'parent',
             'label' => awe_lang('wallet'),
@@ -332,8 +385,20 @@ return [
             'icon' => 'la-cog',
             'route_name' => 'settings',
         ],
+        // [
+        //     'type' => 'item',
+        //     'label' => awe_lang('TechnicalSupport'),
+        //     'icon' => 'la-user-astronaut',
+        //     'route_name' => 'Disputes',
+        // ],
     ],
     'facility_menu' => [
+        [
+            'type' => 'item',
+            'label' => awe_lang('dashboard'),
+            'icon' => 'la-home',
+            'route_name' => 'dashboard',
+        ],
         [
             'type' => 'item',
             'label' => awe_lang('MyAccount'),
@@ -386,6 +451,32 @@ return [
                     'label' => awe_lang('Quotes received'),
                     'route_name' => 'Quotes',
                     'active_class' => 'Quotes/received',
+                    'parameter' => ['source' => 'received'],
+
+                ],
+
+            ],
+        ],
+        [
+            'type' => 'parent',
+            'label' => awe_lang('DealsAndAuctions'),
+            'icon' => 'la-handshake',
+            'route_name' => 'DealsAuctions',
+            'id' => 'DealsAuctions',
+            'child' =>
+            [
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('IssuedealsAuctions'),
+                    'route_name' => 'DealsAuctions',
+                    'active_class' => 'DealsAuctions/issued',
+                    'parameter' => ['source' => 'issued'],
+                ],
+                [
+                    'type' => 'item',
+                    'label' => awe_lang('IncomingDealsAuctions'),
+                    'route_name' => 'DealsAuctions',
+                    'active_class' => 'DealsAuctions/received',
                     'parameter' => ['source' => 'received'],
 
                 ],
@@ -465,6 +556,34 @@ return [
             ]
         ],
         [
+            'type' => 'item',
+            'label' => awe_lang('FinancialAnalysis'),
+            'icon' => 'la-chart-bar',
+            'route_name' => 'FinancialAnalysis',
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('CustomerList'),
+            'icon' => 'la-user-friends',
+            'route_name' => 'FacilityCustomers',
+            
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('FinanceRequest'),
+            'icon' => 'la-file-invoice-dollar',
+            'route_name' => 'SOON',
+            'soon' => true,
+        ],
+        [
+            'type' => 'item',
+            'label' => awe_lang('intermediaryRequest'),
+            'icon' => 'la-user-tie',
+            'route_name' => 'SOON',
+            'soon' => true,
+        ],
+       
+        [
             'type' => 'parent',
             'label' => awe_lang('wallet'),
             'icon' => 'la-wallet',
@@ -503,12 +622,18 @@ return [
             'icon' => 'la-gavel',
             'route_name' => "Disputes",
 
-        ]
+        ],
+        // [
+        //     'type' => 'item',
+        //     'label' => awe_lang('TechnicalSupport'),
+        //     'icon' => 'la-user-astronaut',
+        //     'route_name' => 'Disputes',
+        // ],
     ],
     'customer_menu' => [
         [
             'type' => 'item',
-            'label' => awe_lang('MyAccount'),
+            'label' => awe_lang('myProfile'),
             'icon' => 'la-user',
             'route_name' => 'profile',
 
@@ -598,7 +723,13 @@ return [
             'icon' => 'la-gavel',
             'route_name' => "Disputes",
 
-        ]
+        ],
+        // [
+        //     'type' => 'item',
+        //     'label' => awe_lang('TechnicalSupport'),
+        //     'icon' => 'la-user-astronaut',
+        //     'route_name' => 'Disputes',
+        // ],
 
     ],
 

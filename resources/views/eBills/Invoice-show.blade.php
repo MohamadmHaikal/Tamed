@@ -110,8 +110,11 @@
                                                             $qrContent = einv_generate_tlv_qr_code([$author->name, $author->TaxNumber, $invoice->created_at, $Ttotal['total'], $Ttotal['tax_amount']]);
                                                             
                                                             ?>
-                                                            <div class="col-sm-4 col-12 align-self-center text-sm-center">
+                                                            <div
+                                                                class="col-sm-4 col-12 align-self-center text-sm-center mb-2">
                                                                 {!! QrCode::size(150)->generate($qrContent) !!}
+                                                                <h6 class="mt-2">
+                                                                    {{ __('backend.' . $invoice->type) }}</h6>
                                                             </div>
                                                             <div class="col-sm-4 col-12 align-self-center text-sm-right">
                                                                 <div class="">
@@ -124,7 +127,7 @@
 
                                                             <div class="col-sm-3"
                                                                 style="border: 2px solid #dae1e7; margin-left: 3px;">
-                                                                {{ __('backend.Bill No') }} : {{ $invoice->id }}</div>
+                                                                {{ __('backend.Bill No') }} : {{ pad($invoice->id, 6) }}</div>
                                                             <div class="col-sm-3"
                                                                 style="border: 2px solid #dae1e7 ; margin-left: 5px;">
                                                                 {{ __('backend.Date') }} :
@@ -137,15 +140,32 @@
                                                         </div>
 
                                                         <div class="row mt-2">
-                                                            <div class="col-sm-2 pt-1 pb-1"
-                                                                style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
-                                                                {{ __('backend.customer name') }}</div>
-                                                            <div class="col-sm-6"
-                                                                style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
-                                                                {{ $invoice->customer_name }}
-                                                            </div>
-
+                                                            @if ($invoice->invice_type != 'simplified tax invoice')
+                                                                <div class="col-sm-2 pt-1 pb-1"
+                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                    {{ __('backend.customer name') }} </div>
+                                                                <div class="col-sm-4"
+                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                    {{ $invoice->customer_name }}
+                                                                </div>
+                                                                <div class="col-sm-2 pt-1 pb-1"
+                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
+                                                                    {{ __('backend.Invoice type') }}</div>
+                                                                <div class="col-sm-3"
+                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                    {{ __('backend.' .$invoice->invice_type) }}
+                                                                </div>
+                                                            @else
+                                                                <div class="col-sm-3 pt-1 pb-1"
+                                                                    style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 5px;">
+                                                                    {{ __('backend.Invoice type') }}</div>
+                                                                <div class="col-sm-8"
+                                                                    style="border: 2px solid #dae1e7  ;   margin-left: 3px;">
+                                                                    {{ __('backend.' . $invoice->invice_type) }}
+                                                                </div>
+                                                            @endif
                                                         </div>
+                                                        @if ($invoice->invice_type != 'simplified tax invoice')
                                                         <div class="row mt-2">
                                                             <div class="col-sm-2 pt-1 pb-1"
                                                                 style="border: 2px solid #dae1e7; background-color: #cfe9f2;    margin-left: 3px;">
@@ -188,6 +208,7 @@
                                                                 {{ $invoice->email }}
                                                             </div>
                                                         </div>
+                                                        @endif
                                                         <div class="row inv--product-table-section"
                                                             style="margin-top: 10px; margin-bottom: 0px;">
                                                             <div class="col-12" style="padding-right: 0px;">
@@ -211,16 +232,19 @@
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
                                                                                     {{ __('backend.Discount') }}</th>
-                                                                                <th class="text-center" scope="col"
-                                                                                    style="    padding: 0.5rem;">
-                                                                                    {{ __('backend.Amount subject to value added tax') }}
-                                                                                </th>
-                                                                                <th class="text-center" scope="col"
-                                                                                    style="    padding: 0.5rem;">
-                                                                                    {{ __('backend.VAT rate') }}</th>
-                                                                                <th class="text-center" scope="col"
-                                                                                    style="    padding: 0.5rem;">
-                                                                                    {{ __('backend.VAT amount') }}</th>
+                                                                                @if ($invoice->invice_type != 'simplified tax invoice')
+                                                                                    <th class="text-center" scope="col"
+                                                                                        style="    padding: 0.5rem;">
+                                                                                        {{ __('backend.Amount subject to value added tax') }}
+                                                                                    </th>
+                                                                                    <th class="text-center" scope="col"
+                                                                                        style="    padding: 0.5rem;">
+                                                                                        {{ __('backend.VAT rate') }}</th>
+                                                                                    <th class="text-center" scope="col"
+                                                                                        style="    padding: 0.5rem;">
+                                                                                        {{ __('backend.VAT amount') }}
+                                                                                    </th>
+                                                                                @endif
                                                                                 <th class="text-center" scope="col"
                                                                                     style="    padding: 0.5rem;">
                                                                                     {{ __('backend.The total includes value added tax') }}
@@ -244,15 +268,17 @@
                                                                                     <td class="text-left">
                                                                                         {{ number_format($product->discount, 2, '.', ',') }}{{ $product->discount_type == 1 ? __('backend.Rial') : '%' }}
                                                                                     </td>
-                                                                                    <td class="text-left">
-                                                                                        {{ number_format($product->Taxable_amount, 2, '.', ',') }}
-                                                                                    </td>
-                                                                                    <td class="text-left">
-                                                                                        %{{ number_format($product->tax_rate, 2, '.', ',') }}
-                                                                                    </td>
-                                                                                    <td class="text-left">
-                                                                                        {{ number_format($product->tax_amount, 2, '.', ',') }}
-                                                                                    </td>
+                                                                                    @if ($invoice->invice_type != 'simplified tax invoice')
+                                                                                        <td class="text-left">
+                                                                                            {{ number_format($product->Taxable_amount, 2, '.', ',') }}
+                                                                                        </td>
+                                                                                        <td class="text-left">
+                                                                                            %{{ number_format($product->tax_rate, 2, '.', ',') }}
+                                                                                        </td>
+                                                                                        <td class="text-left">
+                                                                                            {{ number_format($product->tax_amount, 2, '.', ',') }}
+                                                                                        </td>
+                                                                                    @endif
                                                                                     <td class="text-left">
                                                                                         {{ number_format($product->total, 2, '.', ',') }}
                                                                                     </td>
@@ -265,7 +291,7 @@
                                                         </div>
                                                         <div class="row inv--product-table-section"
                                                             style="margin-top: 10px;
-                                                                                                                margin-bottom: 0px;">
+                                                                                                                                        margin-bottom: 0px;">
                                                             <div class="col-12" style="padding-right: 0px;">
                                                                 <div class="table-responsive">
                                                                     <table class="table">
@@ -391,12 +417,12 @@
 
                                                                                 <img src="{{ url("/image/$author->Signature") }}"
                                                                                     style="width: 17%;
-                                                                                        background-position: center;
-                                                                                        position: absolute;
-                                                                                        top: -94px;
-                                                                                        right: 746px;
-                                                                                        background-size: cover;
-                                                                                        z-index: 1;">
+                                                                                                                background-position: center;
+                                                                                                                position: absolute;
+                                                                                                                top: -94px;
+                                                                                                                right: 746px;
+                                                                                                                background-size: cover;
+                                                                                                                z-index: 1;">
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>

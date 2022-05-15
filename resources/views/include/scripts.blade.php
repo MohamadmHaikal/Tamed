@@ -116,6 +116,18 @@
         Hours: "{{ __('backend.Hours') }}",
         Days: "{{ __('backend.Days') }}",
         Atleast: "{{ __('backend.At least one bank must be selected') }}",
+        Clickimage: "{{ __('backend.Click here to download or drop the image') }}",
+        verification: "{{ __('backend.verification') }}",
+        Customerrequired: "{{ __('backend.Customer name is required') }}",
+        customername: "{{ __('backend.customer name') }}",
+        address: "{{ __('backend.address') }}",
+        Addressrequired: " {{ __('backend.Address is required') }}",
+        TaxNumber: "{{ __('backend.Tax Number') }}",
+        Taxrequired: "{{ __('backend.Tax number is required') }}",
+        Responsiblerequired: "{{ __('backend.Responsible Name Required') }}",
+        Mobilerequired: "{{ __('backend.Mobile number is required') }}",
+        Emailrequired: "{{ __('backend.Email is required') }}",
+        ThecompanyRevenue: "{{ __('backend.The company revenue') }}",
     };
 </script>
 <!-- Stack array for including inline js or scripts -->

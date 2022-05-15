@@ -65,6 +65,28 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group"><label
+                                                        for="degree2">{{ __('backend.Invoice type') }}</label>
+                                                    <select id="invice_type" name="invice_type" onchange="myFunction()"
+                                                        class="form-control mb-4">
+                                                        <option value="Tax bill">{{ __('backend.Tax bill') }}</option>
+                                                        <option value="simplified tax invoice">
+                                                            {{ __('backend.simplified tax invoice') }}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label
+                                                        for="degree2">{{ __('backend.purchases or sales') }}</label>
+                                                    <select name="type" class="form-control mb-4">
+                                                        <option value="sales bill">{{ __('backend.sales bill') }}
+                                                        </option>
+                                                        <option value="Purchases bill">{{ __('backend.Purchases bill') }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group"><label
                                                         for="degree2">{{ __('backend.Invoice date') }}</label><input
                                                         type="date" name="Invoice_date" class="form-control "
                                                         aria-describedby="inputGroupPrepend" required>
@@ -83,81 +105,82 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                          
                                         </div>
                                         <hr class="rounded" style=" border-top: 2.5px solid #e5eaff; ">
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.customer name') }}</label><input
-                                                        type="text" name="customer_name" class="form-control "
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Customer name is required') }}
+                                        <div class="clientInfo">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.customer name') }}</label><input
+                                                            type="text" name="customer_name" class="form-control "
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Customer name is required') }}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.address') }}</label><input
-                                                        type="text" name="address" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Address is required') }}
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.address') }}</label><input
+                                                            type="text" name="address" class="form-control"
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Address is required') }}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.Tax Number') }}</label><input
+                                                            type="text" name="Tax_Number" class="form-control"
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Tax number is required') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.responsible') }}</label><input
+                                                            type="text" name="responsible" class="form-control "
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Responsible Name Required') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.phone') }}</label><input
+                                                            type="text" name="phone" class="form-control"
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Mobile number is required') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label
+                                                            for="degree2">{{ __('backend.email') }}</label><input
+                                                            type="text" name="email" class="form-control"
+                                                            aria-describedby="inputGroupPrepend" required>
+                                                        <div class="invalid-feedback">
+                                                            {{ __('backend.Email is required') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <hr class="rounded" style=" border-top: 2.5px solid #e5eaff;">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.Tax Number') }}</label><input
-                                                        type="text" name="Tax_Number" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Tax number is required') }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.responsible') }}</label><input
-                                                        type="text" name="responsible" class="form-control "
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Responsible Name Required') }}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.phone') }}</label><input type="text"
-                                                        name="phone" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Mobile number is required') }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group"><label
-                                                        for="degree2">{{ __('backend.email') }}</label><input type="text"
-                                                        name="email" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" required>
-                                                    <div class="invalid-feedback">
-                                                        {{ __('backend.Email is required') }}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <hr class="rounded" style=" border-top: 2.5px solid #e5eaff;">
-
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group"><label
@@ -363,5 +386,45 @@
                     }, false)
                 })
         })()
+    </script>
+@endpush
+@push('custom-scripts')
+    <script>
+        function myFunction() {
+            var x = document.getElementById("invice_type").value;
+            if (x == "simplified tax invoice") {
+                $('.clientInfo').html("");
+
+            } else {
+                $('.clientInfo').append(
+                    '<div class="row"><div class="col-md-6"> <div class="form-group"><label  for="degree2">' + window
+                    .translation.customername +
+                    '</label><input  type="text" name="customer_name" class="form-control " aria-describedby="inputGroupPrepend" required>  <div class="invalid-feedback"> ' +
+                    window.translation.Customerrequired +
+                    ' </div>  </div> </div> <div class="col-md-6"> <div class="form-group"><label for="degree2">' +
+                    window.translation.address +
+                    '</label><input type="text" name="address" class="form-control"  aria-describedby="inputGroupPrepend" required> <div class="invalid-feedback">' +
+                    window.translation.Addressrequired +
+                    ' </div> </div> </div> </div><div class="row"><div class="col-md-6">  <div class="form-group"><label  for="degree2">' +
+                    window.translation.TaxNumber +
+                    '</label><input type="text" name="Tax_Number" class="form-control" aria-describedby="inputGroupPrepend" required>  <div class="invalid-feedback">  ' +
+                    window.translation.Taxrequired +
+                    ' </div> </div></div> <div class="col-md-6"><div class="form-group"><label for="degree2">' + window
+                    .translation.responsible +
+                    '</label><input type="text" name="responsible" class="form-control " aria-describedby="inputGroupPrepend" required> <div class="invalid-feedback">  ' +
+                    window.translation.Responsiblerequired +
+                    ' </div> </div></div></div>  <div class="row"> <div class="col-md-6"> <div class="form-group"><label for="degree2">' +
+                    window.translation.phone +
+                    '</label><input type="text" name="phone" class="form-control" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback"> ' +
+                    window.translation.Mobilerequired +
+                    '</div> </div> </div><div class="col-md-6"> <div class="form-group"><label for="degree2">' + window
+                    .translation.email +
+                    '</label><input  type="text" name="email" class="form-control" aria-describedby="inputGroupPrepend" required> <div class="invalid-feedback">' +
+                    window.translation.Emailrequired +
+                    '</div> </div> </div> </div>  <hr class="rounded" style=" border-top: 2.5px solid #e5eaff;">');
+
+
+            }
+        }
     </script>
 @endpush

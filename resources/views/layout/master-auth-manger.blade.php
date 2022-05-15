@@ -8,7 +8,7 @@
 
 </head>
 
-<body class="{{ 'lightmode' . 'mode' }}" data-base-url="{{ url('/') }}">
+<body class="{{ $theme . 'mode' }}" data-base-url="{{ url('/') }}">
     <?php
     $enable_lazyload = get_option('enable_lazyload', 'off');
     $currentRoute = request()

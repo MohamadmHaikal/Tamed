@@ -113,6 +113,8 @@ class eBillsController extends Controller
             'supply_date' => $request->date_supply,
             'customer_name' => $request->customer_name,
             'address' => $request->address,
+            'invice_type' => $request->invice_type,
+            'type' => $request->type,
             'TaxNumber' => $request->Tax_Number,
             'responsible' => $request->responsible,
             'phone' => $request->phone,
@@ -147,7 +149,7 @@ class eBillsController extends Controller
             }
         }
         if ($request->route('id') != null) {
-            return redirect()->route('ElectronicContracts');
+            return redirect()->route('ElectronicContracts', ['source' => 'issued']);
         }
         return redirect()->route('eBills');
     }
@@ -200,13 +202,34 @@ class eBillsController extends Controller
     {
         //
     }
-
+    public function _search(Request $request)
+    {
+        $date = explode(" إلى ", $request->date);
+       
+        $invoices = invoice::where('user_id', '=', get_current_user_id())->orWhere('TaxNumber', '=', get_current_user_data()->TaxNumber)->get();
+        $invoices = $invoices->whereBetween('invoice_date', [$date[0], $date[1]]);
+        $date = subscription::where('user_id', '=', get_current_user_id())->first();
+        if ($date != null) {
+            $date = $date->end_date;
+        }
+        if ($date == null || strtotime("now") > strtotime($date)) {
+            return view('eBills.Invoice-dashboard', compact('invoices', 'date'));
+        }
+        return view('eBills.index', compact('invoices', 'date'));
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
+    public function _changeStatus($status,$id)
+    {
+      $invoice=invoice::find($id);
+      $invoice->status=$status;
+      $invoice->save();
+      return redirect()->back();
+    }
     public function destroy($id)
     {
         //

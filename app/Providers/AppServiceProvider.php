@@ -40,5 +40,13 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('theme', $theme);
         });
+        view()->composer('layout.master-auth-manger', function($view) {
+            $theme = \Cookie::get('theme');
+            if ($theme == 'darkmode') {
+                $theme = 'dark';
+            }
+
+            $view->with('theme', $theme);
+        });
     }
 }

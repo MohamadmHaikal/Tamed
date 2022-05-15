@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Hash;
 use Sentinel;
 
 class AuthController extends Controller
@@ -13,11 +16,49 @@ class AuthController extends Controller
 
     public function _getLogin()
     {
-        return view('dashboard.login');
+        return view('dashboard.IndividualAuth.login');
     }
-    public function _getRegister()
-    { 
-        return view('dashboard.register');
+    public function Login()
+    {
+        return view('dashboard.loginSwitch');
+    }
+
+    public function _getSignUp()
+    {
+        return view('dashboard.IndividualAuth.sign-up');
+    }
+    public function _getResetPassword()
+    {
+        return view('dashboard.IndividualAuth.reset-password');
+    }
+    public function checkCardToReset(Request $request)
+    {
+        $user = User::where('IdCard', '=', $request->IdCard)->first();
+        $code = mt_rand(1000, 9999);
+        if (empty($user)) {
+            return $this->sendJson([
+                'status' => 0,
+                'message' => view('common.alert', ['type' => 'danger', 'message' => 'الرقم المدخل غير موجود'])->render()
+            ]);
+        }
+        $code = mt_rand(1000, 9999);
+        $user['v-code'] = $code;
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'mobile' => $user['phone'],
+            'message' => view('common.alert', ['type' => 'success', 'message' => 'تم إرسال كود التحقق بنجاح'])->render()
+        ]);
+    }
+    public function _getPostResetPassword(Request $request)
+    {
+        $user = User::where('IdCard', '=', $request->IdCard)->first();
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('common.alert', ['type' => 'success', 'message' => 'تم تعيين كلمة المرور بنجاح'])->render()
+        ]);
     }
     public function checkMobileUser(Request $request)
     {
@@ -40,73 +81,55 @@ class AuthController extends Controller
                 'message' => view('common.alert', ['type' => 'danger', 'message' => $validator->errors()->first()])->render()
             ]);
         }
-        $user = get_user_by_mobile($input['mobile']);
+        $user = User::where('IdCard', '=', $input['mobile'])->first();
+
+        if (is_Facility($user->id)) {
+            return $this->sendJson([
+                'status' => 0,
+                'message' => view('common.alert', ['type' => 'danger', 'message' => 'رقم الهوية / الاقامة المدخل غير مسجل بتعميد افراد'])->render()
+            ]);
+        }
         $code = mt_rand(1000, 9999);
         if (!empty($user)) {
-
-            $users = User::find($user['id']);
-            $users['v-code'] = $code;
-            $users['password'] = bcrypt($code);
-            $users->save();
+            if (Hash::check($input['password'], $user->password)) {
+                $users = User::find($user['id']);
+                $users['v-code'] = $code;
+                $users->save();
+            } else {
+                return $this->sendJson([
+                    'status' => 0,
+                    'message' => view('common.alert', ['type' => 'danger', 'message' => 'كلمة المرور المدخلة غير صحيحة'])->render()
+                ]);
+            }
         } else {
-            $credentials = [
-                'phone'    => $input['mobile'],
-                'password' => \Illuminate\Support\Str::random(12),
-            ];
-            $user = Sentinel::registerAndActivate($credentials);
-            $user_model = new \App\Models\User();
-            $role = $user_model->getRoleByName('customer');
-            $user_model->updateUserRole($user->getUserId(), $role->id);
-            $users = User::find($user['id']);
-            $users['v-code'] = $code;
-            $users['password'] = bcrypt($code);
-            $users->save();
+            return $this->sendJson([
+                'status' => 0,
+                'message' => view('common.alert', ['type' => 'danger', 'message' => 'الرقم المدخل غير موجود'])->render()
+            ]);
         }
         return $this->sendJson([
             'status' => 1,
-            'mobile' => $input['mobile'],
+            'mobile' => $user['phone'],
             'message' => view('common.alert', ['type' => 'success', 'message' => 'تم إرسال كود التحقق بنجاح'])->render()
         ]);
     }
-    public function _postLogin(Request $request)
+    public function CheckCode(Request $request)
     {
-        $input = request()->only('mobile', 'code');
-        $redirect = url('/auth/login');
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'code' => 'required|numeric'
-            ],
-            [
-                'code.required' => __('backend.Please enter the code to continue'),
-
-            ]
-        );
-        if ($validator->fails()) {
+        $input = request()->only('IdCard', 'code');
+        if (!$input['code']) {
 
             return $this->sendJson([
                 'status' => 0,
-                'message' => view('common.alert', ['type' => 'danger', 'message' => $validator->errors()->first()])->render()
+                'message' => view('common.alert', ['type' => 'danger', 'message' => __('كود التحقق مطلوب')])->render()
             ]);
         }
-        $credentials = [
-            'phone'    => $input['mobile'],
-            'password' => $input['code'],
-        ];
+        $user = User::where('IdCard', '=', $input['IdCard'])->first();
 
-        try {
-            Sentinel::authenticate($credentials, true);
-        } catch (ThrottlingException $e) {
-            return $this->sendJson([
-                'status' => 0,
-                'message' => view('common.alert', ['type' => 'danger', 'message' => __('backend.Your account has been suspended due to 5 failed attempts. Try again after 15 minutes.')])->render()
-            ]);
-        }
-        if (Sentinel::check()) {
+        if ($user['v-code'] == $input['code']) {
             return $this->sendJson([
                 'status' => 1,
-                'message' => view('common.alert', ['type' => 'success', 'message' => __('backend....Logged in successfully. Redirecting')])->render(),
-                'redirect' => $redirect
+                'user' => $user['id'],
+                'message' => view('common.alert', ['type' => 'success', 'message' => __('backend....Logged in successfully. Redirecting')])->render()
             ]);
         } else {
             return $this->sendJson([
@@ -115,6 +138,52 @@ class AuthController extends Controller
             ]);
         }
     }
+    public function _getPostSignUp(Request $request)
+    {
+        $user = User::where('IdCard', '=', $request->IdCard)->orWhere('phone', $request->mobile)->first();
+        if ($user != null) {
+            if ($user->IdCard == $request->IdCard) {
+                return $this->sendJson([
+                    'status' => 0,
+                    'message' => view('common.alert', ['type' => 'danger', 'message' => __('رقم الهوية/الاقامة المدخل موجود بالفعل')])->render()
+                ]);
+            } else {
+                return $this->sendJson([
+                    'status' => 0,
+                    'message' => view('common.alert', ['type' => 'danger', 'message' => __('رقم الجوال المدخل موجود بالفعل')])->render()
+                ]);
+            }
+        }
+        $code = mt_rand(1000, 9999);
+        $user = new User;
+        $user->IdCard = $request->IdCard;
+        $user->phone = $request->mobile;
+        $user->name = $request->name;
+        $user->password = bcrypt($request->password);
+        $user['v-code'] = $code;
+        $user->save();
+        $user = Sentinel::findById($user->id);
+        $activation = Activation::create($user);
+        $role = Sentinel::findRoleByName('Customer');
+        $role->users()->attach($user);
+        return $this->sendJson([
+            'status' => 1,
+            'mobile' => $user['phone'],
+            'message' => view('common.alert', ['type' => 'success', 'message' => 'تم إرسال كود التحقق بنجاح'])->render()
+        ]);
+    }
+    public function _postLogin(Request $request)
+    {
+        try {
+            $user = Sentinel::findById($request['id']);
+            Sentinel::login($user);
+        } catch (ThrottlingException $e) {
+        }
+        return $this->sendJson([
+            'status' => 1,
+            'message' => view('common.alert', ['type' => 'success', 'message' => __('backend....Logged in successfully. Redirecting')])->render()
+        ]);
+    }
     public function _getLogout(Request $request)
     {
         $redirect_url = request()->get('redirect_url');
@@ -122,7 +191,10 @@ class AuthController extends Controller
         Sentinel::logout();
 
         if (empty($redirect_url)) {
-            $redirect_url = url('auth/login');
+            $redirect_url = url('/login');
+        }
+        if (Auth::guard('mangers')->user()) {
+            $redirect_url = url('Business/login');
         }
         return redirect($redirect_url);
     }

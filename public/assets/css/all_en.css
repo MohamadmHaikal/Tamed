@@ -48,6 +48,17 @@ html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
 }
+.soon{
+    position: absolute;
+    top: -3px;
+    right: 20px;
+    font-size: 11px;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #0298a7;
+    color: white;
+}
+
 
 article,
 aside,
@@ -5039,7 +5050,8 @@ input[type=submit].btn-block {
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
-    border-radius: .25rem
+    border-radius: .25rem;
+    box-shadow: 1px 5px 12px 0px #ada8a8;
 }
 
 .card>hr {
@@ -13844,7 +13856,24 @@ h6 {
     width: 85%;
 
 }
+.Accepted {
 
+    color: #8dbf42;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #8dbf42;
+    width: 85%;
+
+}
+.rejected {
+
+    color: #e7515a;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #e7515a;
+    width: 85%;
+
+}
 .retrieved {
 
     color: #009688;

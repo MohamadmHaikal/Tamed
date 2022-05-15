@@ -6,6 +6,11 @@
     {!! Html::style('plugins/notification/snackbar/snackbar.min.css') !!}
     {!! Html::style('assets/css/ui-elements/buttons.css') !!}
     {!! Html::style('assets/css/basic-ui/custom_countdown.css') !!}
+    {!! Html::style('plugins/apex/apexcharts.css') !!}
+    {!! Html::style('assets/css/dashboard/dashboard_2.css') !!}
+    {!! Html::style('plugins/flatpickr/flatpickr.css') !!}
+    {!! Html::style('plugins/flatpickr/custom-flatpickr.css') !!}
+    {!! Html::style('assets/css/elements/tooltip.css') !!}
 @endpush
 
 @section('content')
@@ -58,94 +63,133 @@
                                                 <div class="">
 
                                                     <div class="widget-content" style="padding: 0px;">
-                                                        <p  class="countdown-subs" >{{__('backend.Remaining to subscribe')}}</p>
+                                                        <p class="countdown-subs">
+                                                            {{ __('backend.Remaining to subscribe') }}
+                                                        </p>
                                                         <div id="nocolor" class="square-countdown no-color"
                                                             style="justify-content: end;">
                                                             <div class="days" style="margin-right: 4px"><span
-                                                                    class="count"
-                                                                    style="width: auto; height: 43px;font-size: 15px;">00</span>
-                                                                <span class="text"
-                                                                    style="margin-top:0px">{{ __('backend.Days') }}</span>
-                                                            </div>
-                                                            <div class="hours" style="margin-right: 4px"><span
-                                                                    class="count"
-                                                                    style="width: auto; height: 43px;font-size: 15px;">00</span>
-                                                                <span class="text"
-                                                                    style="margin-top:0px">{{ __('backend.Hours') }}</span>
-                                                            </div>
-                                                            <div class="min" style="margin-right: 4px"><span
-                                                                    class="count"
-                                                                    style="width: auto;height: 43px;font-size: 15px;">00</span>
-                                                                <span class="text"
-                                                                    style="margin-top:0px">{{ __('backend.Mins') }}</span>
-                                                            </div>
-                                                            <div class="sec" style="margin-right: 4px"><span
-                                                                    class="count"
-                                                                    style="width: auto; height: 43px; font-size: 15px;">00</span>
-                                                                <span class="text"
-                                                                    style="margin-top:0px">{{ __('backend.Secs') }}</span>
+                                                                    class="count">00</span>
+
                                                             </div>
 
                                                         </div>
-                                                        
+
                                                     </div>
 
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="table-responsive mb-4">
+                                    <div class="widget-content widget-content-area text-center" style="padding: 0px">
+                                        <div class="button-list mb-3" style="margin-right:35%;">
+                                            <div class="col-md-6">
+                                                <div class="input-group input-group-sm">
+                                                    <form action="{{ route('eBills.search') }}" method="GET">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col-md-10"> <input id="rangeCalendarFlatpickr"
+                                                                    class="form-control flatpickr flatpickr-input active"
+                                                                    type="text" name="date" value="{{ request()->date }}"
+                                                                    placeholder="{{ __('backend.Select a date to search for invoices') }}">
+                                                            </div>
+                                                            <div class="col-md-2 mt-1">
+                                                                <button type="submit"
+                                                                    data-original-title="{{ __('backend.Search') }}"
+                                                                    data-placement="bottom"
+                                                                    class="btn btn-primary dash-btn btn-sm ml-2 bs-tooltip">
+                                                                    <i class="las la-search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div class="table-responsive mb-4">
-                                        <div class="widget-content widget-content-area text-center">
-                                            <div class="button-list">
-                                                <a href="{{ route('eBills') }}">
-                                                    <button type="button"
-                                                        class="btn btn-primary btn-rounded">{{ __('backend.all Invoices') }}</button></a>
-                                                <a href="{{ route('eBills', ['source' => 'issued']) }}">
-                                                    <button type="button"
-                                                        class="btn btn-info btn-rounded">{{ __('backend.Invoices issued') }}</button>
-                                                </a>
-                                                <a href="{{ route('eBills', ['source' => 'received']) }}">
-                                                    <button type="button"
-                                                        class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
-                                                </a>
-                                                <a href="{{ route('eBills.create') }}"><button type="button"
-                                                        class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
-                                                </a>
-                                                <input id="date" value="{{$date}}" hidden>
-                                            </div>
+                                        <div class="button-list">
+                                            <a href="{{ route('eBills') }}">
+                                                <button type="button"
+                                                    class="btn btn-primary btn-rounded">{{ __('backend.all Invoices') }}</button></a>
+                                            <a href="{{ route('eBills', ['source' => 'issued']) }}">
+                                                <button type="button"
+                                                    class="btn btn-info btn-rounded">{{ __('backend.Invoices issued') }}</button>
+                                            </a>
+                                            <a href="{{ route('eBills', ['source' => 'received']) }}">
+                                                <button type="button"
+                                                    class="btn btn-warning btn-rounded">{{ __('backend.Invoices received') }}</button>
+                                            </a>
+                                            <a href="{{ route('eBills.create') }}"><button type="button"
+                                                    class="btn btn-success btn-rounded">{{ __('backend.add new') }}</button>
+                                            </a>
+                                            <input id="date" value="{{ $date }}" hidden>
                                         </div>
-                                        <table id="export-dt" class="table table-hover" style="width:100%">
-                                            <thead>
+                                    </div>
+                                    <table id="export-dt" class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ __('backend.invoice number') }}</th>
+                                                <th>{{ __('backend.customer name') }}</th>
+                                                <th>{{ __('backend.Tax Number') }}</th>
+                                                <th>{{ __('backend.Invoice type') }}</th>
+                                                <th>{{ __('backend.status') }}</th>
+                                                <th>{{ __('backend.Invoice date') }}</th>
+                                                <th class="no-content text-center" style="padding-right:0px;">
+                                                    {{ __('backend.Invoice details') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($invoices as $invoice)
                                                 <tr>
-                                                    <th>{{ __('backend.invoice number') }}</th>
-                                                    <th>{{ __('backend.customer name') }}</th>
-                                                    <th>{{ __('backend.responsible') }}</th>
-                                                    <th>{{ __('backend.Invoice date') }}</th>
-                                                    <th class="no-content text-center" style="padding-right:0px;">
-                                                        {{ __('backend.Invoice details') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($invoices as $invoice)
-                                                    <tr>
-                                                        <td>{{ $invoice->id }}</td>
-                                                        <td>{{ $invoice->customer_name }}</td>
-                                                        <td>{{ $invoice->responsible }}</td>
-                                                        <td>{{ date('Y-m-d', strtotime($invoice->invoice_date)) }}</td>
-                                                        <td class="text-center">
-                                                            <div class="dropdown custom-dropdown">
-                                                                <a class="text-primary"
-                                                                    href="{{ route('eBills.show', [$invoice->id]) }}">
+                                                    <td class="text-center">{{ pad($invoice->id, 6) }}</td>
+                                                    <td>{{ $invoice->customer_name }}</td>
+
+                                                    <td>{{ $invoice->TaxNumber }}</td>
+                                                    <td>{{ __('backend.' . $invoice->invice_type) }}</td>
+                                                    <td>{{ __('backend.' . $invoice->status) }}</td>
+                                                    <td>{{ date('Y-m-d', strtotime($invoice->invoice_date)) }}</td>
+                                                    <td class="text-center">
+                                                        <div class="dropdown custom-dropdown">
+                                                            <a class="dropdown-toggle font-20 text-primary" href="#"
+                                                                role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="las la-cog"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1"
+                                                                style="will-change: transform;">
+
+
+                                                                <a class="dropdown-item  text-primary show-contract"
+                                                                    href="{{ route('eBills.show', [$invoice->id]) }}"
+                                                                    role="button" aria-haspopup="true"
+                                                                    aria-expanded="false">
                                                                     {{ __('backend.Invoice details') }}
                                                                 </a>
+                                                                @if (get_current_user_id() == $invoice->user_id)
+                                                                    @if ($invoice->status == 'un paid')
+                                                                        <a class="dropdown-item  text-primary"
+                                                                            href="{{ route('eBills.status', ['status'=>'paid','id'=> $invoice->id]) }}">
+                                                                            {{ __('backend.paid') }}
+                                                                        </a>
+                                                                    @else
+                                                                        <a class="dropdown-item  text-primary"
+                                                                            href="{{ route('eBills.status', ['status'=>'un paid','id'=> $invoice->id]) }}">
+                                                                            {{ __('backend.Not paid') }}
+                                                                        </a>
+                                                                    @endif
+                                                                @endif
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -153,6 +197,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Main Body Ends -->
@@ -169,6 +214,9 @@
     <!-- The following JS library files are loaded to use PDF Options-->
     {!! Html::script('plugins/table/datatable/button-ext/pdfmake.min.js') !!}
     {!! Html::script('plugins/table/datatable/button-ext/vfs_fonts.js') !!}
+    {!! Html::script('plugins/apex/apexcharts.min.js') !!}
+    {!! Html::script('plugins/flatpickr/flatpickr.js') !!}
+    {!! Html::script('assets/js/dashboard/dashboard_2.js') !!}
 @endpush
 
 
@@ -182,7 +230,7 @@
     <script>
         (function($) {
             "use strict";
-           
+
             var date = document.getElementById("date").value;
             var countDownDate = new Date(date).getTime();
             var countdownfunction = setInterval(function() {
@@ -193,24 +241,9 @@
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 document.getElementById("nocolor").innerHTML =
-                    '<div class="days" style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
+                    '<div class="days" style="margin-right: 4px;"><span class="count" >' +
                     days +
-                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Days +
-                    '</span></div>' +
-                    '<div class="hours " style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
-                    hours +
-                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Hours +
-                    '</span></div>' +
-                    '<div class="min" style="margin-right: 4px"><span class="count" style="width: auto; height: 43px; font-size: 15px;">' +
-                    minutes +
-                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Mins +
-                    '</span></div>' +
-                    '<div class="sec" style="margin-right: 4px"><span class="count"style="width: auto; height: 43px; font-size: 15px;">' +
-                    seconds +
-                    '</span> <span class="text" style="margin-top:0px">' + window.translation.Secs +
-                    '</span></div>';
-
-
+                    '</span> </div>';
                 if (distance < 0) {
 
                     clearInterval(countdownfunction);

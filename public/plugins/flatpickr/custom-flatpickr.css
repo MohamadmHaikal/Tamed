@@ -41,20 +41,21 @@
     padding: 6px 8px 6px 5px;
     letter-spacing: 1px;
     font-weight: 700;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 .flatpickr-current-month input.cur-year {
     height: auto;
     color: #3b3f5c;
     font-size: 15px;
     padding: 7px 12px 5px;
+    padding-bottom: 7px;
     letter-spacing: 1px;
     font-weight: 700;
     border: 1px solid #e6e6e6;
-    border-left: 0px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-right: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 .flatpickr-months .flatpickr-month {
     height: 76px;

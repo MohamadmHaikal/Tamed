@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Sentinel;
 use Redirect;
@@ -15,12 +16,22 @@ class IsLoginMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $type='')
     {
-        if (Sentinel::check()) {
-            return Redirect::to('/');
+        if ($type != 'manger') {
+            if (Sentinel::check()) {
+                return Redirect::route('dashboard');
+            } else {
+                return $next($request);
+            }
         } else {
-            return $next($request);
+            if (Auth::guard('mangers')->user()) {
+               
+                return Redirect::route('Business.index');
+            } else {
+               
+                return $next($request);
+            }
         }
     }
 }

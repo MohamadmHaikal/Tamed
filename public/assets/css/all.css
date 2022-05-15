@@ -2193,7 +2193,18 @@ pre code {
 .table-hover .table-light:hover {
     background-color: #ececf6
 }
+.soon{
+    position: absolute;
+    top: -3px;
+    right: 20px;
+    font-size: 11px;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #0298a7;
+    color: white;
+}
 
+}
 .table-hover .table-light:hover>td,
 .table-hover .table-light:hover>th {
     background-color: #ececf6
@@ -2904,11 +2915,11 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #2f44b2 !important;
-    background: linear-gradient(to right, #7988d1 0%, #2f44b2 100%);
+    background-color: #0298a7 !important;
+    background: #0298a7;
     box-shadow: 0px 5px 20px 0 rgb(0 0 0 / 10%);
     border-radius: 1.875rem !important;
-    border-color: #007bff
+    border-color: #0298a7
 }
 
 .btn-primary:hover {
@@ -5253,7 +5264,8 @@ input[type=submit].btn-block {
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
-    border-radius: .25rem
+    border-radius: .25rem;
+    box-shadow: 1px 5px 12px 0px #cccaca;
 }
 
 .card>hr {
@@ -11231,7 +11243,7 @@ button.bg-dark:hover {
 }
 
 .text-primary {
-    color: #007bff !important
+    color: #027496 !important
 }
 
 a.text-primary:focus,
@@ -11491,7 +11503,24 @@ h6 {
     width: 85%;
 
 }
+.Accepted {
 
+    color: #8dbf42;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #8dbf42;
+    width: 85%;
+
+}
+.rejected {
+
+    color: #e7515a;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #e7515a;
+    width: 85%;
+
+}
 .retrieved {
 
     color: #009688;
@@ -12379,8 +12408,8 @@ select.form-control.form-custom {
 
 .btn-primary {
     color: #fff !important;
-    background-color: #2f44b2 !important;
-    border-color: #2f44b2;
+    background-color: #0298a7 !important;
+    border-color: #0298a7;
 }
 
 .btn-soft-primary {
@@ -12393,22 +12422,22 @@ select.form-control.form-custom {
 .btn-primary:hover,
 .btn-primary:focus {
     color: #fff !important;
-    background-color: #2f44b2;
+    background-color: #0298a7;
     box-shadow: none;
-    border-color: #2f44b2;
+    border-color: #0298a7;
 }
 
 .btn-primary:active,
 .btn-primary.active {
-    background-color: #2f44b2;
-    border-top: 1px solid #2f44b2
+    background-color: #0298a7;
+    border-top: 1px solid #0298a7
 }
 
 .btn-primary.disabled,
 .btn-primary.btn[disabled],
 .btn-primary:disabled {
-    background-color: #2f44b2;
-    border-color: #2f44b2;
+    background-color: #0298a7;
+    border-color: #0298a7;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none
@@ -14330,7 +14359,7 @@ table .badge-dark {
 /* Text-colors */
 
 .text-primary {
-    color: #2f44b2 !important;
+    color: #027496 !important;
 }
 
 .text-success {
@@ -14466,7 +14495,7 @@ table .badge-dark {
 
 .bg-gradient-secondary {
     background-color: #2f44b2 !important;
-    background-image: linear-gradient(to right, #7579ff 0%, #b224ef 100%) !important;
+    background-image: linear-gradient(to right, #7579ff 0%, #027496 100%) !important;
     border: 0px;
 }
 

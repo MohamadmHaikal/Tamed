@@ -46,7 +46,7 @@ return array (
   'invalidPhoneNumber' => 'رقم الهاتف خاطئ',
   'latestNews' => 'جديد الأخبار',
   'locationMap' => 'خريطة الموقع',
-  'login' => 'دخول',
+  'login' => 'تسجيل الدخول',
   'logout' => 'خروج',
   'mPrice' => 'سعر المتر',
   'message' => 'تفاصيل الرسالة',

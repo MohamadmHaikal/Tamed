@@ -118,8 +118,11 @@ $menu_dashboard = get_menu_dashboard();
             @if ($menu['type'] != 'parent')
                 @if (!isset($menu['parameter']))
                     <li class="menu {{ active_class([$menu['route_name']]) }}">
-                        <a href="{{ route($menu['route_name']) }}"
+                        <a href="{{ isset($menu['soon']) ? '#' : route($menu['route_name']) }}"
                             data-active={{ is_active_route([$menu['route_name']]) }} class="dropdown-toggle">
+                            @if (isset($menu['soon']))
+                                <span class="menu-badge soon">{{ __('backend.soon') }}</span>
+                            @endif
                             <i class="las {{ $menu['icon'] }}"></i>
                             <span>{{ __($menu['label']) }}</span>
                         </a>
@@ -130,6 +133,9 @@ $menu_dashboard = get_menu_dashboard();
                         <a href="{{ route($menu['route_name'], [$menu['parameter']]) }}"
                             data-active={{ is_active_route([isset($menu['active_class']) ? $menu['active_class'] : $menu['route_name']]) }}
                             class="dropdown-toggle">
+                            @if (isset($menu['soon']))
+                                <span class="menu-badge soon">{{ __('backend.soon') }}</span>
+                            @endif
                             <i class="las {{ $menu['icon'] }}"></i>
                             <span>{{ __($menu['label']) }}</span>
                         </a>

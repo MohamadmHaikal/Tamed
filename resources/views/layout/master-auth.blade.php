@@ -6,8 +6,9 @@
     @include('include.head')
 
 </head>
-<body class="{{ $theme . 'mode' }}" data-base-url="{{url('/')}}">
+<body class="{{ $theme . 'mode' }}" data-base-url="{{url('/')}}" >
     <!-- Loader Starts -->
+    {{-- dir="{{session()->get('lang') == 'en'?'rtl':'ltr'}}"*/> --}}
     {{-- @include('include.loader') --}}
     <!--  Loader Ends -->
 

@@ -12,6 +12,8 @@ class invoice extends Model
         'supply_date',
         'customer_name',
         'address',
+        'type',
+        'invice_type',
         'TaxNumber',
         'responsible',
         'phone',
